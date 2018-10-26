@@ -3,16 +3,28 @@ declare const server: IServer;
 declare const client: IClient;
 
 declare interface IServer {
-    registerSystem<TSystem extends IServerSystem<TSystem>>(majorVersion: number, minorVersion: number) : TSystem
+    registerSystem<TSystem extends IServerSystemBase>(majorVersion: number, minorVersion: number): TSystem
 }
 
 declare interface IClient {
 
 }
 
-declare interface IServerSystem<TSystem> {
+declare interface IServerSystem<TSystem> extends IServerSystemBase {
     initialize?(this: TSystem): void;
 
+    /**
+     * This method gets called once every game tick. The server aims to be 200 times per second, while client aims to be 60, 
+     * but neither one is guaranteed and can vary with performance. This is a good place to get, check, and react to component changes.
+     */
+    update?(this: TSystem): void;
+}
+
+declare interface IVanillaServerSystem extends IServerSystem<IServerSystemBase> {
+
+}
+
+declare interface IServerSystemBase {
     /**
      * 
      * @param eventIdentifier Allows you to trigger an event with the desired data from script. 
@@ -33,12 +45,6 @@ declare interface IServerSystem<TSystem> {
      * No filters are added by default when you register a view so it will capture all entities.
      */
     registerView(): IView;
-
-    /**
-     * This method gets called once every game tick. The server aims to be 200 times per second, while client aims to be 60, 
-     * but neither one is guaranteed and can vary with performance. This is a good place to get, check, and react to component changes.
-     */
-    update(this: TSystem): void;
 
     /**
      * User-Defined components are a special kind of component that can be defined in script and no built-in game system acts on it.
@@ -111,7 +117,6 @@ declare interface IServerSystem<TSystem> {
      * @returns An object containing the data of the component as described in the component itself, or null if the entity did not have the component or something went wrong when getting the component
      */
     getComponent<TComponent>(entity: IEntityObject, componentIdentifier: MinecraftComponent | string): TComponent | null;
-    
 }
 
 declare interface IView {
@@ -131,20 +136,4 @@ declare enum BroadcastableEvent {
 declare enum EntityType {
     Entity = "entity",
     ItemEntity = "item_entity"
-}
-
-declare enum MinecraftComponent {
-    Position = "minecraft:position",
-    Rotation = "minecraft:rotation"
-}
-
-declare interface IPositionComponent {
-    x: number;
-    y: number;
-    z: number;
-}
-
-declare interface IRotationComponent {
-    x: number;
-    y: number;
 }
