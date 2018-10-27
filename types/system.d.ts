@@ -14,14 +14,6 @@ declare interface IVanillaSystem extends ISystem<ISystemBase> {
 
 declare interface ISystemBase {
     /**
-     * 
-     * @param eventIdentifier Allows you to trigger an event with the desired data from script. 
-     * Anything that signed up to listen for the event will be notified and the given data delivered to them.
-     * @param eventData The data for the event. You can create a new JavaScript Object with the parameters you want to pass in to the listener and the engine will take care of delivering the data to them
-     */
-    broadcastEvent(eventIdentifier: BroadcastableEvent, eventData: any): boolean | null;
-
-    /**
      * Creates an entity and applies the specified template as defined in JSON. This allows you to quickly create an entity from the 
      * applied Behavior Packs as the base for an entity created in scripting. The entity will be spawned into the world with all the 
      * components, component groups, and event triggers that are defined in the JSON file of the identifier specified.
@@ -29,21 +21,6 @@ declare interface ISystemBase {
      * @param templateIdentifier This can be any of the entity identifiers from the applied Behavior Packs. For example specifying minecraft:cow here will make the provided entity a cow as defined in JSON
      */
     createEntity(type: string, templateIdentifier: string): IEntityObject | null;
-
-    /**
-     * 
-     * @param eventIdentifier Allows you to trigger an event with the desired data from script. 
-     * Anything that signed up to listen for the event will be notified and the given data delivered to them.
-     * @param eventData The data for the event. You can create a new JavaScript Object with the parameters you want to pass in to the listener and the engine will take care of delivering the data to them
-     */
-    broadcastEvent(eventIdentifier: string, eventData: any): boolean | null;
-
-    /**
-     * Allows you to register a JavaScript object that gets called whenever the specified event is broadcast. The event can either be a built-in event or an event specified in script.
-     * @param eventIdentifier This is the name of the event to which we want to react. Can be the identifier of a built-in event or a custom one from script
-     * @param eventData The name of the JavaScript object that will get called whenever the event is broadcast
-     */
-    listenForEvent(eventIdentifier: string, eventData: (eventData: any) => void ): boolean | null;
 
     /**
      * Allows you to register a view. A view will contain all entities that meet the filter requirement.
