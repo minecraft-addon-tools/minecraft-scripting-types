@@ -4,20 +4,20 @@
 
 Mojang provides modding capabilities via JavaScript. This project aims to bring the Type safety of TypeScript to the Bedrock Scripting Engine
 
-This readme is not a replacement for the API documentation, and it should still be your primary source of information. See: [https://minecraft.gamepedia.com/Bedrock_Beta_Script_Documentation](https://minecraft.gamepedia.com/Bedrock_Beta_Script_Documentation)
+This readme is not a replacement for the API documentation, which should still be your primary source of information. See: [https://minecraft.gamepedia.com/Bedrock_Beta_Script_Documentation](https://minecraft.gamepedia.com/Bedrock_Beta_Script_Documentation)
 
 ## Pre-Requisites
 
 So you want to make your own Scripts? That's awesome! In this section you will find the list of minimum and recommended software you will need.
 
-| Software | Minimum | Recommended | 
-| -------- | -------- | ----------- | 
+| Software    | Minimum                                     | Recommended                                               | 
+| ----------- | ------------------------------------------- | --------------------------------------------------------- | 
 | Code Editor | Visual Studio Code or any plain-text editor | Visual Studio Community 2017 with the following components installed: 'JavaScript diagnostics', 'JavaScript and TypeScript language support', 'Just-In-Time debugger' |
-| Debugger | N/A | Visual Studio Community 2017 |
-| Minecraft | Minecraft on your Windows 10 device | Minecraft on your Windows 10 device |
-| Other | Vanilla Behavior Pack available from https://aka.ms/minecraftscripting_behaviorpack | Vanilla Behavior Pack available from https://aka.ms/minecraftscripting_behaviorpack |
-| Storage | 1.0 GB of free space for text editor, game, and scripts | 3.0 GB of free space for Visual Studio, game, and scripts |
-| Node.js | 8.x | 10.x |
+| Debugger    | N/A                                         | Visual Studio Community 2017                              |
+| Minecraft   | Minecraft on your Windows 10 device         | Minecraft on your Windows 10 device                       |
+| Other       | Vanilla Behavior Pack available from https://aka.ms/minecraftscripting_behaviorpack | Vanilla Behavior Pack available from https://aka.ms/minecraftscripting_behaviorpack |
+| Storage     | 1.0 GB of free space for text editor, game, and scripts | 3.0 GB of free space for Visual Studio, game, and scripts |
+| Node.js     | 8.x                                         | 10.x                                                      |
 
 ## Getting Started
 First you will need to download the latest Vanilla Behavior Pack. You can get this from the following link: https://aka.ms/minecraftscripting_behaviorpack
@@ -73,7 +73,7 @@ Next we just need to add a script to compile the project, the final package.json
 
 this can be done by adding a "compile" script with the command `tsc -p .` which compiles the current project.
 
-#### example package.json
+#### Example package.json
 ```json
 {
   "private": "true",
@@ -89,7 +89,7 @@ this can be done by adding a "compile" script with the command `tsc -p .` which 
 
 The project will not compile however until we add a tsconfig.json file, here is an example one that was used to write Beanstalk
 
-#### example tsconfig.json
+#### Example tsconfig.json
 ```json
 {
     "compilerOptions": {
@@ -121,7 +121,7 @@ It will generate .js files next to the typescript files which Minecraft will hap
 
 Below we will detail the differences (and benefits that using these typings provide)
 
-### namespace your client and server systems
+### Namespace your client and server systems
 
 You should make use of TypeScript namespaces in order to prevent TypeScript from thinking that your client and servers scripts from thinking that they both exist in the same global space. If you do not namespace your project, you may see unusual errors caused by variable or type collisions.
 
@@ -148,6 +148,8 @@ namespace Server {
 ```
 
 If you need to declare additional methods or properties on your system, you can subclass `ISystem<T>` in order to pre-define the shape of your system.
+
+Note: although the demos from Mojang do this, we do not recommend it.
 
 ```typescript
 namespace Server {
