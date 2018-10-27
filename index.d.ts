@@ -3,14 +3,16 @@ declare const server: IServer;
 declare const client: IClient;
 
 declare interface IServer {
-    registerSystem<TSystem extends IServerSystemBase>(majorVersion: number, minorVersion: number): TSystem
+    registerSystem<TSystem extends ISystemBase>(majorVersion: number, minorVersion: number): TSystem;
+    log(message: string): void;
 }
 
 declare interface IClient {
-
+    registerSystem<TSystem extends ISystemBase>(majorVersion: number, minorVersion: number): TSystem;
+    log(message: string): void;
 }
 
-declare interface IServerSystem<TSystem> extends IServerSystemBase {
+declare interface ISystem<TSystem> extends ISystemBase {
     initialize?(this: TSystem): void;
 
     /**
@@ -20,11 +22,11 @@ declare interface IServerSystem<TSystem> extends IServerSystemBase {
     update?(this: TSystem): void;
 }
 
-declare interface IVanillaServerSystem extends IServerSystem<IServerSystemBase> {
+declare interface IVanillaSystem extends ISystem<ISystemBase> {
 
 }
 
-declare interface IServerSystemBase {
+declare interface ISystemBase {
     /**
      * 
      * @param eventIdentifier Allows you to trigger an event with the desired data from script. 
@@ -45,6 +47,24 @@ declare interface IServerSystemBase {
      * No filters are added by default when you register a view so it will capture all entities.
      */
     registerView(): IView;
+
+    /**
+     * 
+     * @param spacialComponent Views are a way for you to filter for entities based on their components. Spatial views have an additional 
+     * filtering system based on an area. Once you have registered a view, you can request all the entities that are captured by it. 
+     * Views will only ever return entities that are currently active in the level. If your view extends into chunks that are not currently 
+     * loaded, entities there will not be included in the view.
+     * @param x_attribute This is the X axis value that will be used for the bounding box
+     * @param y_attribute This is the Y axis value that will be used for the bounding box
+     * @param z_attribute This is the Z axis value that will be used for the bounding box
+     */
+    registerSpacialView(spacialComponent: IPositionComponent | any, x_attribute: number, y_attribute: number, z_attribute: number): ISpacialView;
+
+    /**
+     * By default no filters are added. This will allow views to capture all entities
+     * @param ComponentName This is the identifier of the component that will be added to the filter list. Only entities that have that component will be listed in the view
+     */
+    addFilterToView(ComponentName: string): void;
 
     /**
      * User-Defined components are a special kind of component that can be defined in script and no built-in game system acts on it.
@@ -89,8 +109,24 @@ declare interface IServerSystemBase {
      */
     isValidEntity(entity: IEntityObject): boolean | null;
 
+    createComponent(entity: IEntityObject, componentName: MinecraftComponent.Attack): IAttackComponent | null;
+    createComponent(entity: IEntityObject, componentName: MinecraftComponent.CollisionBox): ICollisionBoxComponent | null;
+    createComponent(entity: IEntityObject, componentName: MinecraftComponent.DamageSensor): IDamageSensorComponent[] | null;
+    createComponent(entity: IEntityObject, componentName: MinecraftComponent.Equipment): IEquipmentComponent | null;
+    createComponent(entity: IEntityObject, componentName: MinecraftComponent.Equippable): IEquippableComponent | null;
+    createComponent(entity: IEntityObject, componentName: MinecraftComponent.Explode): IExplodeComponent | null;
+    createComponent(entity: IEntityObject, componentName: MinecraftComponent.Healable): IHealableComponent | null;
+    createComponent(entity: IEntityObject, componentName: MinecraftComponent.Health): IHealthComponent | null;
+    createComponent(entity: IEntityObject, componentName: MinecraftComponent.Interact): IInteractComponent[] | null;
+    createComponent(entity: IEntityObject, componentName: MinecraftComponent.Inventory): IInventoryComponent | null;
+    createComponent(entity: IEntityObject, componentName: MinecraftComponent.LookAt): ILookAtComponent | null;
+    createComponent(entity: IEntityObject, componentName: MinecraftComponent.Nameable): INameableComponent | null;
     createComponent(entity: IEntityObject, componentName: MinecraftComponent.Position): IPositionComponent | null;
     createComponent(entity: IEntityObject, componentName: MinecraftComponent.Rotation): IRotationComponent | null;
+    createComponent(entity: IEntityObject, componentName: MinecraftComponent.Shooter): IShooterComponent | null;
+    createComponent(entity: IEntityObject, componentName: MinecraftComponent.SpawnEntity): ISpawnEntityComponent | null;
+    createComponent(entity: IEntityObject, componentName: MinecraftComponent.Teleport): ITeleportComponent | null;
+
     /**
      * Creates a component of the specified name and adds it to the entity. This should only be used with custom components which need 
      * to be registered first. If the entity already has the component, this will retrieve the component already there instead.
@@ -108,25 +144,40 @@ declare interface IServerSystemBase {
      */
     applyComponentChanges(component: any): boolean | null;
 
-    getComponent(entity: IEntityObject, componentIdentifier: MinecraftComponent.Position): IPositionComponent | null;
-    getComponent(entity: IEntityObject, componentIdentifier: MinecraftComponent.Rotation): IRotationComponent | null;
+    getComponent(entity: IEntityObject, componentName: MinecraftComponent.Attack): IAttackComponent | null;
+    getComponent(entity: IEntityObject, componentName: MinecraftComponent.CollisionBox): ICollisionBoxComponent | null;
+    getComponent(entity: IEntityObject, componentName: MinecraftComponent.DamageSensor): IDamageSensorComponent[] | null;
+    getComponent(entity: IEntityObject, componentName: MinecraftComponent.Equipment): IEquipmentComponent | null;
+    getComponent(entity: IEntityObject, componentName: MinecraftComponent.Equippable): IEquippableComponent | null;
+    getComponent(entity: IEntityObject, componentName: MinecraftComponent.Explode): IExplodeComponent | null;
+    getComponent(entity: IEntityObject, componentName: MinecraftComponent.Healable): IHealableComponent | null;
+    getComponent(entity: IEntityObject, componentName: MinecraftComponent.Health): IHealthComponent | null;
+    getComponent(entity: IEntityObject, componentName: MinecraftComponent.Interact): IInteractComponent[] | null;
+    getComponent(entity: IEntityObject, componentName: MinecraftComponent.Inventory): IInventoryComponent | null;
+    getComponent(entity: IEntityObject, componentName: MinecraftComponent.LookAt): ILookAtComponent | null;
+    getComponent(entity: IEntityObject, componentName: MinecraftComponent.Nameable): INameableComponent | null;
+    getComponent(entity: IEntityObject, componentName: MinecraftComponent.Position): IPositionComponent | null;
+    getComponent(entity: IEntityObject, componentName: MinecraftComponent.Rotation): IRotationComponent | null;
+    getComponent(entity: IEntityObject, componentName: MinecraftComponent.Shooter): IShooterComponent | null;
+    getComponent(entity: IEntityObject, componentName: MinecraftComponent.SpawnEntity): ISpawnEntityComponent | null;
+    getComponent(entity: IEntityObject, componentName: MinecraftComponent.Teleport): ITeleportComponent | null;
+
     /**
      * Looks for the specified component in the entity. If it exists, retrieves the data from the component and returns it.
      * @param entity The EntityObject that was retrieved from a call to createEntity() or retrieved from an event
      * @param componentIdentifier The name of the component to retrieve from the entity. This is either the name of a built-in component (check the Script Components section) or a custom component created with a call to registerComponent()
      * @returns An object containing the data of the component as described in the component itself, or null if the entity did not have the component or something went wrong when getting the component
      */
-    getComponent<TComponent>(entity: IEntityObject, componentIdentifier: MinecraftComponent | string): TComponent | null;
+    getComponent<TComponent>(entity: IEntityObject, componentIdentifier: string): TComponent | null;
 }
 
-declare interface IView {
-
-}
+declare interface IView { }
+declare interface ISpacialView { }
 
 declare interface IEntityObject {
     id: string;
     __identifier__: string;
-
+    __type__: string;
 }
 
 declare enum BroadcastableEvent {
@@ -137,47 +188,17 @@ declare enum EntityType {
     Entity = "entity",
     ItemEntity = "item_entity"
 }
+    
+declare enum MinecraftClientReceiveEvent {
+    ClientEnteredWorld = "minecraft:client_entered_world"
+}
+
+declare enum MinecraftClientSendEvent {
+    
+}
 
 
-declare interface IServerSystem<TSystem> {
-    createComponent(entity: IEntityObject, componentName: MinecraftComponent.Attack): IAttackComponent | null;
-    createComponent(entity: IEntityObject, componentName: MinecraftComponent.CollisionBox): ICollisionBoxComponent | null;
-    createComponent(entity: IEntityObject, componentName: MinecraftComponent.DamageSensor): IDamageSensorComponent | null;
-    createComponent(entity: IEntityObject, componentName: MinecraftComponent.Equipment): IEquipmentComponent | null;
-    createComponent(entity: IEntityObject, componentName: MinecraftComponent.Equippable): IEquippableComponent | null;
-    createComponent(entity: IEntityObject, componentName: MinecraftComponent.Explode): IExplodeComponent | null;
-    createComponent(entity: IEntityObject, componentName: MinecraftComponent.Healable): IHealableComponent | null;
-    createComponent(entity: IEntityObject, componentName: MinecraftComponent.Health): IHealthComponent | null;
-    createComponent(entity: IEntityObject, componentName: MinecraftComponent.Interact): IInteractComponent | null;
-    createComponent(entity: IEntityObject, componentName: MinecraftComponent.Inventory): IInventoryComponent | null;
-    createComponent(entity: IEntityObject, componentName: MinecraftComponent.LookAt): ILookAtComponent | null;
-    createComponent(entity: IEntityObject, componentName: MinecraftComponent.Nameable): INameableComponent | null;
-    createComponent(entity: IEntityObject, componentName: MinecraftComponent.Position): IPositionComponent | null;
-    createComponent(entity: IEntityObject, componentName: MinecraftComponent.Rotation): IRotationComponent | null;
-    createComponent(entity: IEntityObject, componentName: MinecraftComponent.Shooter): IShooterComponent | null;
-    createComponent(entity: IEntityObject, componentName: MinecraftComponent.SpawnEntity): ISpawnEntityComponent | null;
-    createComponent(entity: IEntityObject, componentName: MinecraftComponent.Teleport): ITeleportComponent | null;
-    
-    getComponent(entity: IEntityObject, componentName: MinecraftComponent.Attack): IAttackComponent | null;
-    getComponent(entity: IEntityObject, componentName: MinecraftComponent.CollisionBox): ICollisionBoxComponent | null;
-    getComponent(entity: IEntityObject, componentName: MinecraftComponent.DamageSensor): IDamageSensorComponent | null;
-    getComponent(entity: IEntityObject, componentName: MinecraftComponent.Equipment): IEquipmentComponent | null;
-    getComponent(entity: IEntityObject, componentName: MinecraftComponent.Equippable): IEquippableComponent | null;
-    getComponent(entity: IEntityObject, componentName: MinecraftComponent.Explode): IExplodeComponent | null;
-    getComponent(entity: IEntityObject, componentName: MinecraftComponent.Healable): IHealableComponent | null;
-    getComponent(entity: IEntityObject, componentName: MinecraftComponent.Health): IHealthComponent | null;
-    getComponent(entity: IEntityObject, componentName: MinecraftComponent.Interact): IInteractComponent | null;
-    getComponent(entity: IEntityObject, componentName: MinecraftComponent.Inventory): IInventoryComponent | null;
-    getComponent(entity: IEntityObject, componentName: MinecraftComponent.LookAt): ILookAtComponent | null;
-    getComponent(entity: IEntityObject, componentName: MinecraftComponent.Nameable): INameableComponent | null;
-    getComponent(entity: IEntityObject, componentName: MinecraftComponent.Position): IPositionComponent | null;
-    getComponent(entity: IEntityObject, componentName: MinecraftComponent.Rotation): IRotationComponent | null;
-    getComponent(entity: IEntityObject, componentName: MinecraftComponent.Shooter): IShooterComponent | null;
-    getComponent(entity: IEntityObject, componentName: MinecraftComponent.SpawnEntity): ISpawnEntityComponent | null;
-    getComponent(entity: IEntityObject, componentName: MinecraftComponent.Teleport): ITeleportComponent | null;
-    }
-    
-    declare enum MinecraftComponent {
+declare enum MinecraftComponent {
     /**
      * This component controls the Attack Damage attribute from the entity. It allows you to change the current minimum and maximum values. Once the changes are applied, the current attack of the entity will be reset to the minimum specified. With the minimum and maximum changed to the values specified. Any buffs or debuffs will be left intact.
      */
@@ -255,15 +276,15 @@ declare interface IServerSystem<TSystem> {
     /**
      * Range of the random amount of damage the melee attack deals. A negative value can heal the entity instead of hurting it
      */
-    damage: any;
+    damage: [number, number];
     /**
      * Name of the status ailment to apply to an entity attacked by this entity's melee attack
      */
-    effect_name: any;
+    effect_name: string;
     /**
      * Duration in seconds of the status ailment applied to the damaged entity
      */
-    effect_duration: any;
+    effect_duration: number;
     }
     
     /**
@@ -273,11 +294,11 @@ declare interface IServerSystem<TSystem> {
     /**
      * Width and Depth of the collision box in blocks. A negative value will be assumed to be 0
      */
-    width: any;
+    width: number;
     /**
      * Height of the collision box in blocks. A negative value will be assumed to be 0
      */
-    height: any;
+    height: number;
     }
     
     /**
@@ -287,15 +308,15 @@ declare interface IServerSystem<TSystem> {
     /**
      * List of triggers with the events to call when taking this specific kind of damage, allows specifying filters for entity definitions and events
      */
-    on_damage: any;
+    on_damage: any[];
     /**
      * If true, the damage dealt to the entity will take away health from it, set to false to make the entity ignore that damage
      */
-    deals_damage: any;
+    deals_damage: boolean;
     /**
      * Type of damage that triggers this set of events
      */
-    cause: any;
+    cause: string;
     }
     
     /**
@@ -305,11 +326,11 @@ declare interface IServerSystem<TSystem> {
     /**
      * The file path to the equipment table, relative to the behavior pack's root
      */
-    table: any;
+    table: string;
     /**
      * A list of slots with the chance to drop an equipped item from that slot
      */
-    slot_drop_chance: any;
+    slot_drop_chance: any[];
     }
     
     /**
@@ -358,7 +379,7 @@ declare interface IServerSystem<TSystem> {
      * 
      * 
      */
-    slots: any;
+    slots: any[];
     }
     
     /**
@@ -368,35 +389,35 @@ declare interface IServerSystem<TSystem> {
     /**
      * The range for the random amount of time the fuse will be lit before exploding, a negative value means the explosion will be immediate
      */
-    fuseLength: any;
+    fuseLength: [number, number];
     /**
      * The radius of the explosion in blocks and the amount of damage the explosion deals
      */
-    power: any;
+    power: number;
     /**
      * A blocks explosion resistance will be capped at this value when an explosion occurs
      */
-    maxResistance: any;
+    maxResistance: number;
     /**
      * If true, the fuse is already lit when this component is added to the entity
      */
-    fuseLit: any;
+    fuseLit: boolean;
     /**
      * If true, blocks in the explosion radius will be set on fire
      */
-    causesFire: any;
+    causesFire: boolean;
     /**
      * If true, the explosion will destroy blocks in the explosion radius
      */
-    breaks_blocks: any;
+    breaks_blocks: boolean;
     /**
      * If true, whether the explosion causes fire is affected by the mob griefing game rule
      */
-    fireAffectedByGriefing: any;
+    fireAffectedByGriefing: boolean;
     /**
      * If true, whether the explosion breaks blocks is affected by the mob griefing game rule
      */
-    destroyAffectedByGriefing: any;
+    destroyAffectedByGriefing: boolean;
     }
     
     /**
@@ -406,7 +427,7 @@ declare interface IServerSystem<TSystem> {
     /**
      * Determines if item can be used regardless of entity being at full health
      */
-    force_use: any;
+    force_use: boolean;
     /**
      * The filter group that defines the conditions for this trigger
      */
@@ -435,7 +456,7 @@ declare interface IServerSystem<TSystem> {
      * 
      * 
      */
-    items: any;
+    items: any[];
     }
     
     /**
@@ -445,11 +466,11 @@ declare interface IServerSystem<TSystem> {
     /**
      * Current health of the entity
      */
-    health: any;
+    health: number;
     /**
      * The maximum health the entity can heal
      */
-    maxHealth: any;
+    maxHealth: number;
     }
     
     /**
@@ -459,11 +480,11 @@ declare interface IServerSystem<TSystem> {
     /**
      * An array of entity identifiers to spawn when the interaction occurs
      */
-    spawn_entities: any;
+    spawn_entities: any[];
     /**
      * An event identifier to fire when the interaction occurs
      */
-    on_interact: any;
+    on_interact: string;
     /**
      * Particle effect that will be triggered at the start of the interaction
      *  Name Type Default Value Description 
@@ -492,23 +513,23 @@ declare interface IServerSystem<TSystem> {
     /**
      * Time in seconds before this entity can be interacted with again
      */
-    cooldown: any;
+    cooldown: number;
     /**
      * If true, the player will do the 'swing' animation when interacting with this entity
      */
-    swing: any;
+    swing: boolean;
     /**
      * If true, the interaction will use an item
      */
-    use_item: any;
+    use_item: boolean;
     /**
      * The amount of damage the item will take when used to interact with this entity. A value of 0 means the item won't lose durability
      */
-    hurt_item: any;
+    hurt_item: number;
     /**
      * Text to show when the player is able to interact in this way with this entity when playing with Touch-screen controls
      */
-    interact_text: any;
+    interact_text: string;
     /**
      * Loot table with items to add to the player's inventory upon successful interaction
      *  Name Type Default Value Description 
@@ -538,11 +559,11 @@ declare interface IServerSystem<TSystem> {
     /**
      * The item used will transform to this item upon successful interaction. Format: itemName:auxValue
      */
-    transform_to_item: any;
+    transform_to_item: string;
     /**
      * An array of sound identifiers to play when the interaction occurs
      */
-    play_sounds: any;
+    play_sounds: any[];
     }
     
     /**
@@ -552,27 +573,27 @@ declare interface IServerSystem<TSystem> {
     /**
      * Type of container this entity has. Can be horse, minecart_chest, minecart_hopper, inventory, container or hopper
      */
-    container_type: any;
+    container_type: string;
     /**
      * Number of slots the container has
      */
-    inventory_size: any;
+    inventory_size: number;
     /**
      * If true, the contents of this inventory can be removed by a hopper
      */
-    can_be_siphoned_from: any;
+    can_be_siphoned_from: boolean;
     /**
      * If true, only the entity can access the inventory
      */
-    private: any;
+    private: boolean;
     /**
      * If true, the entity's inventory can only be accessed by its owner or itself
      */
-    restrict_to_owner: any;
+    restrict_to_owner: boolean;
     /**
      * Number of slots that this entity can gain per extra strength
      */
-    additional_slots_per_strength: any;
+    additional_slots_per_strength: number;
     }
     
     /**
@@ -586,23 +607,23 @@ declare interface IServerSystem<TSystem> {
     /**
      * The range for the random amount of time during which the entity is 'cooling down' and won't get angered or look for a target
      */
-    look_cooldown: any;
+    look_cooldown: [number, number];
     /**
      * The event identifier to run when the entities specified in filters look at this entity
      */
-    look_event: any;
+    look_event: string;
     /**
      * If true, invulnerable entities (e.g. Players in creative mode) are considered valid targets
      */
-    mAllowInvulnerable: any;
+    mAllowInvulnerable: boolean;
     /**
      * Maximum distance this entity will look for another entity looking at it
      */
-    searchRadius: any;
+    searchRadius: number;
     /**
      * If true, this entity will set the attack target as the entity that looked at it
      */
-    setTarget: any;
+    setTarget: boolean;
     }
     
     /**
@@ -631,19 +652,19 @@ declare interface IServerSystem<TSystem> {
     /**
      * Trigger to run when the entity gets named
      */
-    default_trigger: any;
+    default_trigger: string;
     /**
      * If true, the name will always be shown
      */
-    alwaysShow: any;
+    alwaysShow: boolean;
     /**
      * If true, this entity can be renamed with name tags
      */
-    allowNameTagRenaming: any;
+    allowNameTagRenaming: boolean;
     /**
      * The current name of the entity, empty if the entity hasn't been named yet, making this non-empty will apply the name to the entity
      */
-    name: any;
+    name: string;
     }
     
     /**
@@ -653,15 +674,15 @@ declare interface IServerSystem<TSystem> {
     /**
      * Position along the X-Axis (east-west) of the entity
      */
-    x: any;
+    x: number;
     /**
      * Position along the Y-Axis (height) of the entity
      */
-    y: any;
+    y: number;
     /**
      * Position along the Z-Axis (north-south) of the entity
      */
-    z: any;
+    z: number;
     }
     
     /**
@@ -671,11 +692,11 @@ declare interface IServerSystem<TSystem> {
     /**
      * Controls the head rotation looking up and down
      */
-    x: any;
+    x: number;
     /**
      * Controls the body rotation parallel to the floor
      */
-    y: any;
+    y: number;
     }
     
     /**
@@ -685,11 +706,11 @@ declare interface IServerSystem<TSystem> {
     /**
      * Entity identifier to use as projectile for the ranged attack. The entity must have the projectile component to be able to be shot as a projectile
      */
-    def: any;
+    def: string;
     /**
      * ID of the Potion effect to be applied on hit
      */
-    auxVal: any;
+    auxVal: number;
     }
     
     /**
@@ -699,31 +720,31 @@ declare interface IServerSystem<TSystem> {
     /**
      * Minimum amount of time to randomly wait in seconds before another entity is spawned
      */
-    min_wait_time: any;
+    min_wait_time: number;
     /**
      * Maximum amount of time to randomly wait in seconds before another entity is spawned
      */
-    max_wait_time: any;
+    max_wait_time: number;
     /**
      * Name of the sound effect to play when the entity is spawned
      */
-    spawn_sound: any;
+    spawn_sound: string;
     /**
      * Item identifier of the item to spawn
      */
-    spawn_item: any;
+    spawn_item: string;
     /**
      * Identifier of the entity to spawn, leave empty to spawn the item defined above instead
      */
-    spawn_entity: any;
+    spawn_entity: string;
     /**
      * Method to use to spawn the entity
      */
-    spawn_method: any;
+    spawn_method: string;
     /**
      * Event to call when the entity is spawned
      */
-    spawn_event: any;
+    spawn_event: string;
     }
     
     /**
@@ -733,33 +754,33 @@ declare interface IServerSystem<TSystem> {
     /**
      * Modifies the chance that the entity will teleport if the entity is in darkness
      */
-    darkTeleportChance: any;
+    darkTeleportChance: number;
     /**
      * Modifies the chance that the entity will teleport if the entity is in daylight
      */
-    lightTeleportChance: any;
+    lightTeleportChance: number;
     /**
      * Maximum amount of time in seconds between random teleports
      */
-    maxRandomTeleportTime: any;
+    maxRandomTeleportTime: number;
     /**
      * Minimum amount of time in seconds between random teleports
      */
-    minRandomTeleportTime: any;
+    minRandomTeleportTime: number;
     /**
      * Entity will teleport to a random position within the area defined by this cube
      */
-    randomTeleportCube: any;
+    randomTeleportCube: [number, number, number];
     /**
      * If true, the entity will teleport randomly
      */
-    randomTeleports: any;
+    randomTeleports: boolean;
     /**
      * Maximum distance the entity will teleport when chasing a target
      */
-    targetDistance: any;
+    targetDistance: number;
     /**
      * The chance that the entity will teleport between 0.0 and 1.0. 1.0 means 100%
      */
-    target_teleport_chance: any;
+    target_teleport_chance: number;
     }
