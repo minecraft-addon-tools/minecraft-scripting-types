@@ -109,6 +109,14 @@ The project will not compile however until we add a tsconfig.json file, here is 
 }
 ```
 
+The last step will be to rename the `.js` files in `scripts/**/*.js` to `.ts` files.
+
+You should now be able to build your project using
+```
+npm run compile
+```
+It will generate .js files next to the typescript files which Minecraft will happily load.
+
 ## API Differences when using this typing
 
 Below we will detail the differences (and benefits that using these typings provide)
@@ -167,3 +175,39 @@ namespace Server {
     //... continue adding more code
 }
 ```
+
+### Improved type detection for built-in components and events
+
+Minecraft's built-in components have all been defined in the `MinecraftComponent` enum, when you use one of these enum values with an API such as `getComponent()` you will be given an appropriate definition for the component that you are asking for.
+
+```typescript
+    system.update = function() {
+        const player = //... resolving player here
+        const position = this.getComponent(player, MinecraftComponent.Position);
+        // position will be IPositionComponent
+        server.log(`x: ${position.x}, y: ${position.y}, z: ${position.z}`)
+    }
+```
+
+For custom components, overloads for specific components will not be available and you will need to specify the expected return type.
+
+```typescript
+    interface IAwesomeComponent {
+        isAwesome: bool;
+    }
+
+    system.update = function() {
+        const player = //... resolving player here
+        const awesomeComponent = this.getComponent<IAwesomeComponent>(player, "demo_mod:awesome_component");
+
+        // position will be IAwesomeComponent
+        server.log(`isAwesome: ${awesomeComponent.isAwesome}`);
+    }
+```
+
+these overloads will also be available for events in the near future, but are not yet implemented.
+
+### Source Mapping
+Source mapping is not currently available, you will unfortunately need to get used to debugging with the compiled JavaScript files. 
+
+A feedback item is pending approval for this feature.
