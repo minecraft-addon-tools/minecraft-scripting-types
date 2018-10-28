@@ -7,5 +7,6 @@
 /// <reference path="./types/server.d.ts" />
 /// <reference path="./types/system.d.ts" />
 /// <reference path="./types/system_components.generated.d.ts" />
-/// <reference path="./types/system_events.generated.d.ts" />
+/// <reference path="./types/system_server_events.generated.d.ts" />
+/// <reference path="./types/system_client_events.generated.d.ts" />
 /// <reference path="./types/view.d.ts" />

@@ -1,3 +1,11 @@
+declare interface IClientSystem<TSystem> extends ISystem<TSystem>, IVanillaClientSystemBase {
+
+}
+
+declare interface IServerSystem<TSystem> extends ISystem<TSystem>, IVanillaServerSystemBase {
+
+}
+
 declare interface ISystem<TSystem> extends ISystemBase {
     initialize?(this: TSystem): void;
 
@@ -8,7 +16,19 @@ declare interface ISystem<TSystem> extends ISystemBase {
     update?(this: TSystem): void;
 }
 
-declare interface IVanillaSystem extends ISystem<ISystemBase> {
+declare interface IVanillaClientSystemBase {
+    
+}
+
+declare interface IVanillaServerSystemBase {
+    
+}
+
+declare interface IVanillaClientSystem extends IClientSystem<IVanillaClientSystem> {
+
+}
+
+declare interface IVanillaServerSystem extends IServerSystem<IVanillaServerSystem> {
 
 }
 
@@ -38,7 +58,7 @@ declare interface ISystemBase {
      * @param y_attribute This is the Y axis value that will be used for the bounding box
      * @param z_attribute This is the Z axis value that will be used for the bounding box
      */
-    registerSpacialView(spacialComponent: IPositionComponent | any, x_attribute: number, y_attribute: number, z_attribute: number): ISpacialView;
+    registerSpacialView(spacialComponent: IPositionComponent | any, x_attribute: string, y_attribute: string, z_attribute: string): ISpacialView;
 
     /**
      * By default no filters are added. This will allow views to capture all entities

@@ -1,5 +1,5 @@
-declare interface ISystemBase {
-    broadcastEvent(eventIdentifier: BroadcastableEvent.ExecuteCommand, eventData: string): boolean | null;
+declare interface IVanillaServerSystemBase {
+    broadcastEvent(eventIdentifier: BroadcastableServerEvent.ExecuteCommand, eventData: string): boolean | null;
 
     listenForEvent(eventIdentifier: MinecraftServerEvent.EntityCreated, eventData: (eventData: IEntityCreatedEventData) => void): boolean | null
 
@@ -17,6 +17,4 @@ declare interface ISystemBase {
      * @param eventData The name of the JavaScript object that will get called whenever the event is broadcast
      */
     listenForEvent(eventIdentifier: string, eventData: (eventData: any) => void ): boolean | null;
-
-
 }
