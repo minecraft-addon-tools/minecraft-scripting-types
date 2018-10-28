@@ -62,18 +62,17 @@ This is a node module that is not intended to be published, but can be used for 
 
 *This repository is not currently available on NPM, so you must install it using the GitHub repository. It will be made available on NPM once we have figured out how to license this and how we're going to version it*
 
-Now add TypeScript and MinecraftScriptingTypeScript (this project) using NPM, replacing `<commit>` with the current commit ID from this repository (e.g., `6176afc78f1a0c16ed7f63fdc221accbacf93ac5`)
+Now add TypeScript and MinecraftScriptingTypeScript (this project) using NPM, replacing `<commit>` with the current commit ID from this repository (e.g., `5d8ee06b3be36e20c8c531ad418ce8e250abc2ac`)
 
 ```cmd
 npm install --save-dev TypeScript
-npm install --save-dev npm install github:atomicblom/MinecraftScriptingTypeScript#<commit>
+npm install --save-dev github:atomicblom/MinecraftScriptingTypeScript#<commit>
 ```
 
-Next we just need to add a script to compile the project, the final package.json should look something like this:
-
-this can be done by adding a "compile" script with the command `tsc -p .` which compiles the current project.
+Next we just need to add a script to compile the project, which can be done by adding a "compile" script with the command `tsc -p .` which compiles the current project.
 
 #### Example package.json
+The final package.json should look something like this:
 ```json
 {
   "private": "true",
@@ -81,7 +80,7 @@ this can be done by adding a "compile" script with the command `tsc -p .` which 
     "compile": "tsc -p ."
   },
   "dependencies": {
-    "mcscripting": "github:atomicblom/MinecraftScriptingTypeScript#6176afc78f1a0c16ed7f63fdc221accbacf93ac5",
+    "mcscripting": "github:atomicblom/MinecraftScriptingTypeScript#5d8ee06b3be36e20c8c531ad418ce8e250abc2ac",
     "typescript": "^3.1.3"
   }
 }
@@ -137,23 +136,23 @@ namespace Server {
 
 ### Getting type information for an extended system
 
-The Mojang demonstrations create a system and them assigns additional methods to them in a way that TypeScript does not detect methods being available on the system.
+The Mojang demonstrations create a system and them assigns additional methods to them in such a way that TypeScript does not detect methods being available on the system.
 
-If you do not intend to use this behaviour (perhaps your logic will be in methods, loose in the namespace you defined with the above hint), then you can use the `IVanillaSystem` to register a plain system:
+If you do not intend to use this behaviour (perhaps your logic will be in methods, loose in the namespace you defined with the above hint), then you can simply register a plain system:
 
 ```typescript
 namespace Server {
-    const system = server.registerSystem<IVanillaSystem>(0, 0);
+    const system = server.registerSystem(0, 0);
 }
 ```
 
-If you need to declare additional methods or properties on your system, you can subclass `ISystem<T>` in order to pre-define the shape of your system.
+If you need to declare additional methods or properties on your system, you can subclass `IServerSystem<T>` in order to pre-define the shape of your system.
 
 Note: although the demos from Mojang do this, we do not recommend it.
 
 ```typescript
 namespace Server {
-    interface IMyCustomModSystem extends ISystem<IMyCustomModSystem> {
+    interface IMyCustomModSystem extends IServerSystem<IMyCustomModSystem> {
         // defining a pretend variable "this" with the type of your system will help TypeScript to 
         // know that you can use "this." to get at the properties.
         notifyPlayer(this: IMyCustomModSystem, player: IEntityObject): void;
@@ -177,6 +176,8 @@ namespace Server {
     //... continue adding more code
 }
 ```
+
+You can subclass `IClientSystem` in a similliar way.
 
 ### Improved type detection for built-in components and events
 
