@@ -202,7 +202,7 @@ For custom components, overloads for specific components will not be available a
         const player = //... resolving player here
         const awesomeComponent = this.getComponent<IAwesomeComponent>(player, "demo_mod:awesome_component");
 
-        // position will be IAwesomeComponent
+        // awesomeComponent will be IAwesomeComponent
         server.log(`isAwesome: ${awesomeComponent.isAwesome}`);
     }
 ```
