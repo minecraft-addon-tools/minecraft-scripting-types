@@ -5,16 +5,26 @@ declare const enum BroadcastableClientEvent {
 
 declare const enum BroadcastableServerEvent {
     ExecuteCommand = "minecraft:execute_command",
+    DisplayChat = "minecraft:display_chat_event",
+    LoadUI = "minecraft:load_ui",
+    SendUIEvent = "minecraft:send_ui_event",
+    SpawnParticleAttachedEntity = "minecraft:spawn_particle_attached_entity",
+    SpawnParticleInWorld = "minecraft:spawn_particle_in_world",
+    UnloadUI = "minecraft:unload_ui"
 }
     
 declare const enum MinecraftClientEvent {
     ClientEnteredWorld = "minecraft:client_entered_world"
 }
 
-declare const enum MinecraftClientSendEvent {
-    
+declare const enum MinecraftServerEvent {
+    EntityCreated = "minecraft:entity_created",
+    EntityDeath = "minecraft:entity_death",
+    EntityStartRiding = "minecraft:entity_start_riding",
+    EntityStopRiding = "minecraft:entity_stop_riding",
+    EntityTick = "minecraft:entity_tick",
+    PlayerAttackedActor = "minecraft:player_attacked_actor"
 }
 
-declare const enum MinecraftServerEvent {
-    EntityCreated = "minecraft:entity_created"
-}
+declare type ParticleEffect = MinecraftParticleEffect | string;
+declare type Vector = [number, number, number];
