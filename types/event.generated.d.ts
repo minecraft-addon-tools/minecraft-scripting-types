@@ -102,3 +102,47 @@ declare interface ISpawnParticleInWorldParameters {
      */
     offset: Vector;
 }
+
+declare interface IHitResultChangedEvent {
+    /**
+     * The enity that was hit or null if it fired when moving off of an entity
+     */
+    entity: EntityId,
+    /**
+     * The position of the enity that was hit or null if it fired when moving off an entity
+     */
+    position: Vector
+}
+
+declare interface IHitResultContinuousEvent {
+    /**
+     * The enity that was hit or null if it not pointing at an entity
+     */
+    entity: EntityId,
+    /**
+     * The position of the enity that was hit or block that was hit
+     */
+    position: Vector
+}
+
+declare interface IPickHitResultChangedEvent {
+    /**
+     * The enity that was hit or null if it fired when moving off of an entity
+     */
+    entity: EntityId,
+    /**
+     * The position of the enity that was hit or null if it fired when moving off an entity
+     */
+    position: Vector | null
+}
+
+declare interface IPickHitResultContinuousEvent {
+    /**
+     * The enity that was hit or null if it not pointing at an entity
+     */
+    entity: EntityId,
+    /**
+     * The position of the enity that was hit or block that was hit
+     */
+    position: Vector
+}

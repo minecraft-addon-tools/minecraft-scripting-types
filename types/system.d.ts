@@ -7,6 +7,10 @@ declare interface IServerSystem<TSystem> extends ISystem<TSystem>, IVanillaServe
 }
 
 declare interface ISystem<TSystem> extends ISystemBase {
+    /**
+     * This is the first method that gets called immediately after the system is registered. It will run as soon as the script loads at world start.
+     * You can use this to set up the environment for your script: register custom components and events, sign up event listeners, etc. This will run BEFORE the world is ready and the player has been added to it, so you shouldn't try to spawn any entities here!
+     */
     initialize?(this: TSystem): void;
 
     /**
@@ -14,6 +18,11 @@ declare interface ISystem<TSystem> extends ISystemBase {
      * but neither one is guaranteed and can vary with performance. This is a good place to get, check, and react to component changes.
      */
     update?(this: TSystem): void;
+
+    /**
+     * This method gets called when the Minecraft Script Engine is shutting down. For the client this is when they leave the world; for the server this is after the last player has exited the world.
+     */
+    shutdown?(this: TSystem): void;
 }
 
 declare interface IVanillaClientSystemBase {
@@ -80,11 +89,37 @@ declare interface ISystemBase {
     registerComponent(componentIdentifier: string, componentData: object): any;
 
     /**
+     * Applies the component and any changes made to it in script back to the entity. What this means for each component can be slightly 
+     * different: it makes the component reload on the entity with the new data as if it had just been added to the entity.
+     * @param component The component object retrieved from the entity that was returned by either createComponent() or getComponent()
+     */
+    applyComponentChanges(component: any): boolean | null;
+
+    /**
+     * Removes the specified component from the given entity. If the entity has the component, it will be removed. Currently this only works with custom components and can't be used to remove components defined for an entity in JSON.
+     * @param entityObject The EntityObject that was retrieved from a call to createEntity() or retrieved from an event
+     * @param componentIdentifier The name of the component to remove from the entity. This is either the name of a built-in component (check the Script Components section) or a custom component created with a call to registerComponent()
+     */
+    destroyComponent(entityObject: IEntityObject, componentIdentifier: string): boolean | null;
+
+    /**
      * Allows you to fetch the entities captured by a view.
      * @param viewAllEntities This is the view you registered earlier using registerView()
      * @returns An array of IEntityObjects representing the entities found within the view
      */
     getEntitiesFromView(viewAllEntities: IView): IEntityObject[];
+    
+    /**
+     * Allows you to fetch the entities captured by a spatial view.
+     * @param spacialView This is the view you created earlier using registerSpatialView(...)
+     * @param x0 The west limit of the filter area
+     * @param y0 The bottom limit of the filter area
+     * @param z0 The north limit of the filter area
+     * @param x1 The east limit of the filter area
+     * @param y1 The upper limit of the filter area
+     * @param z1 The south limit of the filter area
+     */
+    getEntitiesFromSpacialView(spacialView: ISpacialView, x0:number, y0: number, z0: number, x1: number, y1: number, z1: number): IEntityObject[];
 
     /**
      * Creates an entity and applies the specified template as defined in JSON. This allows you to quickly create an entity from the 
@@ -108,11 +143,4 @@ declare interface ISystemBase {
      * @param entity The EntityObject that was retrieved from a call to createEntity() or retrieved from an event
      */
     isValidEntity(entity: IEntityObject): boolean | null;
-
-    /**
-     * Applies the component and any changes made to it in script back to the entity. What this means for each component can be slightly 
-     * different: it makes the component reload on the entity with the new data as if it had just been added to the entity.
-     * @param component The component object retrieved from the entity that was returned by either createComponent() or getComponent()
-     */
-    applyComponentChanges(component: any): boolean | null;
 }
