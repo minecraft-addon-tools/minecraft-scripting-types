@@ -33,7 +33,7 @@ declare interface IVanillaClientSystemBase {
      * This event is used to create a static particle effect in the world. This particle effect is visible to all players. Any effect defined in a JSON file (both in your resource pack and in Minecraft) can be used here. Once the effect is spawned you won't be able to control it further.
      * @param particleParameters the details of the particle to spawn 
      */
-    broadcastEvent(eventIdentifier: BroadcastableClientEvent.SpawnParticleInWorld, particleParameters: ISpawnParticleInWorldParameters): boolean | null
+    broadcastEvent(eventIdentifier: BroadcastableClientEvent.SpawnParticleInWorld, particleParameters: IClientSpawnParticleInWorldParameters): boolean | null
     /**
      * This event is used to remove a UI screen from the stack of the specific player running the client script. The event data contains the name of the screen to remove as a string. After the event is triggered the screen will be scheduled to be removed from the stack the next time the UI Engine can do so. Only screens defined in a HTML file can be removed using this event.
      * @param uiName the name of the UI to close

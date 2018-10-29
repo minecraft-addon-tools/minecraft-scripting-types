@@ -92,7 +92,22 @@ declare interface ISpawnParticleAttachedEntityParameters {
     offset: Vector;
 }
 
-declare interface ISpawnParticleInWorldParameters {
+declare interface IClientSpawnParticleInWorldParameters {
+    /**
+     * The identifier of the particle effect you want to attach to spawn. This is the same name you gave the effect in its JSON file
+     */
+    effect: ParticleEffect;
+    /**
+     * The position in the world where you want to spawn the effect
+     */
+    offset: Vector;
+}
+
+declare interface IServerSpawnParticleInWorldParameters {
+    /**
+     * The dimension in which you want to spawn the effect. Can be "overworld", "nether", or "the end"
+     */
+    dimension: Dimension;
     /**
      * The identifier of the particle effect you want to attach to spawn. This is the same name you gave the effect in its JSON file
      */
