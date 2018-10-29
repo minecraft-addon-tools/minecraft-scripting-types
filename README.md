@@ -1,4 +1,4 @@
-# MCScripting
+# minecraft-scripting-types
 
 ***This API is still in development and may break with updates until things stabilize***
 
@@ -80,7 +80,7 @@ The final package.json should look something like this:
     "compile": "tsc -p ."
   },
   "dependencies": {
-    "mcscripting": "github:atomicblom/MinecraftScriptingTypeScript#5d8ee06b3be36e20c8c531ad418ce8e250abc2ac",
+    "minecraft-scripting-types": "github:atomicblom/minecraft-scripting-types#5d8ee06b3be36e20c8c531ad418ce8e250abc2ac",
     "typescript": "^3.1.3"
   }
 }
@@ -95,7 +95,7 @@ The project will not compile however until we add a tsconfig.json file, here is 
         "module": "ES6",
         "noImplicitAny": true,
         "types": [
-            "mcscripting"
+            "minecraft-scripting-types"
         ]
     },
     "include": [
