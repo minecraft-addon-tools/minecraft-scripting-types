@@ -21,7 +21,7 @@ declare interface IVanillaServerSystemBase {
      * This event is used to create a static particle effect in the world. This particle effect is visible to all players. Any effect defined in a JSON file (both in your resource pack and in Minecraft) can be used here. Once the effect is spawned you won't be able to control it further.
      * @param particleParameters the details of the particle to spawn 
      */
-    broadcastEvent(eventIdentifier: BroadcastableServerEvent.SpawnParticleInWorld, particleParameters: ISpawnParticleInWorldParameters): boolean | null
+    broadcastEvent(eventIdentifier: BroadcastableServerEvent.SpawnParticleInWorld, particleParameters: IServerSpawnParticleInWorldParameters): boolean | null
 
     ///////////////////////////
     // listenForEvent overloads
