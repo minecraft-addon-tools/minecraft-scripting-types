@@ -100,7 +100,7 @@ declare interface IClientSpawnParticleInWorldParameters {
     /**
      * The position in the world where you want to spawn the effect
      */
-    offset: Vector;
+    position: Vector;
 }
 
 declare interface IServerSpawnParticleInWorldParameters {
@@ -115,7 +115,7 @@ declare interface IServerSpawnParticleInWorldParameters {
     /**
      * The position in the world where you want to spawn the effect
      */
-    offset: Vector;
+    position: Vector;
 }
 
 declare interface IHitResultChangedEvent {
