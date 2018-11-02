@@ -1,3 +1,5 @@
+declare type ParticleEffect = MinecraftParticleEffect | string;
+
 declare const enum MinecraftParticleEffect {
     /**
      * Beacon effects

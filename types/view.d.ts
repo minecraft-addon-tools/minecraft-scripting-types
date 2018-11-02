@@ -1,2 +1,2 @@
 declare interface IView { }
-declare interface ISpacialView { }
+declare interface ISpatialView { }

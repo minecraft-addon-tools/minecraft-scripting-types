@@ -1,3 +1,6 @@
+/// <reference path="./event.d.ts" />
+/// <reference path="./component_names.generated.d.ts" />
+/// <reference path="./component.generated.d.ts" />
 declare interface ISystemBase {
     createComponent(entity: IEntityObject, componentName: MinecraftComponent.Attack): IAttackComponent | null;
     createComponent(entity: IEntityObject, componentName: MinecraftComponent.CollisionBox): ICollisionBoxComponent | null;

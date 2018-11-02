@@ -1,3 +1,4 @@
+/// <reference path="./event.d.ts" />
 declare interface IVanillaServerSystemBase {
     ///////////////////////////
     // broadcastEvent overloads

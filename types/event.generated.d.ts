@@ -1,3 +1,5 @@
+/// <reference path="./entity.d.ts" />
+
 declare interface IEntityCreatedEventData {
     /**
      * The entity that was just created

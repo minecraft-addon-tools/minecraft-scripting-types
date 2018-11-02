@@ -1,6 +1,4 @@
-declare interface IClientSystem<TSystem> extends ISystem<TSystem>, IVanillaClientSystemBase {
-
-}
+/// <reference path="./view.d.ts" />
 
 declare interface IServerSystem<TSystem> extends ISystem<TSystem>, IVanillaServerSystemBase {
 
@@ -59,7 +57,7 @@ declare interface ISystemBase {
 
     /**
      * 
-     * @param spacialComponent Views are a way for you to filter for entities based on their components. Spatial views have an additional 
+     * @param spatialComponent Views are a way for you to filter for entities based on their components. Spatial views have an additional 
      * filtering system based on an area. Once you have registered a view, you can request all the entities that are captured by it. 
      * Views will only ever return entities that are currently active in the level. If your view extends into chunks that are not currently 
      * loaded, entities there will not be included in the view.
@@ -67,7 +65,7 @@ declare interface ISystemBase {
      * @param y_attribute This is the Y axis value that will be used for the bounding box
      * @param z_attribute This is the Z axis value that will be used for the bounding box
      */
-    registerSpacialView(spacialComponent: IPositionComponent | any, x_attribute: string, y_attribute: string, z_attribute: string): ISpacialView;
+    registerSpatialView(spatialComponent: IPositionComponent | any, x_attribute: string, y_attribute: string, z_attribute: string): ISpatialView;
 
     /**
      * By default no filters are added. This will allow views to capture all entities
@@ -111,7 +109,7 @@ declare interface ISystemBase {
     
     /**
      * Allows you to fetch the entities captured by a spatial view.
-     * @param spacialView This is the view you created earlier using registerSpatialView(...)
+     * @param spatialView This is the view you created earlier using registerSpatialView(...)
      * @param x0 The west limit of the filter area
      * @param y0 The bottom limit of the filter area
      * @param z0 The north limit of the filter area
@@ -119,7 +117,7 @@ declare interface ISystemBase {
      * @param y1 The upper limit of the filter area
      * @param z1 The south limit of the filter area
      */
-    getEntitiesFromSpacialView(spacialView: ISpacialView, x0:number, y0: number, z0: number, x1: number, y1: number, z1: number): IEntityObject[];
+    getEntitiesFromSpatialView(spatialView: ISpatialView, x0:number, y0: number, z0: number, x1: number, y1: number, z1: number): IEntityObject[];
 
     /**
      * Creates an entity and applies the specified template as defined in JSON. This allows you to quickly create an entity from the 

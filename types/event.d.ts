@@ -39,6 +39,5 @@ declare const enum MinecraftDimension {
 }
 
 declare type Dimension = MinecraftDimension | string;
-declare type ParticleEffect = MinecraftParticleEffect | string;
 declare type Vector = [number, number, number];
 declare type EntityId = number;
