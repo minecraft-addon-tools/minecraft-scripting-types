@@ -62,11 +62,11 @@ This is a node module that is not intended to be published, but can be used for 
 
 *This repository is not currently available on NPM, so you must install it using the GitHub repository. It will be made available on NPM once we have figured out how to license this and how we're going to version it*
 
-Now add TypeScript and MinecraftScriptingTypeScript (this project) using NPM, replacing `<commit>` with the current commit ID from this repository (e.g., `5d8ee06b3be36e20c8c531ad418ce8e250abc2ac`)
+Now add TypeScript and minecraft-scripting-types (this project) using NPM
 
 ```cmd
 npm install --save-dev TypeScript
-npm install --save-dev github:atomicblom/MinecraftScriptingTypeScript#<commit>
+npm install --save-dev github:minecraft-addon-tools/minecraft-scripting-types
 ```
 
 Next we just need to add a script to compile the project, which can be done by adding a "compile" script with the command `tsc -p .` which compiles the current project.
@@ -80,7 +80,7 @@ The final package.json should look something like this:
     "compile": "tsc -p ."
   },
   "dependencies": {
-    "minecraft-scripting-types": "github:atomicblom/minecraft-scripting-types#5d8ee06b3be36e20c8c531ad418ce8e250abc2ac",
+    "minecraft-scripting-types": "github:atomicblom/minecraft-addon-tools/minecraft-scripting-types",
     "typescript": "^3.1.3"
   }
 }
