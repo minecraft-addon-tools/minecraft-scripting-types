@@ -1,8 +1,5 @@
 /// <reference path="./view.d.ts" />
-
-declare interface IServerSystem<TSystem> extends ISystem<TSystem>, IVanillaServerSystemBase {
-
-}
+/// <reference path="./component.generated.d.ts" />
 
 declare interface ISystem<TSystem> extends ISystemBase {
     /**
@@ -21,22 +18,6 @@ declare interface ISystem<TSystem> extends ISystemBase {
      * This method gets called when the Minecraft Script Engine is shutting down. For the client this is when they leave the world; for the server this is after the last player has exited the world.
      */
     shutdown?(this: TSystem): void;
-}
-
-declare interface IVanillaClientSystemBase {
-    
-}
-
-declare interface IVanillaServerSystemBase {
-    
-}
-
-declare interface IVanillaClientSystem extends IClientSystem<IVanillaClientSystem> {
-
-}
-
-declare interface IVanillaServerSystem extends IServerSystem<IVanillaServerSystem> {
-
 }
 
 declare interface ISystemBase {
