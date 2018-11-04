@@ -1,4 +1,6 @@
 /// <reference path="./entity.d.ts" />
+/// <reference path="./event.d.ts" />
+/// <reference path="./particle_effects.d.ts" />
 
 declare interface IEntityCreatedEventData {
     /**
@@ -7,7 +9,7 @@ declare interface IEntityCreatedEventData {
     entity: IEntityObject;
 }
 
-declare interface IEntityDeathEventData { 
+declare interface IEntityDeathEventData {
     /**
      * The entity that died
      */
@@ -49,7 +51,7 @@ declare interface IEntityStopRidingEventData {
     switching_rides: boolean;
 }
 
-declare interface IEntityTickEventData { 
+declare interface IEntityTickEventData {
     /**
      * The entity that died
      */

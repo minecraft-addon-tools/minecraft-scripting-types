@@ -1,7 +1,9 @@
+/// <reference path="./system.d.ts" />
+
 declare const client: IClient;
 
 declare interface IVanillaClientSystemBase {
-    
+
 }
 
 declare interface IClientSystem<TSystem> extends ISystem<TSystem>, IVanillaClientSystemBase {

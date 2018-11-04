@@ -1,4 +1,5 @@
 /// <reference path="./view.d.ts" />
+/// <reference path="./entity.d.ts" />
 /// <reference path="./component.generated.d.ts" />
 
 declare interface ISystem<TSystem> extends ISystemBase {
@@ -87,7 +88,7 @@ declare interface ISystemBase {
      * @returns An array of IEntityObjects representing the entities found within the view
      */
     getEntitiesFromView(viewAllEntities: IView): IEntityObject[];
-    
+
     /**
      * Allows you to fetch the entities captured by a spatial view.
      * @param spatialView This is the view you created earlier using registerSpatialView(...)
@@ -98,7 +99,7 @@ declare interface ISystemBase {
      * @param y1 The upper limit of the filter area
      * @param z1 The south limit of the filter area
      */
-    getEntitiesFromSpatialView(spatialView: ISpatialView, x0:number, y0: number, z0: number, x1: number, y1: number, z1: number): IEntityObject[];
+    getEntitiesFromSpatialView(spatialView: ISpatialView, x0: number, y0: number, z0: number, x1: number, y1: number, z1: number): IEntityObject[];
 
     /**
      * Creates an entity and applies the specified template as defined in JSON. This allows you to quickly create an entity from the 
