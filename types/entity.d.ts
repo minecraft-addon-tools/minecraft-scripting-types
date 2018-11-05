@@ -1,5 +1,6 @@
 declare interface IEntityObject {
-    id: string;
+    id: number;
+
     /**
      * The identifier of the entity, e.g., "minecraft:sheep", or "minecraft:pumpkin_seeds"
      * @deprecated this is not meant to be public, but it is currently the only way to get the identifier of an item

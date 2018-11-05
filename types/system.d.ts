@@ -29,7 +29,7 @@ declare interface ISystemBase {
      * @param type Specifies the type of the entity that is being created by the template. Valid inputs are `entity` and `item_entity`
      * @param templateIdentifier This can be any of the entity identifiers from the applied Behavior Packs. For example specifying minecraft:cow here will make the provided entity a cow as defined in JSON
      */
-    createEntity(type: string, templateIdentifier: string): IEntityObject | null;
+    createEntity(type: EntityType, templateIdentifier: string): IEntityObject | null;
 
     /**
      * Allows you to register a view. A view will contain all entities that meet the filter requirement.
