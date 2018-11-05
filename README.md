@@ -80,7 +80,7 @@ The final package.json should look something like this:
     "compile": "tsc -p ."
   },
   "dependencies": {
-    "minecraft-scripting-types": "github:atomicblom/minecraft-addon-tools/minecraft-scripting-types",
+    "minecraft-scripting-types": "github:minecraft-addon-tools/minecraft-scripting-types",
     "typescript": "^3.1.3"
   }
 }
