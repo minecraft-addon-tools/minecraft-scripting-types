@@ -21,6 +21,7 @@ declare const enum MinecraftClientEvent {
     HitResultContinuous = "minecraft:hit_result_continuous",
     PickHitResultChanged = "minecraft:pick_hit_result_changed",
     PickHitResultContinuous = "minecraft:pick_hit_result_continuous",
+    UIEvent = "minecraft:ui_event"
 }
 
 declare const enum MinecraftServerEvent {

@@ -31,27 +31,27 @@ declare interface IVanillaServerSystemBase {
     /**
      * This event is triggered whenever an entity is added to the world.
      */
-    listenForEvent(eventIdentifier: MinecraftServerEvent.EntityCreated, eventData: (eventData: IEntityCreatedEventData) => void): boolean | null;
+    listenForEvent(eventIdentifier: MinecraftServerEvent.EntityCreated, callback: (eventData: IEntityCreatedEventData) => void): boolean | null;
     /**
      * This event is triggered whenever an entity dies. This won't be triggered when an entity is removed (such as when using destroyEntity)
      */
-    listenForEvent(eventIdentifier: MinecraftServerEvent.EntityDeath, eventData: (eventData: IEntityDeathEventData) => void): boolean | null;
+    listenForEvent(eventIdentifier: MinecraftServerEvent.EntityDeath, callback: (eventData: IEntityDeathEventData) => void): boolean | null;
     /**
      * This event is triggered whenever an entity becomes a rider on another entity.
      */
-    listenForEvent(eventIdentifier: MinecraftServerEvent.EntityStartRiding, eventData: (eventData: IEntityStartRidingEventData) => void): boolean | null;
+    listenForEvent(eventIdentifier: MinecraftServerEvent.EntityStartRiding, callback: (eventData: IEntityStartRidingEventData) => void): boolean | null;
     /**
      * This event is triggered whenever an entity stops riding another entity.
      */
-    listenForEvent(eventIdentifier: MinecraftServerEvent.EntityStopRiding, eventData: (eventData: IEntityStopRidingEventData) => void): boolean | null;
+    listenForEvent(eventIdentifier: MinecraftServerEvent.EntityStopRiding, callback: (eventData: IEntityStopRidingEventData) => void): boolean | null;
     /**
      * This event is triggered whenever an entity is ticked. This event will not fire when a player is ticked.
      */
-    listenForEvent(eventIdentifier: MinecraftServerEvent.EntityTick, eventData: (eventData: IEntityTickEventData) => void): boolean | null;
+    listenForEvent(eventIdentifier: MinecraftServerEvent.EntityTick, callback: (eventData: IEntityTickEventData) => void): boolean | null;
     /**
      * This event is triggered whenever a player attacks an entity.
      */
-    listenForEvent(eventIdentifier: MinecraftServerEvent.PlayerAttackedActor, eventData: (eventData: IPlayerAttackedActorEventData) => void): boolean | null;
+    listenForEvent(eventIdentifier: MinecraftServerEvent.PlayerAttackedActor, callback: (eventData: IPlayerAttackedActorEventData) => void): boolean | null;
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Generic method for other custom events
@@ -70,5 +70,5 @@ declare interface IVanillaServerSystemBase {
      * @param eventIdentifier This is the name of the event to which we want to react. Can be the identifier of a built-in event or a custom one from script
      * @param eventData The name of the JavaScript object that will get called whenever the event is broadcast
      */
-    listenForEvent<TEventDataType = any>(eventIdentifier: string, eventData: (eventData: TEventDataType) => void ): boolean | null;
+    listenForEvent<TEventDataType = any>(eventIdentifier: string, callback: (eventData: TEventDataType) => void ): boolean | null;
 }

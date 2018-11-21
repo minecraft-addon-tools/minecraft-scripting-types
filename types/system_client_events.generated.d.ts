@@ -49,24 +49,27 @@ declare interface IVanillaClientSystemBase {
     /**
      * This event is fired whenever a player joins the world. The event data contains the ID of the player in the world. The ID uniquely identifies the player in the world. This does NOT uniquely identify the player if they disconnect and reconnect.
      */
-    listenForEvent(eventIdentifier: MinecraftClientEvent.ClientEnteredWorld, eventData: (playerEntity: IEntityObject) => void): boolean | null
+    listenForEvent(eventIdentifier: MinecraftClientEvent.ClientEnteredWorld, callback: (playerEntity: IEntityObject) => void): boolean | null
     /**
      * This event is triggered whenever the reticle changes from pointing at a block or air to pointing at an entity and the other way around. Up to 1000 blocks away.
      */
-    listenForEvent(eventIdentifier: MinecraftClientEvent.HitResultChanged, eventData: (hitResultEvent: IHitResultChangedEvent) => void): boolean | null
+    listenForEvent(eventIdentifier: MinecraftClientEvent.HitResultChanged, callback: (hitResultEvent: IHitResultChangedEvent) => void): boolean | null
     /**
      * This event is triggered every update and tells you what entity the reticle is pointing to in the world up to 1000 blocks away.
      */
-    listenForEvent(eventIdentifier: MinecraftClientEvent.HitResultContinuous, eventData: (hitResultEvent: IHitResultContinuousEvent) => void): boolean | null
+    listenForEvent(eventIdentifier: MinecraftClientEvent.HitResultContinuous, callback: (hitResultEvent: IHitResultContinuousEvent) => void): boolean | null
     /**
      * This event is triggered whenever the mouse pointer changes from pointing at a block or air to pointing at an entity and the other way around. Up to 1000 blocks away.
      */
-    listenForEvent(eventIdentifier: MinecraftClientEvent.PickHitResultChanged, eventData: (hitResultEvent: IPickHitResultChangedEvent) => void): boolean | null
+    listenForEvent(eventIdentifier: MinecraftClientEvent.PickHitResultChanged, callback: (hitResultEvent: IPickHitResultChangedEvent) => void): boolean | null
     /**
      * This event is triggered every update and tells you what entity the mouse pointer is pointing to in the world up to 1000 blocks away.
      */
-    listenForEvent(eventIdentifier: MinecraftClientEvent.PickHitResultContinuous, eventData: (hitResultEvent: IPickHitResultContinuousEvent) => void): boolean | null
-
+    listenForEvent(eventIdentifier: MinecraftClientEvent.PickHitResultContinuous, callback: (hitResultEvent: IPickHitResultContinuousEvent) => void): boolean | null
+/**
+     * This event is triggered every update and tells you what entity the mouse pointer is pointing to in the world up to 1000 blocks away.
+     */
+    listenForEvent(eventIdentifier: MinecraftClientEvent.UIEvent, callback: (uiEvent: string) => void): boolean | null
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Generic method for other custom events
@@ -85,7 +88,7 @@ declare interface IVanillaClientSystemBase {
      * @param eventIdentifier This is the name of the event to which we want to react. Can be the identifier of a built-in event or a custom one from script
      * @param eventData The name of the JavaScript object that will get called whenever the event is broadcast
      */
-    listenForEvent(eventIdentifier: string, eventData: (eventData: any) => void): boolean | null;
+    listenForEvent(eventIdentifier: string, callback: (eventData: any) => void): boolean | null;
 
 
 }
