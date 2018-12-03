@@ -8,7 +8,7 @@
   ],
   "homepage": "hhttps://github.com/AtomicBlom/minecraft-scripting-types",
   "repository": "hhttps://github.com/AtomicBlom/minecraft-scripting-types",
-  "license": "MIT",
+  "license": "CC-BY-NC-SA-3.0",
   "devDependencies": {
     "typescript": "^3.1.3"
   }
