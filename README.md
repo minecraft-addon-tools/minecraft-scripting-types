@@ -1,7 +1,7 @@
 # minecraft-scripting-types
 
-***This API is still in development and may break with updates until things stabilize***
-
+*** This API is still in development and may break with updates until things stabilize ***
+*** Licensing for the project is still under consideration. It is currently distributed as [CC-BY-NC-SA-3.0](https://creativecommons.org/licenses/by-nc-sa/3.0/), which is the only license available compatible with it's source from the wiki. Note however that this license forbids commercial use. We aim to get a more permissive license if possible. ***
 Mojang provides modding capabilities via JavaScript. This project aims to bring the Type safety of TypeScript to the Bedrock Scripting Engine
 
 This readme is not a replacement for the API documentation, which should still be your primary source of information. See: [https://minecraft.gamepedia.com/Bedrock_Beta_Script_Documentation](https://minecraft.gamepedia.com/Bedrock_Beta_Script_Documentation)
