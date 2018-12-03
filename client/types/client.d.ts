@@ -1,4 +1,4 @@
-/// <reference path="./system.d.ts" />
+/// <reference path="../system.d.ts" />
 
 declare const client: IClient;
 

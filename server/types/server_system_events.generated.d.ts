@@ -1,5 +1,5 @@
-/// <reference path="./event.d.ts" />
-/// <reference path="./event.generated.d.ts" />
+/// <reference path="../event.d.ts" />
+/// <reference path="./server_events.generated.d.ts" />
 declare interface IVanillaServerSystemBase {
     ///////////////////////////
     // broadcastEvent overloads
@@ -8,22 +8,22 @@ declare interface IVanillaServerSystemBase {
      * This event is used to send a chat message from the server to the players. The event data is the message being sent as a string. Special formatting is supported the same way it would be if a player was sending the message.
      * @param chatText The message to display. Normal Minecraft formatting codes work.
      */
-    broadcastEvent(eventIdentifier: BroadcastableServerEvent.DisplayChat, chatText: string): boolean | null;
+    broadcastEvent(eventIdentifier: BroadcastEvent.DisplayChat, chatText: string): boolean | null;
     /**
      * This event is used to execute a slash command on the server with the World Owner permission level. The event data contains the slash command as a string. The slash command will be processed and will run after the event is sent.
      * @param command The command to execute, it should start with "/"
      */
-    broadcastEvent(eventIdentifier: BroadcastableServerEvent.ExecuteCommand, command: string): boolean | null;
+    broadcastEvent(eventIdentifier: BroadcastEvent.ExecuteCommand, command: string): boolean | null;
     /**
      * This event is used to create a particle effect that will follow an entity around. This particle effect is visible to all players. Any effect defined in a JSON file (both in your resource pack and in Minecraft) can be used here. MoLang variables defined in the JSON of the effect can then be used to control that effect by changing them in the entity to which it is attached.
      * @param particleParameters the details of the particle to spawn
      */
-    broadcastEvent(eventIdentifier: BroadcastableServerEvent.SpawnParticleAttachedEntity, particleParameters: ISpawnParticleAttachedEntityParameters): boolean | null
+    broadcastEvent(eventIdentifier: BroadcastEvent.SpawnParticleAttachedEntity, particleParameters: ISpawnParticleAttachedEntityParameters): boolean | null
     /**
      * This event is used to create a static particle effect in the world. This particle effect is visible to all players. Any effect defined in a JSON file (both in your resource pack and in Minecraft) can be used here. Once the effect is spawned you won't be able to control it further.
      * @param particleParameters the details of the particle to spawn 
      */
-    broadcastEvent(eventIdentifier: BroadcastableServerEvent.SpawnParticleInWorld, particleParameters: IServerSpawnParticleInWorldParameters): boolean | null
+    broadcastEvent(eventIdentifier: BroadcastEvent.SpawnParticleInWorld, particleParameters: IServerSpawnParticleInWorldParameters): boolean | null
 
     ///////////////////////////
     // listenForEvent overloads
@@ -31,27 +31,27 @@ declare interface IVanillaServerSystemBase {
     /**
      * This event is triggered whenever an entity is added to the world.
      */
-    listenForEvent(eventIdentifier: MinecraftServerEvent.EntityCreated, callback: (eventData: IEntityCreatedEventData) => void): boolean | null;
+    listenForEvent(eventIdentifier: MinecraftEvent.EntityCreated, callback: (eventData: IEntityCreatedEventData) => void): boolean | null;
     /**
      * This event is triggered whenever an entity dies. This won't be triggered when an entity is removed (such as when using destroyEntity)
      */
-    listenForEvent(eventIdentifier: MinecraftServerEvent.EntityDeath, callback: (eventData: IEntityDeathEventData) => void): boolean | null;
+    listenForEvent(eventIdentifier: MinecraftEvent.EntityDeath, callback: (eventData: IEntityDeathEventData) => void): boolean | null;
     /**
      * This event is triggered whenever an entity becomes a rider on another entity.
      */
-    listenForEvent(eventIdentifier: MinecraftServerEvent.EntityStartRiding, callback: (eventData: IEntityStartRidingEventData) => void): boolean | null;
+    listenForEvent(eventIdentifier: MinecraftEvent.EntityStartRiding, callback: (eventData: IEntityStartRidingEventData) => void): boolean | null;
     /**
      * This event is triggered whenever an entity stops riding another entity.
      */
-    listenForEvent(eventIdentifier: MinecraftServerEvent.EntityStopRiding, callback: (eventData: IEntityStopRidingEventData) => void): boolean | null;
+    listenForEvent(eventIdentifier: MinecraftEvent.EntityStopRiding, callback: (eventData: IEntityStopRidingEventData) => void): boolean | null;
     /**
      * This event is triggered whenever an entity is ticked. This event will not fire when a player is ticked.
      */
-    listenForEvent(eventIdentifier: MinecraftServerEvent.EntityTick, callback: (eventData: IEntityTickEventData) => void): boolean | null;
+    listenForEvent(eventIdentifier: MinecraftEvent.EntityTick, callback: (eventData: IEntityTickEventData) => void): boolean | null;
     /**
      * This event is triggered whenever a player attacks an entity.
      */
-    listenForEvent(eventIdentifier: MinecraftServerEvent.PlayerAttackedActor, callback: (eventData: IPlayerAttackedActorEventData) => void): boolean | null;
+    listenForEvent(eventIdentifier: MinecraftEvent.PlayerAttackedActor, callback: (eventData: IPlayerAttackedActorEventData) => void): boolean | null;
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Generic method for other custom events

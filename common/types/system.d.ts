@@ -1,6 +1,5 @@
 /// <reference path="./view.d.ts" />
 /// <reference path="./entity.d.ts" />
-/// <reference path="./component.generated.d.ts" />
 
 declare interface ISystem<TSystem> extends ISystemBase {
     /**
@@ -47,7 +46,7 @@ declare interface ISystemBase {
      * @param y_attribute This is the Y axis value that will be used for the bounding box
      * @param z_attribute This is the Z axis value that will be used for the bounding box
      */
-    registerSpatialView(spatialComponent: IPositionComponent | any, x_attribute: string, y_attribute: string, z_attribute: string): ISpatialView;
+    registerSpatialView(spatialComponent: IViewPosition | any, x_attribute: string, y_attribute: string, z_attribute: string): ISpatialView;
 
     /**
      * By default no filters are added. This will allow views to capture all entities

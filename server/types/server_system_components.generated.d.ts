@@ -1,7 +1,7 @@
-/// <reference path="./event.d.ts" />
-/// <reference path="./component_names.generated.d.ts" />
-/// <reference path="./component.generated.d.ts" />
-declare interface ISystemBase {
+/// <reference path="../event.d.ts" />
+/// <reference path="./server_component_names.generated.d.ts" />
+/// <reference path="./server_component.generated.d.ts" />
+declare interface IVanillaServerSystemBase {
     createComponent(entity: IEntityObject, componentName: MinecraftComponent.Attack): IAttackComponent | null;
     createComponent(entity: IEntityObject, componentName: MinecraftComponent.CollisionBox): ICollisionBoxComponent | null;
     createComponent(entity: IEntityObject, componentName: MinecraftComponent.DamageSensor): IDamageSensorComponent[] | null;
