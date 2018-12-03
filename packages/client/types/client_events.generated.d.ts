@@ -1,9 +1,7 @@
-/// <reference path="../event.d.ts" />
-
 /**
  * (Client-side) Events that can be sent to Minecraft to achieve an effect. 
  */
-declare const enum BroadcastableClientEvent {
+declare const enum SendToMinecraftClient {
     ExecuteCommand = "minecraft:execute_command",
     DisplayChat = "minecraft:display_chat_event",
     LoadUI = "minecraft:load_ui",
@@ -16,7 +14,7 @@ declare const enum BroadcastableClientEvent {
 /**
  * (Client-side) Events that can be received from Minecraft
  */
-declare const enum MinecraftClientEvent {
+declare const enum ReceiveFromMinecraftClient {
     ClientEnteredWorld = "minecraft:client_entered_world",
     HitResultChanged = "minecraft:hit_result_changed",
     HitResultContinuous = "minecraft:hit_result_continuous",
@@ -35,6 +33,22 @@ declare interface IUIEventParameters {
      */
     data: string;
 }
+
+declare interface ISpawnParticleAttachedEntityParameters {
+    /**
+     * The identifier of the particle effect you want to attach to the entity. This is the same name you gave the effect in its JSON file
+     */
+    effect: ParticleEffect;
+    /**
+     * The entity object you want to attach the effect to
+     */
+    entity: IEntityObject;
+    /**
+     * The offset from the entity's "center" where you want to spawn the effect
+     */
+    offset: Vector;
+}
+
 
 declare interface IClientSpawnParticleInWorldParameters {
     /**

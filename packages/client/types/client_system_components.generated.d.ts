@@ -1,5 +1,3 @@
-/// <reference path="../event.d.ts" />
-/// <reference path="../entity.d.ts" />
 /// <reference path="./client_component_names.generated.d.ts" />
 /// <reference path="./client_component.generated.d.ts" />
 

@@ -177,7 +177,7 @@ namespace Server {
 }
 ```
 
-You can subclass `IClientSystem` in a similliar way.
+You can subclass `IClientSystem` in a similiar way.
 
 ### Improved type detection for built-in components and events
 

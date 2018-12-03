@@ -1,11 +1,7 @@
-/// <reference path="../event.d.ts" />
-/// <reference path="../entity.d.ts" />
-/// <reference path="../particle_effects.d.ts" />
-
 /**
  * (Server-side) Events that can be sent to Minecraft to achieve an effect. 
  */
-declare const enum BroadcastEvent {
+declare const enum SendToMinecraftServer {
     DisplayChat = "minecraft:display_chat_event",
     ExecuteCommand = "minecraft:execute_command",
     SpawnParticleAttachedEntity = "minecraft:spawn_particle_attached_entity",
@@ -15,7 +11,7 @@ declare const enum BroadcastEvent {
 /**
  * (Server-side) Events that can be received from Minecraft
  */
-declare const enum MinecraftEvent {
+declare const enum ReceiveFromMinecraftServer {
     EntityCreated = "minecraft:entity_created",
     EntityDeath = "minecraft:entity_death",
     EntityStartRiding = "minecraft:entity_start_riding",

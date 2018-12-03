@@ -1,5 +1,3 @@
-/// <reference path="../system.d.ts" />
-
 declare const server: IServer;
 
 declare interface IVanillaServerSystemBase {
