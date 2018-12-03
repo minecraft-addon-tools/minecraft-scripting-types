@@ -1,6 +1,6 @@
 {
   "name": "minecraft-scripting-types-client",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "Client-side TypeScript definitions for Minecraft Bedrock Edition's scripting engine",
   "contributors": [
     "AtomicBlom",
