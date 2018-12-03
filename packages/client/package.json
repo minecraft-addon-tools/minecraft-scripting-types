@@ -1,19 +1,18 @@
 {
-    "name": "minecraft-scripting-types-client",
-    "version": "0.0.0",
-    "description": "Client-side TypeScript definitions for Minecraft Bedrock Edition's scripting engine",
-    "contributors": [
-      "AtomicBlom",
-      "abc55"
-    ],
-    "homepage": "hhttps://github.com/AtomicBlom/minecraft-scripting-types",
-    "repository": "hhttps://github.com/AtomicBlom/minecraft-scripting-types",
-    "license": "MIT",
-    "dependencies": {
-      "minecraft-scripting-types-shared": "^0.0.0"
-    },
-    "devDependencies": {
-      "typescript": "^3.1.3"
-    }
+  "name": "minecraft-scripting-types-client",
+  "version": "0.1.0",
+  "description": "Client-side TypeScript definitions for Minecraft Bedrock Edition's scripting engine",
+  "contributors": [
+    "AtomicBlom",
+    "abc55"
+  ],
+  "homepage": "hhttps://github.com/AtomicBlom/minecraft-scripting-types",
+  "repository": "hhttps://github.com/AtomicBlom/minecraft-scripting-types",
+  "license": "MIT",
+  "dependencies": {
+    "minecraft-scripting-types-shared": "^0.1.0"
+  },
+  "devDependencies": {
+    "typescript": "^3.1.3"
   }
-  
+}
