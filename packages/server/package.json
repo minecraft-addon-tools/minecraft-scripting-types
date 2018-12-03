@@ -1,6 +1,6 @@
 {
   "name": "minecraft-scripting-types-server",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Server-side TypeScript definitions for Minecraft Bedrock Edition's scripting engine",
   "contributors": [
     "AtomicBlom",
@@ -10,7 +10,7 @@
   "repository": "hhttps://github.com/AtomicBlom/minecraft-scripting-types",
   "license": "CC-BY-NC-SA-3.0",
   "dependencies": {
-    "minecraft-scripting-types-shared": "^0.1.0"
+    "minecraft-scripting-types-shared": "^0.1.1"
   },
   "devDependencies": {
     "typescript": "^3.1.3"
