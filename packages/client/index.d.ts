@@ -1,5 +1,6 @@
 /// <reference types="minecraft-scripting-types-shared" />
 /// <reference path="./types/client.d.ts" />
+/// <reference path="./types/client_system.d.ts" />
 /// <reference path="./types/client_system_events.generated.d.ts" />
 /// <reference path="./types/client_system_components.generated.d.ts" />
 /// <reference path="./types/client_events.generated.d.ts" />

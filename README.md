@@ -1,7 +1,10 @@
 # minecraft-scripting-types
+__This branch is targeting Minecraft Bedrock Edition 1.9.0.4 (beta)__
 
-*** This API is still in development and may break with updates until things stabilize ***
-*** Licensing for the project is still under consideration. It is currently distributed as [CC-BY-NC-SA-3.0](https://creativecommons.org/licenses/by-nc-sa/3.0/), which is the only license available compatible with it's source from the wiki. Note however that this license forbids commercial use. We aim to get a more permissive license if possible. ***
+***This API is still in development and may break with updates until things stabilize***
+
+***Licensing for the project is still under consideration. It is currently distributed as [CC-BY-NC-SA-3.0](https://creativecommons.org/licenses/by-nc-sa/3.0/), which is the only license available compatible with it's source from the wiki. Note however that this license forbids commercial use. We aim to get a more permissive license if possible.***
+
 Mojang provides modding capabilities via JavaScript. This project aims to bring the Type safety of TypeScript to the Bedrock Scripting Engine
 
 This readme is not a replacement for the API documentation, which should still be your primary source of information. See: [https://minecraft.gamepedia.com/Bedrock_Beta_Script_Documentation](https://minecraft.gamepedia.com/Bedrock_Beta_Script_Documentation)
@@ -15,12 +18,15 @@ So you want to make your own Scripts? That's awesome! In this section you will f
 | Code Editor | Visual Studio Code or any plain-text editor | Visual Studio Community 2017 with the following components installed: 'JavaScript diagnostics', 'JavaScript and TypeScript language support', 'Just-In-Time debugger' |
 | Debugger    | N/A                                         | Visual Studio Community 2017                              |
 | Minecraft   | Minecraft on your Windows 10 device         | Minecraft on your Windows 10 device                       |
-| Other       | Vanilla Behavior Pack available from https://aka.ms/minecraftscripting_behaviorpack | Vanilla Behavior Pack available from https://aka.ms/minecraftscripting_behaviorpack |
+| Other       | Vanilla Behavior Pack available from https://aka.ms/MinecraftBetaBehaviors | Vanilla Behavior Pack available from https://aka.ms/MinecraftBetaBehaviors |
 | Storage     | 1.0 GB of free space for text editor, game, and scripts | 3.0 GB of free space for Visual Studio, game, and scripts |
 | Node.js     | 8.x                                         | 10.x                                                      |
 
 ## Getting Started
-First you will need to download the latest Vanilla Behavior Pack. You can get this from the following link: https://aka.ms/minecraftscripting_behaviorpack
+First you will need to download the latest Vanilla Behavior Pack. You can get this from the following link:
+
+https://aka.ms/MinecraftBetaBehaviors
+
 Once you have downloaded the Behavior Pack, unzip it to a folder. Inside the Behavior Pack you will find the scripts folder which contains all the scripting files you want to run.
 
 In the scripts folder you will find two folders: one for client scripts and one for server scripts.
@@ -60,13 +66,11 @@ This will guide you through creating an NPM module, but an absolute minimum modu
 
 This is a node module that is not intended to be published, but can be used for dependency management.
 
-*This repository is not currently available on NPM, so you must install it using the GitHub repository. It will be made available on NPM once we have figured out how to license this and how we're going to version it*
-
 Now add TypeScript and minecraft-scripting-types (this project) using NPM
 
 ```cmd
 npm install --save-dev TypeScript
-npm install --save-dev github:minecraft-addon-tools/minecraft-scripting-types
+npm install --save-dev minecraft-scripting-types-client minecraft-scripting-types-server
 ```
 
 Next we just need to add a script to compile the project, which can be done by adding a "compile" script with the command `tsc -p .` which compiles the current project.
@@ -80,7 +84,8 @@ The final package.json should look something like this:
     "compile": "tsc -p ."
   },
   "dependencies": {
-    "minecraft-scripting-types": "github:minecraft-addon-tools/minecraft-scripting-types",
+    "minecraft-scripting-types-client": "^0.1.0",
+    "minecraft-scripting-types-server": "^0.1.0",
     "typescript": "^3.1.3"
   }
 }
@@ -93,10 +98,7 @@ The project will not compile however until we add a tsconfig.json file, here is 
 {
     "compilerOptions": {
         "module": "ES6",
-        "noImplicitAny": true,
-        "types": [
-            "minecraft-scripting-types"
-        ]
+        "noImplicitAny": true
     },
     "include": [
         "scripts/client/*",
@@ -127,6 +129,8 @@ You should make use of TypeScript namespaces in order to prevent TypeScript from
 namespacing should be as simple as wrapping your script like this:
 
 ```typescript
+/// <reference types="minecraft-scripting-types-server" />
+
 namespace Server {
     ...
     /// Your code goes here
@@ -151,6 +155,8 @@ If you need to declare additional methods or properties on your system, you can 
 Note: although the demos from Mojang do this, we do not recommend it.
 
 ```typescript
+/// <reference types="minecraft-scripting-types-server" />
+
 namespace Server {
     interface IMyCustomModSystem extends IServerSystem<IMyCustomModSystem> {
         // defining a pretend variable "this" with the type of your system will help TypeScript to 

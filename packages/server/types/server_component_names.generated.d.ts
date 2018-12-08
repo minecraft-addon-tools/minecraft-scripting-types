@@ -42,7 +42,7 @@ declare const enum MinecraftComponent {
     /**
      * Makes the entity look at another entity. Once applied, if an entity of the specified type is nearby and can be targeted the entity will turn towards it.
      */
-    LookAt = "minecraft:look_at",
+    LookAt = "minecraft:lookat",
     /**
      * Nameable component describes an entity's ability to be named using a nametag and whether the name shows up or not once applied. Additionally, scripting allows setting the name of the entity directly with the property 'name'.
      */

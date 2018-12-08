@@ -1,7 +1,7 @@
 /**
  * This component controls the Attack Damage attribute from the entity. It allows you to change the current minimum and maximum values. Once the changes are applied, the current attack of the entity will be reset to the minimum specified. With the minimum and maximum changed to the values specified. Any buffs or debuffs will be left intact.
  */
-declare interface IAttackComponent {
+declare interface IAttackComponent extends IComponent {
     /**
      * Range of the random amount of damage the melee attack deals. A negative value can heal the entity instead of hurting it
      */
@@ -19,7 +19,7 @@ declare interface IAttackComponent {
 /**
  * Controls the collision box of the entity. When changes to the component are applied the entity's collision box is immediately updated to reflect the new dimensions. WARNING: If the change of the collision box dimensions would cause the entity to be inside a block, the entity might become stuck there and start suffocating.
  */
-declare interface ICollisionBoxComponent {
+declare interface ICollisionBoxComponent extends IComponent {
     /**
      * Width and Depth of the collision box in blocks. A negative value will be assumed to be 0
      */
@@ -33,7 +33,7 @@ declare interface ICollisionBoxComponent {
 /**
  * Defines an array of damages and how the entity reacts to them - including whether the entity ignores that damage or not. Currently Minecraft triggers can't be properly serialized so any existing triggers will be completely replaced when applyComponentChanges().
  */
-declare interface IDamageSensorComponent {
+declare interface IDamageSensorComponent extends IComponent {
     /**
      * List of triggers with the events to call when taking this specific kind of damage, allows specifying filters for entity definitions and events
      */
@@ -51,7 +51,7 @@ declare interface IDamageSensorComponent {
 /**
  * Defines the loot table the entity uses to defines its equipment. Once the changes are applied, the equipment is re-rolled and a new set of equipment is chosen for the entity.
  */
-declare interface IEquipmentComponent {
+declare interface IEquipmentComponent extends IComponent {
     /**
      * The file path to the equipment table, relative to the behavior pack's root
      */
@@ -65,7 +65,7 @@ declare interface IEquipmentComponent {
 /**
  * Defines how many and what items the entity can be equipped with.
  */
-declare interface IEquippableComponent {
+declare interface IEquippableComponent extends IComponent {
     /**
      * List of slots and the item that can be equipped
      *  Name Type Default Value Description 
@@ -114,7 +114,7 @@ declare interface IEquippableComponent {
 /**
  * Controls the entity's explosion, timer until the explosion, and whether the timer is counting down or not.
  */
-declare interface IExplodeComponent {
+declare interface IExplodeComponent extends IComponent {
     /**
      * The range for the random amount of time the fuse will be lit before exploding, a negative value means the explosion will be immediate
      */
@@ -152,7 +152,7 @@ declare interface IExplodeComponent {
 /**
  * Defines how the entity can be healed by the player. This doesn't control how much health the entity can have; you must use the Health component for that instead.
  */
-declare interface IHealableComponent {
+declare interface IHealableComponent extends IComponent {
     /**
      * Determines if item can be used regardless of entity being at full health
      */
@@ -191,7 +191,7 @@ declare interface IHealableComponent {
 /**
  * Defines the current and maximum possible health of the entity. Upon applying the component back to the entity the health will change. If it reaches 0 or below the entity will die.
  */
-declare interface IHealthComponent {
+declare interface IHealthComponent extends IComponent {
     /**
      * Current health of the entity
      */
@@ -205,7 +205,7 @@ declare interface IHealthComponent {
 /**
  * Defines the ways the player can interact with the entity to which this component is applied.
  */
-declare interface IInteractComponent {
+declare interface IInteractComponent extends IComponent {
     /**
      * An array of entity identifiers to spawn when the interaction occurs
      */
@@ -238,7 +238,11 @@ declare interface IInteractComponent {
      * 
      * 
      */
-    particle_on_start: any;
+    particle_on_start: {
+        particle_type: string,
+        particle_y_offset: number,
+        particle_offset_towards_interactor: boolean
+    };
     /**
      * Time in seconds before this entity can be interacted with again
      */
@@ -292,13 +296,13 @@ declare interface IInteractComponent {
     /**
      * An array of sound identifiers to play when the interaction occurs
      */
-    play_sounds: any[];
+    play_sounds: string[];
 }
 
 /**
  * Defines the entity's inventory (size, restrictions, etc.). Currently this does not allow changing the entity's inventory contents.
  */
-declare interface IInventoryComponent {
+declare interface IInventoryComponent extends IComponent {
     /**
      * Type of container this entity has. Can be horse, minecart_chest, minecart_hopper, inventory, container or hopper
      */
@@ -328,7 +332,7 @@ declare interface IInventoryComponent {
 /**
  * Makes the entity look at another entity. Once applied, if an entity of the specified type is nearby and can be targeted the entity will turn towards it.
  */
-declare interface ILookAtComponent {
+declare interface ILookAtComponent extends IComponent {
     /**
      * Defines the entities that can trigger this component
      */
@@ -358,7 +362,7 @@ declare interface ILookAtComponent {
 /**
  * Nameable component describes an entity's ability to be named using a nametag and whether the name shows up or not once applied. Additionally, scripting allows setting the name of the entity directly with the property 'name'.
  */
-declare interface INameableComponent {
+declare interface INameableComponent extends IComponent {
     /**
      * Describes the special names for this entity and the events to call when the entity acquires those names
      *  Name Type Default Value Description 
@@ -399,7 +403,7 @@ declare interface INameableComponent {
 /**
  * This component allows you to control an entity's current position in the world. Once applied the entity will be teleported to the new position specified.
  */
-declare interface IPositionComponent {
+declare interface IPositionComponent extends IComponent {
     /**
      * Position along the X-Axis (east-west) of the entity
      */
@@ -417,7 +421,7 @@ declare interface IPositionComponent {
 /**
  * This component allows you to control an entity's current rotation in the world as well as the entity's head rotation. Once applied, the entity will be rotated as specified.
  */
-declare interface IRotationComponent {
+declare interface IRotationComponent extends IComponent {
     /**
      * Controls the head rotation looking up and down
      */
@@ -431,7 +435,7 @@ declare interface IRotationComponent {
 /**
  * Defines the entity's ranged attacks. This doesn't allow the entity to use a ranged attack: it only defines what kind of projectile it shoots.
  */
-declare interface IShooterComponent {
+declare interface IShooterComponent extends IComponent {
     /**
      * Entity identifier to use as projectile for the ranged attack. The entity must have the projectile component to be able to be shot as a projectile
      */
@@ -445,7 +449,7 @@ declare interface IShooterComponent {
 /**
  * Controls the entity's ability to spawn an entity or an item. This is similar to the chicken's ability to lay eggs after a set amount of time.
  */
-declare interface ISpawnEntityComponent {
+declare interface ISpawnEntityComponent extends IComponent {
     /**
      * Minimum amount of time to randomly wait in seconds before another entity is spawned
      */
@@ -479,7 +483,7 @@ declare interface ISpawnEntityComponent {
 /**
  * This controls the entity's ability to teleport itself (similar to the Enderman). If you wish to teleport the entity once use the Position component instead.
  */
-declare interface ITeleportComponent {
+declare interface ITeleportComponent extends IComponent {
     /**
      * Modifies the chance that the entity will teleport if the entity is in darkness
      */

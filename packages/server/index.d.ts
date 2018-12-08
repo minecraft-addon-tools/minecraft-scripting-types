@@ -5,3 +5,4 @@
 /// <reference path="./types/server_system_events.generated.d.ts" />
 /// <reference path="./types/server_events.generated.d.ts" />
 /// <reference path="./types/server.d.ts" />
+/// <reference path="./types/server_system.d.ts" />

@@ -1,0 +1,9 @@
+// This file keeps IDEs happy, it is not used for compilation
+{
+    "compilerOptions": {
+        "module": "ES6",
+        "noImplicitAny": true,
+        "rootDir": "./types",
+        "target": "es5"
+    }
+}

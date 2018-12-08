@@ -1,20 +1,21 @@
-declare interface IEntityObject {
-    id: number;
+/// <reference path="minecraft_object.d.ts" />
+
+declare interface IEntityObject extends IMinecraftObject {
+    /**
+     * READ ONLY. The type of the entity
+     */
+    readonly __type__: EntityType.Entity | EntityType.ItemEntity;
 
     /**
-     * The identifier of the entity, e.g., "minecraft:sheep", or "minecraft:pumpkin_seeds"
-     * @deprecated this is not meant to be public, but it is currently the only way to get the identifier of an item
+     * READ ONLY. This is the unique identifier of the query
      */
-    __identifier__: string;
-
-    /**
-     * The type of the entity
-     * @deprecated this is not meant to be public, but it is currently the only way to determine if something is an item
-     */
-    __type__: EntityType;
+    readonly id: number;
 }
 
 declare const enum EntityType {
     Entity = "entity",
-    ItemEntity = "item_entity"
+    ItemEntity = "item_entity",
+    Level = "level",
+    Component = "component",
+    Query = "query"
 }
