@@ -1,6 +1,6 @@
 {
   "name": "minecraft-scripting-types-shared",
-  "version": "0.1.2",
+  "version": "0.2.0-alpha.0",
   "description": "Shared TypeScript definitions for Minecraft Bedrock Edition's scripting engine",
   "contributors": [
     "AtomicBlom",
