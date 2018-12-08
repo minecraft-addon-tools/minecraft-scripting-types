@@ -1,0 +1,4 @@
+# Declare files that will always have LF line endings on checkout.
+*.ts text eol=lf
+*.json text eol=lf
+.gitattributes text eol=lf
