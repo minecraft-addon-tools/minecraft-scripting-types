@@ -48,7 +48,7 @@ declare interface IVanillaClientSystemBase {
     /**
      * This event is fired whenever a player joins the world. The event data contains the ID of the player in the world. The ID uniquely identifies the player in the world. This does NOT uniquely identify the player if they disconnect and reconnect.
      */
-    listenForEvent(eventIdentifier: ReceiveFromMinecraftClient.ClientEnteredWorld, callback: (playerEntity: IEntityObject) => void): boolean | null
+    listenForEvent(eventIdentifier: ReceiveFromMinecraftClient.ClientEnteredWorld, callback: (eventData: IClientEnteredWorldParameters) => void): boolean | null
     /**
      * This event is triggered whenever the reticle changes from pointing at a block or air to pointing at an entity and the other way around. Up to 1000 blocks away.
      */

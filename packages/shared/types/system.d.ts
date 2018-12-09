@@ -99,12 +99,12 @@ declare interface ISystemBase {
      * different: it makes the component reload on the entity with the new data as if it had just been added to the entity.
      * @param component The component object retrieved from the entity that was returned by either createComponent() or getComponent()
      */
-    applyComponentChanges(component: any): boolean | null;
+    applyComponentChanges(entity: IEntityObject, component: IComponent): boolean | null;
 
     /**
      * Removes the specified component from the given entity. If the entity has the component, it will be removed. Currently this only works with custom components and can't be used to remove components defined for an entity in JSON.
-     * @param entityObject The EntityObject that was retrieved from a call to createEntity() or retrieved from an event
+     * @param entity The EntityObject that was retrieved from a call to createEntity() or retrieved from an event
      * @param componentIdentifier The name of the component to remove from the entity. This is either the name of a built-in component (check the Script Components section) or a custom component created with a call to registerComponent()
      */
-    destroyComponent(entityObject: IEntityObject, componentIdentifier: string): boolean | null;
+    destroyComponent(entity: IEntityObject, componentIdentifier: string): boolean | null;
 }

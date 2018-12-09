@@ -34,6 +34,13 @@ declare interface IUIEventParameters {
     data: string;
 }
 
+declare interface IClientEnteredWorldParameters {
+    /**
+     * The player entering the world
+     */
+    player: IEntityObject;
+}
+
 declare interface ISpawnParticleAttachedEntityParameters {
     /**
      * The identifier of the particle effect you want to attach to the entity. This is the same name you gave the effect in its JSON file
@@ -70,7 +77,7 @@ declare interface IHitResultChangedEvent {
     /**
      * The position of the enity that was hit or null if it fired when moving off an entity
      */
-    position: Vector
+    position: VectorXYZ | null
 }
 
 declare interface IHitResultContinuousEvent {
@@ -81,7 +88,7 @@ declare interface IHitResultContinuousEvent {
     /**
      * The position of the enity that was hit or block that was hit
      */
-    position: Vector
+    position: VectorXYZ
 }
 
 declare interface IPickHitResultChangedEvent {
@@ -92,7 +99,7 @@ declare interface IPickHitResultChangedEvent {
     /**
      * The position of the enity that was hit or null if it fired when moving off an entity
      */
-    position: Vector | null
+    position: VectorXYZ | null
 }
 
 declare interface IPickHitResultContinuousEvent {
@@ -103,5 +110,5 @@ declare interface IPickHitResultContinuousEvent {
     /**
      * The position of the enity that was hit or block that was hit
      */
-    position: Vector
+    position: VectorXYZ
 }
