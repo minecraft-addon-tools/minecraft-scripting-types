@@ -6,8 +6,8 @@
     "AtomicBlom",
     "abc55"
   ],
-  "homepage": "hhttps://github.com/AtomicBlom/minecraft-scripting-types",
-  "repository": "hhttps://github.com/AtomicBlom/minecraft-scripting-types",
+  "homepage": "https://github.com/minecraft-addon-tools/minecraft-scripting-types",
+  "repository": "https://github.com/minecraft-addon-tools/minecraft-scripting-types",
   "license": "CC-BY-NC-SA-3.0",
   "dependencies": {
     "minecraft-scripting-types-shared": "^0.2.0-alpha.0"
