@@ -81,6 +81,24 @@ declare interface ISystemBase {
         componentField3Max: number): IEntityObject[];
 
     /**
+     * Creates a component of the specified name and adds it to the entity. This should only be used with custom components which need 
+     * to be registered first. If the entity already has the component, this will retrieve the component already there instead.
+     * @param entity The EntityObject that was retrieved from a call to createEntity() or retrieved from an event
+     * @param componentName The name of the component to add to the entity. This is either the name of a built-in component (check the Script Components section) or a custom component created with a call to registerComponent()
+     * @returns An object with all the fields as defined in the component, or null if something went wrong when creating the component
+     */
+    createComponent<TComponentKey extends keyof ComponentTypeMap>(entity: IEntityObject, componentName: TComponentKey): ComponentTypeMap[TComponentKey] | null;
+
+
+    /**
+     * Looks for the specified component in the entity. If it exists, retrieves the data from the component and returns it.
+     * @param entity The EntityObject that was retrieved from a call to createEntity() or retrieved from an event
+     * @param componentIdentifier The name of the component to retrieve from the entity. This is either the name of a built-in component (check the Script Components section) or a custom component created with a call to registerComponent()
+     * @returns An object containing the data of the component as described in the component itself, or null if the entity did not have the component or something went wrong when getting the component
+     */
+    getComponent<TComponentKey extends keyof ComponentTypeMap>(entity: IEntityObject, componentIdentifier: TComponentKey): ComponentTypeMap[TComponentKey] | null;
+
+    /**
      * User-Defined components are a special kind of component that can be defined in script and no built-in game system acts on it.
      * The component needs to be registered with the Script Engine by giving it a name and a set of fields in the format name:value. 
      * Once applied, the component behaves like any of the built-in components: you can get it from an entity, modify its values, and 
@@ -92,7 +110,25 @@ declare interface ISystemBase {
      * @param componentData A JavaScript Object that defines the name of the fields and the data each field holds inside the component.
      * @returns true if successful, null if an error occurred
      */
-    registerComponent(componentIdentifier: string, componentData: object): true | null;
+    registerComponent<TComponentKey extends keyof ComponentTypeMap>(componentIdentifier: TComponentKey, componentData: ComponentTypeMap[TComponentKey]): true | null;
+
+    /**
+     * Looks for the specified component in the entity. If it exists, retrieves the data from the component and returns it.
+     * @param entity The `IEntityObject` that was retrieved from a call to `createEntity()` or retrieved from an event
+     * @param componentIdentifier The identifier of the component to check on the entity. This is either the identifier of a built-in component (check the Script Components section) or a custom component created with a call to registerComponent()
+     * @returns true if the component is present, false if it is not, or null if an unknown component was passed in or something else went wrong when checking if the EntityObject had the component
+     */
+    hasComponent(entity: IEntityObject, componentIdentifier: keyof ComponentTypeMap): boolean | null;
+
+    /**
+     * Allows you to register a query that will only show entities that have the given component and define which fields of that component will be used as a filter when getting the entities from the query.
+     * 
+     * This is the identifier of the component that will be used to filter entities when
+     * @param componentField1 This is the name of the first field of the component that we want to filter entities by. By default this is set to x. If the component you used doesn't have the field you defined here, the field will be ignored
+     * @param componentField2 This is the name of the second field of the component that we want to filter entities by. By default this is set to y. If the component you used doesn't have the field you defined here, the field will be ignored
+     * @param componentField3 This is the name of the third field of the component that we want to filter entities by. By default this is set to z. If the component you used doesn't have the field you defined here, the field will be ignored
+     */
+    registerQuery(component: keyof ComponentTypeMap, componentField1?: string, componentField2?: string, componentField3?: string): IQuery;
 
     /**
      * Applies the component and any changes made to it in script back to the entity. What this means for each component can be slightly 

@@ -4,3 +4,6 @@ declare interface IComponent extends IMinecraftObject {
      */
     readonly __type__: EntityType.Component;
 }
+
+declare interface ComponentTypeMap {
+}
