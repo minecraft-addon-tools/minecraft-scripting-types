@@ -1,9 +1,12 @@
 import template from "./template";
 import extractComponents from "./components";
 import extractEvents from "./events";
+import { ClientServer, ListeningTriggerable } from "./events";
 import { MinecraftScriptDocumentation } from "minecraft-documentation-extractor"
 
-import { sourceFile, templateDir, outputDir } from "../config.json";
+const sourceFile = "./Documentation_Scripting.html";
+const templateFiles = "./template/**";
+const outputDir = "../packages";
 
 (async () => {
 
@@ -11,14 +14,10 @@ import { sourceFile, templateDir, outputDir } from "../config.json";
 
     const values = {};
     extractComponents(documentation, values);
-    extractEvents(documentation.events.client.listening, values,
-        "MinecraftClientEvent", "listenForEvent", "clientListening", "listenForEventClient");
-    extractEvents(documentation.events.client.triggerable, values,
-        "BroadcastableClientEvent", "broadcastEvent", "clientTriggerable", "broadcastEventClient");
-    extractEvents(documentation.events.server.listening, values,
-        "MinecraftServerEvent", "listenForEvent", "serverListening", "listenForEventServer");
-    extractEvents(documentation.events.server.triggerable, values,
-        "BroadcastableServerEvent", "broadcastEvent", "serverTriggerable", "broadcastEventServer");
-    await template(templateDir, outputDir, values);
+    extractEvents(documentation.events.client.listening, values, ClientServer.Client, ListeningTriggerable.Listening);
+    extractEvents(documentation.events.client.triggerable, values, ClientServer.Client, ListeningTriggerable.Triggerable);
+    extractEvents(documentation.events.server.listening, values, ClientServer.Server, ListeningTriggerable.Listening);
+    extractEvents(documentation.events.server.triggerable, values, ClientServer.Server, ListeningTriggerable.Triggerable);
+    await template(templateFiles, outputDir, values);
 
 })();

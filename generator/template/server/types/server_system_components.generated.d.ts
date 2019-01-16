@@ -1,7 +1,7 @@
-/// <reference path="./entity.d.ts" />
-/// <reference path="./component_names.generated.d.ts" />
-/// <reference path="./component.generated.d.ts" />
-declare interface ISystemBase {
+/// <reference path="./server_component_names.generated.d.ts" />
+/// <reference path="./server_component.generated.d.ts" />
+
+declare interface IVanillaServerSystemBase {
     $$createComponent$$
 
     $$getComponent$$
@@ -11,9 +11,9 @@ declare interface ISystemBase {
      * to be registered first. If the entity already has the component, this will retrieve the component already there instead.
      * @param entity The EntityObject that was retrieved from a call to createEntity() or retrieved from an event
      * @param componentName The name of the component to add to the entity. This is either the name of a built-in component (check the Script Components section) or a custom component created with a call to registerComponent()
-     * @returns An object with all the fields as defined in the component
+     * @returns An object with all the fields as defined in the component, or null if something went wrong when creating the component
      */
-    createComponent<TComponent>(entity: IEntityObject, componentName: string): TComponent | null;
+    createComponent<TComponent extends IComponent>(entity: IEntityObject, componentName: string): TComponent | null;
 
     /**
      * Looks for the specified component in the entity. If it exists, retrieves the data from the component and returns it.
@@ -21,5 +21,5 @@ declare interface ISystemBase {
      * @param componentIdentifier The name of the component to retrieve from the entity. This is either the name of a built-in component (check the Script Components section) or a custom component created with a call to registerComponent()
      * @returns An object containing the data of the component as described in the component itself, or null if the entity did not have the component or something went wrong when getting the component
      */
-    getComponent<TComponent>(entity: IEntityObject, componentIdentifier: MinecraftComponent | string): TComponent | null;
+    getComponent<TComponent extends IComponent>(entity: IEntityObject, componentIdentifier: MinecraftComponent | string): TComponent | null;
 }

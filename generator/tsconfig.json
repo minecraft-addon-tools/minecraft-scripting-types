@@ -4,8 +4,7 @@
     "module": "commonjs",
     "sourceMap": true,
     "outDir": "./out",
-    "strict": true,
-    "resolveJsonModule": true
+    "strict": true
   },
   "include": [
     "src/*"

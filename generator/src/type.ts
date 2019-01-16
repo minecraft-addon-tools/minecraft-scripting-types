@@ -1,6 +1,15 @@
-import { typeMap } from "../config.json";
-const typeMap2 = typeMap as { [typeName: string]: string };
+const typeMap: { [typeName: string]: string } = {
+    "string": "string",
+    "decimal": "number",
+    "integer": "number",
+    "boolean": "boolean",
+    "json object": "any",
+    "array": "any[]",
+    "list": "any[]",
+    "range [a, b]": "[number, number]",
+    "vector [a, b, c]": "[number, number, number]"
+};
 
 export default function getType(typeName: string): string {
-    return typeMap2[typeName.toLowerCase()] || "any";
+    return typeMap[typeName.toLowerCase()] || "any";
 }

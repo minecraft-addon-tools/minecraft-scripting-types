@@ -1,5 +1,4 @@
-/// <reference path="./event_names.generated.d.ts" />
-/// <reference path="./event.generated.d.ts" />
+/// <reference path="./client_events.generated.d.ts" />
 
 declare interface IVanillaClientSystemBase {
     $$broadcastEventClient$$

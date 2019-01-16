@@ -1,8 +1,10 @@
 import { MinecraftScriptDocumentation } from "minecraft-documentation-extractor";
 import getType from "./type";
 
-import { arrayComponents } from "../config.json";
-const arrayComponentsSet = new Set(arrayComponents);
+const arrayComponentsSet = new Set([
+    "minecraft:damage_sensor",
+    "minecraft:interact"
+]);
 
 export default function extractComponents(documentation: MinecraftScriptDocumentation, values: { [name: string]: string }) {
 
@@ -29,7 +31,7 @@ ${enumName} = "${component.name}"`);
 
         const interfaceName = `I${enumName}Component`;
 
-        const parameters = component.parameters.map(parameter => {
+        const parameters = (component.parameters || []).map(parameter => {
 
             const type = getType(parameter.type);
             typeNames.add(parameter.type);
@@ -45,7 +47,7 @@ ${enumName} = "${component.name}"`);
 /**
  * ${component.description}
  */
-declare interface ${interfaceName} {${parameters}
+declare interface ${interfaceName} extends IComponent {${parameters}
 }`);
 
         const isArray = arrayComponentsSet.has(component.name);

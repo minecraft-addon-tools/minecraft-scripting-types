@@ -1,5 +1,12 @@
 import * as fs from "fs";
 import * as path from "path";
+import { promisify } from "util";
+import { src, dest } from "vinyl-fs";
+import * as pump from "pump";
+import * as replace from "gulp-replace";
+import { prepend } from "gulp-insert";
+
+const promisifiedPump: (...streams: pump.Stream[]) => Promise<void> = promisify(pump);
 
 const FILE_HEADER = `\
 //////////////////////////////////////////////////////////////
@@ -8,18 +15,16 @@ const FILE_HEADER = `\
 //////////////////////////////////////////////////////////////
 `;
 
-async function processFile(templateFile: string, outputFile: string, values: { [name: string]: string }) {
-    const data = await fs.promises.readFile(templateFile, "utf8");
-    const result = data.replace(/^([ \t]*)\$\$(.*)\$\$/gm,
-        (x, indent, name) => values[name].replace(/^/gm, indent));
-    await fs.promises.writeFile(outputFile, FILE_HEADER + result, "utf8");
+export default async function (templateFiles: string | string[], outputDir: string, values: { [name: string]: string }) {
+    const regex = /^([ \t]*)\$\$(.*)\$\$/gm;
+    const replaceFunction: any = (text: string, indent: string, name: string) => {
+        if (!values[name]) throw new Error(`Variable with name "${name}" doesn't exist`);
+        return values[name].replace(/^/gm, indent);
+    };
+    await promisifiedPump(
+        src(templateFiles),
+        replace(regex, replaceFunction),
+        prepend(FILE_HEADER),
+        dest(outputDir));
 }
 
-export default async function processDir(templateDir: string, outputDir: string, values: { [name: string]: string }) {
-    try { await fs.promises.mkdir(outputDir); } catch (err) {
-        if (err.code !== "EEXIST") throw err;
-    }
-    const templateFiles = await fs.promises.readdir(templateDir);
-    await Promise.all(templateFiles.map(
-        name => processFile(path.join(templateDir, name), path.join(outputDir, name), values)));
-}
