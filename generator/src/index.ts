@@ -2,7 +2,8 @@ import template from "./template";
 import extractComponents from "./components";
 import extractEvents from "./events";
 import { ClientServer, ListeningTriggerable } from "./events";
-import { MinecraftScriptDocumentation } from "minecraft-documentation-extractor"
+import { debugPrintTypeNames } from "./type";
+import { MinecraftScriptDocumentation } from "minecraft-documentation-extractor";
 
 const sourceFile = "./Documentation_Scripting.html";
 const templateFiles = "./template/**";
@@ -19,5 +20,7 @@ const outputDir = "../packages";
     extractEvents(documentation.events.server.listening, values, ClientServer.Server, ListeningTriggerable.Listening);
     extractEvents(documentation.events.server.triggerable, values, ClientServer.Server, ListeningTriggerable.Triggerable);
     await template(templateFiles, outputDir, values);
+
+    debugPrintTypeNames();
 
 })();

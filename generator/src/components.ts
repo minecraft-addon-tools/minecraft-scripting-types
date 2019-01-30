@@ -16,12 +16,7 @@ export default function extractComponents(documentation: MinecraftScriptDocument
         "getComponent": []
     };
 
-    const componentNames: string[] = [];
-    const typeNames = new Set();
-
     for (const component of documentation.components) {
-        componentNames.push(component.name);
-
         const enumName = component.name.replace(/^minecraft:/, "_").replace(/_([a-z])/g, g => g[1].toUpperCase());
         componentEnum.push(`\
 /**
@@ -34,7 +29,6 @@ ${enumName} = "${component.name}"`);
         const parameters = (component.parameters || []).map(parameter => {
 
             const type = getType(parameter.type);
-            typeNames.add(parameter.type);
 
             return `
     /**
@@ -56,9 +50,6 @@ declare interface ${interfaceName} extends IComponent {${parameters}
             functions[name].push(name + x);
         });
     }
-
-    console.log(`const componentNames = ${JSON.stringify(componentNames)};`)
-    console.log(typeNames);
 
     values.componentEnum = componentEnum.join(",\n");
     values.componentInterfaces = interfaces.join("\n\n");
