@@ -11,7 +11,7 @@
     "@types/pump": "^1.0.1",
     "gulp-insert": "^0.5.0",
     "gulp-replace": "^1.0.0",
-    "minecraft-documentation-extractor": "^0.1.2",
+    "minecraft-documentation-extractor": "^1.0.0-alpha",
     "pump": "^3.0.0",
     "vinyl": "^2.2.0",
     "vinyl-fs": "^3.0.3"
@@ -20,6 +20,7 @@
     "@types/cheerio": "^0.22.10",
     "@types/gulp-insert": "^0.5.7",
     "@types/gulp-replace": "0.0.31",
+    "@types/lodash": "^4.14.120",
     "@types/node": "^10.12.18",
     "@types/vinyl-fs": "^2.4.9",
     "typescript": "^3.2.2"

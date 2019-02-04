@@ -5,3 +5,4 @@
 /// <reference path="./types/system.d.ts" />
 /// <reference path="./types/query.d.ts" />
 /// <reference path="./types/minecraft_object.d.ts" />
+/// <reference path="./types/types.d.ts" />

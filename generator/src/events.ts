@@ -1,5 +1,6 @@
-import { Event } from "minecraft-documentation-extractor";
-import getType from "./type";
+import { Event, isWellKnownType } from "minecraft-documentation-extractor";
+import getType, { getTypeAsString } from "./type";
+import { minecraftIdentifierToCamelCase } from "./identifiers";
 
 export enum ClientServer {
     Client = "Client", Server = "Server"
@@ -17,9 +18,9 @@ export default function extractEvents(events: Event[], values: { [name: string]:
     const interfaces: string[] = [];
     const functions: string[] = [];
 
-    for (const event of events) {
+    for (const event of events.sort((a, b) => a.name.localeCompare(b.name))) {
+        const enumValueName = minecraftIdentifierToCamelCase(event.name);
 
-        const enumValueName = event.name.replace(/^minecraft:/, "_").replace(/_([a-z])/g, g => g[1].toUpperCase());
         eventEnum.push(`\
 /**
  * ${event.description}
@@ -27,26 +28,29 @@ export default function extractEvents(events: Event[], values: { [name: string]:
 ${enumValueName} = "${event.name}"`);
 
         let eventDataType: string = "any";
-        if (event.parameters) {
+        if (event.type) {
             const interfaceName = `I${enumValueName}${isListening ? "EventData" : "Parameters"}`;
             eventDataType = interfaceName;
-            const parameters = event.parameters.map(parameter => `
-    /**
-     * ${parameter.description.replace(/\n/g, "\n * ")}
-     */
-    ${parameter.name}: ${getType(parameter.type)};`).join("");
+            if (isWellKnownType(event.type)) {
+                eventDataType = getType(event.type);
+            } else {
+                const eventBody = event.type ? getTypeAsString(event.type, `component(${enumValueName})`) : "";
 
-            interfaces.push(`\
+                interfaces.push(`\
 /**
  * ${event.description}
  */
-declare interface ${interfaceName} {${parameters}
-}`);
+declare interface ${interfaceName} ${eventBody}`);
+            }
         }
 
         const enumName = `${isListening ? "ReceiveFrom" : "SendTo"}Minecraft${clientOrServer}`;
         const secondParameter = functionName === "listenForEvent" ? `callback: (eventData: ${eventDataType}) => void` : `eventData: ${eventDataType}`;
-        functions.push(`${functionName}(eventIdentifier: ${enumName}.${enumValueName}, ${secondParameter}): boolean | null;`);
+        functions.push(`\
+/**
+ * ${event.description.replace(/\n/g, "\n * ")}
+ */
+${functionName}(eventIdentifier: ${enumName}.${enumValueName}, ${secondParameter}): boolean | null;`);
     }
 
     const resultVariableName = clientOrServer.toLowerCase() + listeningOrTriggerable;

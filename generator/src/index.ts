@@ -10,11 +10,10 @@ const templateFiles = "./template/**";
 const outputDir = "../packages";
 
 (async () => {
-
-    const documentation = await MinecraftScriptDocumentation.fromFile(sourceFile);
-
+    const documentation = await MinecraftScriptDocumentation.fromFile(sourceFile, { sort: true, fix: true });
     const values = {};
     extractComponents(documentation, values);
+
     extractEvents(documentation.events.client.listening, values, ClientServer.Client, ListeningTriggerable.Listening);
     extractEvents(documentation.events.client.triggerable, values, ClientServer.Client, ListeningTriggerable.Triggerable);
     extractEvents(documentation.events.server.listening, values, ClientServer.Server, ListeningTriggerable.Listening);
@@ -22,5 +21,4 @@ const outputDir = "../packages";
     await template(templateFiles, outputDir, values);
 
     debugPrintTypeNames();
-
 })();

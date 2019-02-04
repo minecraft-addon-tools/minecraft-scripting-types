@@ -1,10 +1,14 @@
 {
   "compilerOptions": {
-    "target": "es2015",
+    "target": "es2018",
+    "lib": [
+      "es2018"
+    ],
     "module": "commonjs",
     "sourceMap": true,
     "outDir": "./out",
-    "strict": true
+    "strict": true,
+    "resolveJsonModule": true
   },
   "include": [
     "src/*"

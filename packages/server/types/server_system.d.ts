@@ -13,7 +13,7 @@ declare interface IServerSystem<TSystem> extends ISystem<TSystem>, IVanillaServe
      * @param componentIdentifier The identifier of the component to check on the entity. This is either the identifier of a built-in component (check the Script Components section) or a custom component created with a call to registerComponent()
      * @returns true if the component is present, false if it is not, or null if an unknown component was passed in or something else went wrong when checking if the EntityObject had the component
      */
-    hasComponent(entity: IEntityObject, componentIdentifier: MinecraftComponent | string): boolean | null;
+    hasComponent(entity: IEntity, componentIdentifier: MinecraftComponent | string): boolean | null;
 
     /**
      * Allows you to register a query that will only show entities that have the given component and define which fields of that component will be used as a filter when getting the entities from the query.
@@ -23,7 +23,7 @@ declare interface IServerSystem<TSystem> extends ISystem<TSystem>, IVanillaServe
      * @param componentField2 This is the name of the second field of the component that we want to filter entities by. By default this is set to y. If the component you used doesn't have the field you defined here, the field will be ignored
      * @param componentField3 This is the name of the third field of the component that we want to filter entities by. By default this is set to z. If the component you used doesn't have the field you defined here, the field will be ignored
      */
-    registerQuery(component: MinecraftComponent | string, componentField1?: string, componentField2?: string, componentField3?: string): IQuery;
+    registerQuery(component: MinecraftComponent | string, componentField1?: string, componentField2?: string, componentField3?: string): IQuery | null;
 
     /**
      * Allows you to register a query. A query will contain all entities that meet the filter requirement.

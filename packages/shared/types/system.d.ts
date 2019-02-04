@@ -24,7 +24,7 @@ declare interface ISystemBase {
     /**
      * Creates an empty entity with no components and does not place it in the world.
      */
-    createEntity(): IEntityObject | null;
+    createEntity(): IEntity | null;
 
     /**
      * Creates an entity and applies the specified template as defined in JSON. This allows you to quickly create an entity from the 
@@ -33,7 +33,7 @@ declare interface ISystemBase {
      * @param type Specifies the type of the entity that is being created by the template. Valid inputs are `entity` and `item_entity`
      * @param templateIdentifier This can be any of the entity identifiers from the applied Behavior Packs. For example specifying minecraft:cow here will make the provided entity a cow as defined in JSON
      */
-    createEntity(type: EntityType.Entity | EntityType.ItemEntity, templateIdentifier: string): IEntityObject | null;
+    createEntity(type: IEntity["__type__"], templateIdentifier: string): IEntity | null;
 
     /**
      * Destroys an entity identified by the EntityObject. If the entity exists in the world this will remove it from the world and 
@@ -41,13 +41,13 @@ declare interface ISystemBase {
      * no longer need to reference it again. This does NOT kill the entity. There won't be an event for its death: it will be removed.
      * @param entity The IEntityObject that was retrieved from a call to createEntity() or retrieved from an event
      */
-    destroyEntity(entity: IEntityObject): boolean | null;
+    destroyEntity(entity: IEntity): true | null;
 
     /**
      * Checks if the given EntityObject corresponds to a valid entity.
      * @param entity The EntityObject that was retrieved from a call to createEntity() or retrieved from an event
      */
-    isValidEntity(entity: IEntityObject): boolean | null;
+    isValidEntity(entity: IEntity): boolean | null;
 
     /**
      * By default no filters are added. This will allow queries to capture all entities.
@@ -60,7 +60,7 @@ declare interface ISystemBase {
      * @param query This is the query you registered earlier using `registerQuery()`
      * @returns An array of IEntityObjects representing the entities found within the query
      */
-    getEntitiesFromQuery(query: IQuery): IEntityObject[];
+    getEntitiesFromQuery(query: IQuery): IEntity[];
 
     /**
      * Allows you to fetch the entities captured by a spatial query.
@@ -72,13 +72,13 @@ declare interface ISystemBase {
      * @param componentField2Max The maximum value that the second component field needs to be on an entity for that entity to be included in the query
      * @param componentField3Max The maximum value that the third component field needs to be on an entity for that entity to be included in the query
      */
-    getEntitiesFromQuery(query: IQuery, 
-        componentField1Min: number, 
-        componentField2Min: number, 
-        componentField3Min: number, 
-        componentField1Max: number, 
-        componentField2Max: number, 
-        componentField3Max: number): IEntityObject[];
+    getEntitiesFromQuery(query: IQuery,
+        componentField1Min: number,
+        componentField2Min: number,
+        componentField3Min: number,
+        componentField1Max: number,
+        componentField2Max: number,
+        componentField3Max: number): IEntity[];
 
     /**
      * User-Defined components are a special kind of component that can be defined in script and no built-in game system acts on it.
@@ -99,12 +99,12 @@ declare interface ISystemBase {
      * different: it makes the component reload on the entity with the new data as if it had just been added to the entity.
      * @param component The component object retrieved from the entity that was returned by either createComponent() or getComponent()
      */
-    applyComponentChanges(entity: IEntityObject, component: IComponent): boolean | null;
+    applyComponentChanges(entity: IEntity, component: IComponent<any>): true | null;
 
     /**
      * Removes the specified component from the given entity. If the entity has the component, it will be removed. Currently this only works with custom components and can't be used to remove components defined for an entity in JSON.
      * @param entity The EntityObject that was retrieved from a call to createEntity() or retrieved from an event
      * @param componentIdentifier The name of the component to remove from the entity. This is either the name of a built-in component (check the Script Components section) or a custom component created with a call to registerComponent()
      */
-    destroyComponent(entity: IEntityObject, componentIdentifier: string): boolean | null;
+    destroyComponent(entity: IEntity, componentIdentifier: string): true | null;
 }
