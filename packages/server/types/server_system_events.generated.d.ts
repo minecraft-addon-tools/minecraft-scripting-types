@@ -50,6 +50,10 @@ declare interface IVanillaServerSystemBase {
      */
     listenForEvent(eventIdentifier: ReceiveFromMinecraftServer.EntityTick, callback: (eventData: IEntityTickEventData) => void): boolean | null;
     /**
+     * This event is used to play a sound effect. Currently, sounds can only be played at a fixed position in the world. Global sounds and sounds played by an entity will be supported in a later update.
+     */
+    listenForEvent(eventIdentifier: ReceiveFromMinecraftServer.PlaySound, callback: (eventData: IPlaySoundEventData) => void): boolean | null;
+    /**
      * This event is triggered whenever a player attacks an entity.
      */
     listenForEvent(eventIdentifier: ReceiveFromMinecraftServer.PlayerAttackedEntity, callback: (eventData: IPlayerAttackedEntityEventData) => void): boolean | null;

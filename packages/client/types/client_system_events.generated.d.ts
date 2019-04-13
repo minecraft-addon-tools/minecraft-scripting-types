@@ -14,10 +14,6 @@ declare interface IVanillaClientSystemBase {
      */
     broadcastEvent(eventIdentifier: SendToMinecraftClient.DisplayChat, eventData: string): boolean | null;
     /**
-     * This event is used to run a slash command from the specific player running the client script. The script runs it as that player. The event data contains the slash command in plain text. The slash command will be run immediately after the event is triggered.
-     */
-    broadcastEvent(eventIdentifier: SendToMinecraftClient.ExecuteCommand, eventData: string): boolean | null;
-    /**
      * This event is used to show a UI screen to the specific player running the client script. This event will add the UI screen to the top of the UI screen stack. The screen will be shown immediately after the event is triggered. Only screens defined in a HTML file can be shown using this event.
      */
     broadcastEvent(eventIdentifier: SendToMinecraftClient.LoadUI, eventData: ILoadUIParameters): boolean | null;
