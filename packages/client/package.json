@@ -1,6 +1,6 @@
 {
   "name": "minecraft-scripting-types-client",
-  "version": "1.0.0-alpha.1",
+  "version": "1.0.0-alpha.2",
   "description": "Client-side TypeScript definitions for Minecraft Bedrock Edition's scripting engine",
   "contributors": [
     "AtomicBlom",
@@ -10,7 +10,7 @@
   "repository": "https://github.com/minecraft-addon-tools/minecraft-scripting-types",
   "license": "CC-BY-NC-SA-3.0",
   "dependencies": {
-    "minecraft-scripting-types-shared": "^1.0.0-alpha.1"
+    "minecraft-scripting-types-shared": "^1.0.0-alpha.2"
   },
   "devDependencies": {
     "typescript": "^3.1.3"
