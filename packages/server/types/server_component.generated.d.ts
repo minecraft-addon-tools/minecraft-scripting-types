@@ -4,22 +4,29 @@
 //////////////////////////////////////////////////////////////
 
 /**
+ * This component represents the armor contents of an entity. The component contains an array of ItemStack JS API Objects representing each slot in the armor container. NOTE: Currently items and containers are read-only. Slots are ordered from head to feet.
+ */
+declare type IArmorContainerComponent = IItemStack[]
+
+/**
  * This component controls the Attack Damage attribute from the entity. It allows you to change the current minimum and maximum values. Once the changes are applied, the current attack of the entity will be reset to the minimum specified. With the minimum and maximum changed to the values specified. Any buffs or debuffs will be left intact.
  */
 declare interface IAttackComponent {
     /**
      * Range of the random amount of damage the melee attack deals. A negative value can heal the entity instead of hurting it
      */
-    damage: Range;
-    /**
-     * Duration in seconds of the status ailment applied to the damaged entity
-     * @default 0.0
-     */
-    effect_duration: number;
-    /**
-     * Identifier of the status ailment to apply to an entity attacked by this entity's melee attack
-     */
-    effect_name: string;
+    damage: {
+        /**
+         * The maximum amount of damage the entity will deal
+         * @default 0.0
+         */
+        range_max: number;
+        /**
+         * The minimum amount of damage the entity will deal
+         * @default 0.0
+         */
+        range_min: number;
+    };
 }
 
 /**
@@ -158,6 +165,11 @@ declare interface IExplodeComponent {
 }
 
 /**
+ * This component represents the contents of an entity's hands. The component contains an array of ItemStack JS API Objects representing each slot in the hand container. NOTE: Currently items and containers are read-only. Slot 0 is main-hand Slot 1 is off-hand.
+ */
+declare type IHandContainerComponent = IItemStack[]
+
+/**
  * Defines how the entity can be healed by the player. This doesn't control how much health the entity can have; you must use the Health component for that instead.
  */
 declare interface IHealableComponent {
@@ -226,6 +238,11 @@ declare interface IHealthComponent {
      */
     value: number;
 }
+
+/**
+ * This component represents the hotbar contents of a player. The component contains an array of ItemStack JS API Objects representing each slot in the hotbar. NOTE: Currently items and containers are read-only. Slots are ordered left to right.
+ */
+declare type IHotbarContainerComponent = IItemStack[]
 
 /**
  * Defines the ways the player can interact with the entity to which this component is applied.
@@ -345,6 +362,11 @@ declare interface IInventoryComponent {
      */
     restrict_to_owner: boolean;
 }
+
+/**
+ * This component represents the inventory contents of an entity. The component contains an array of ItemStack JS API Objects representing each slot in the inventory. NOTE: Currently items and containers are read-only.Slot 0-8 is the hotbar, 9-16 is the top row of the player's inventory, 17-24 is the middle row, 25-32 is the bottom row
+ */
+declare type IInventoryContainerComponent = IItemStack[]
 
 /**
  * Makes the entity look at another entity. Once applied, if an entity of the specified type is nearby and can be targeted the entity will turn towards it.

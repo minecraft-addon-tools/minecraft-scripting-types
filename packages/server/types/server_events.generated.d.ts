@@ -16,6 +16,14 @@ declare const enum SendToMinecraftServer {
      */
     ExecuteCommand = "minecraft:execute_command",
     /**
+     * This event is used to play a sound effect. Currently, sounds can only be played at a fixed position in the world. Global sounds and sounds played by an entity will be supported in a later update.
+     */
+    PlaySound = "minecraft:play_sound",
+    /**
+     * This event is used to turn various levels of logging on and off for server scripts. Note that turning logging on/off is not limited to the script that broadcasted the event. It will affect ALL server scripts including those in other Behavior Packs that are applied to the world. See the Debugging section for more information on logging.
+     */
+    ScriptLoggerConfig = "minecraft:script_logger_config",
+    /**
      * This event is used to create a particle effect that will follow an entity around. This particle effect is visible to all players. Any effect defined in a JSON file (both in your resource pack and in Minecraft) can be used here. MoLang variables defined in the JSON of the effect can then be used to control that effect by changing them in the entity to which it is attached.
      */
     SpawnParticleAttachedEntity = "minecraft:spawn_particle_attached_entity",
@@ -30,6 +38,22 @@ declare const enum SendToMinecraftServer {
  */
 declare const enum ReceiveFromMinecraftServer {
     /**
+     * This event is triggered whenever a player places a block.
+     */
+    BlockDestructionStarted = "minecraft:block_destruction_started",
+    /**
+     * This event is triggered whenever a player places a block.
+     */
+    BlockDestructionStopped = "minecraft:block_destruction_stopped",
+    /**
+     * This event is triggered whenever an entity acquires an item.
+     */
+    EntityAcquiredItem = "minecraft:entity_acquired_item",
+    /**
+     * This event is triggered whenever an entity changes the item carried in their hand.
+     */
+    EntityCarriedItemChanged = "minecraft:entity_carried_item_changed",
+    /**
      * This event is triggered whenever an entity is added to the world.
      */
     EntityCreated = "minecraft:entity_created",
@@ -37,6 +61,14 @@ declare const enum ReceiveFromMinecraftServer {
      * This event is triggered whenever an entity dies. This won't be triggered when an entity is removed (such as when using destroyEntity).
      */
     EntityDeath = "minecraft:entity_death",
+    /**
+     * This event is triggered whenever an entity drops an item.
+     */
+    EntityDroppedItem = "minecraft:entity_dropped_item",
+    /**
+     * This event is triggered whenever an entity equips an item in their armor slots.
+     */
+    EntityEquippedArmor = "minecraft:entity_equipped_armor",
     /**
      * This event is triggered whenever an entity becomes a rider on another entity.
      */
@@ -50,6 +82,10 @@ declare const enum ReceiveFromMinecraftServer {
      */
     EntityTick = "minecraft:entity_tick",
     /**
+     * This event is triggered whenever a piston moves a block.
+     */
+    PistonMovedBlock = "minecraft:piston_moved_block",
+    /**
      * This event is used to play a sound effect. Currently, sounds can only be played at a fixed position in the world. Global sounds and sounds played by an entity will be supported in a later update.
      */
     PlaySound = "minecraft:play_sound",
@@ -58,9 +94,93 @@ declare const enum ReceiveFromMinecraftServer {
      */
     PlayerAttackedEntity = "minecraft:player_attacked_entity",
     /**
+     * This event is triggered whenever a player places a block.
+     */
+    PlayerDestroyedBlock = "minecraft:player_destroyed_block",
+    /**
+     * This event is triggered whenever a player places a block.
+     */
+    PlayerPlacedBlock = "minecraft:player_placed_block",
+    /**
      * This event is triggered whenever the weather changes. It contains information about the weather it is changing to.
      */
     WeatherChanged = "minecraft:weather_changed"
+}
+
+/**
+ * This event is triggered whenever a player places a block.
+ */
+declare interface IBlockDestructionStartedEventData {
+    /**
+     * The position of the block that is being destroyed
+     */
+    block_position: VectorXYZ;
+    /**
+     * The player that started destoying the block
+     */
+    player: IEntity;
+}
+
+/**
+ * This event is triggered whenever a player places a block.
+ */
+declare interface IBlockDestructionStoppedEventData {
+    /**
+     * The position of the block that was being destroyed
+     */
+    block_position: VectorXYZ;
+    /**
+     * How far along the destruction was before it was stopped (0 - 1 range)
+     */
+    destruction_progress: number;
+    /**
+     * The player that stopped destoying the block
+     */
+    player: IEntity;
+}
+
+/**
+ * This event is triggered whenever an entity acquires an item.
+ */
+declare interface IEntityAcquiredItemEventData {
+    /**
+     * The total number of items acquired by the entity during this event
+     */
+    acquired_amount: number;
+    /**
+     * The way the entity acquired the item
+     */
+    acquisition_method: string;
+    /**
+     * The entity who acquired the item
+     */
+    entity: IEntity;
+    /**
+     * The item that was acquired
+     */
+    item_stack: IItemStack;
+    /**
+     * If it exists, the entity that affected the item before it was acquired. Example: A player completes a trade with a villager. The `entity` property would be the player and the `secondary_entity` would be the villager
+     */
+    secondary_entity: IEntity;
+}
+
+/**
+ * This event is triggered whenever an entity changes the item carried in their hand.
+ */
+declare interface IEntityCarriedItemChangedEventData {
+    /**
+     * The item that is now in the entities hands
+     */
+    carried_item: IItemStack;
+    /**
+     * The entity that changed what they were carrying
+     */
+    entity: IEntity;
+    /**
+     * The item that was previously in the entities hands
+     */
+    previous_carried_item: IItemStack;
 }
 
 /**
@@ -81,6 +201,34 @@ declare interface IEntityDeathEventData {
      * The entity that died
      */
     entity: IEntity;
+}
+
+/**
+ * This event is triggered whenever an entity drops an item.
+ */
+declare interface IEntityDroppedItemEventData {
+    /**
+     * The entity who dropped the item
+     */
+    entity: IEntity;
+    /**
+     * The item that was dropped
+     */
+    item_stack: IItemStack;
+}
+
+/**
+ * This event is triggered whenever an entity equips an item in their armor slots.
+ */
+declare interface IEntityEquippedArmorEventData {
+    /**
+     * The entity who is equipping the armor
+     */
+    entity: IEntity;
+    /**
+     * The armor that is being equipped
+     */
+    item_stack: IItemStack;
 }
 
 /**
@@ -130,6 +278,24 @@ declare interface IEntityTickEventData {
 }
 
 /**
+ * This event is triggered whenever a piston moves a block.
+ */
+declare interface IPistonMovedBlockEventData {
+    /**
+     * The position of the block that was moved
+     */
+    block_position: VectorXYZ;
+    /**
+     * The action the piston took, "extended" or "retracted"
+     */
+    piston_action: string;
+    /**
+     * The position of the piston that moved the block
+     */
+    piston_position: VectorXYZ;
+}
+
+/**
  * This event is used to play a sound effect. Currently, sounds can only be played at a fixed position in the world. Global sounds and sounds played by an entity will be supported in a later update.
  */
 declare interface IPlaySoundEventData {
@@ -169,6 +335,38 @@ declare interface IPlayerAttackedEntityEventData {
 }
 
 /**
+ * This event is triggered whenever a player places a block.
+ */
+declare interface IPlayerDestroyedBlockEventData {
+    /**
+     * The identifier of the block that was destroyed
+     */
+    block_identifier: string;
+    /**
+     * The position of the block that was destroyed
+     */
+    block_position: VectorXYZ;
+    /**
+     * The player that destroyed the block
+     */
+    player: IEntity;
+}
+
+/**
+ * This event is triggered whenever a player places a block.
+ */
+declare interface IPlayerPlacedBlockEventData {
+    /**
+     * The position of the block that was placed
+     */
+    block_position: VectorXYZ;
+    /**
+     * The player that placed the block
+     */
+    player: IEntity;
+}
+
+/**
  * This event is triggered whenever the weather changes. It contains information about the weather it is changing to.
  */
 declare interface IWeatherChangedEventData {
@@ -184,6 +382,52 @@ declare interface IWeatherChangedEventData {
      * Tells if the new weather has rain
      */
     raining: boolean;
+}
+
+/**
+ * This event is used to play a sound effect. Currently, sounds can only be played at a fixed position in the world. Global sounds and sounds played by an entity will be supported in a later update.
+ */
+declare interface IPlaySoundParameters {
+    /**
+     * The pitch of the sound effect. A value of 1.0 will play the sound effect with regular pitch
+     * @default 1.0
+     */
+    pitch: number;
+    /**
+     * The position in the world we want to play the sound at
+     * @default [0, 0, 0]
+     */
+    position: VectorArray;
+    /**
+     * The identifier of the sound you want to play. Only sounds defined in the applied resource packs can be played
+     */
+    sound: string;
+    /**
+     * The volume of the sound effect. A value of 1.0 will play the sound effect at the volume it was recorded at
+     * @default 1.0
+     */
+    volume: number;
+}
+
+/**
+ * This event is used to turn various levels of logging on and off for server scripts. Note that turning logging on/off is not limited to the script that broadcasted the event. It will affect ALL server scripts including those in other Behavior Packs that are applied to the world. See the Debugging section for more information on logging.
+ */
+declare interface IScriptLoggerConfigParameters {
+    /**
+     * Set to true to log any scripting errors that occur on the server
+     * @default false
+     */
+    log_errors: boolean;
+    /**
+     * Set to true to log any general scripting information that occurs on the server. This includes any logging done with server.log()
+     * @default false
+     */
+    log_information: boolean;
+    /**
+     * Set to true to log any scripting warnings that occur on the server
+     * @default false
+     */
+    log_warnings: boolean;
 }
 
 /**

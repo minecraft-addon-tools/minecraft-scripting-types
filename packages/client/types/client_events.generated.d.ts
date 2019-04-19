@@ -16,6 +16,10 @@ declare const enum SendToMinecraftClient {
      */
     LoadUI = "minecraft:load_ui",
     /**
+     * This event is used to turn various levels of logging on and off for client scripts. Note that turning logging on/off is not limited to the script that broadcasted the event. It will affect ALL client scripts including those in other Behavior Packs that are applied to the world. See the Debugging section for more information on logging.
+     */
+    ScriptLoggerConfig = "minecraft:script_logger_config",
+    /**
      * This event is used to send UI events to the UI Engine for the specific player running the script. After the event is triggered, the UI event will be sent immediately.
     Custom UI is based on HTML 5. Review the scripting demo for an example of a custom UI file.
      */
@@ -39,7 +43,7 @@ declare const enum SendToMinecraftClient {
  */
 declare const enum ReceiveFromMinecraftClient {
     /**
-     * This event is fired whenever a player joins the world. The event data contains the ID of the player in the world. The ID uniquely identifies the player in the world. This does NOT uniquely identify the player if they disconnect and reconnect.
+     * This event is fired whenever a player joins the world. The event data contains the player entity object.
      */
     ClientEnteredWorld = "minecraft:client_entered_world",
     /**
@@ -108,6 +112,27 @@ declare interface ILoadUIParameters {
 }
 
 /**
+ * This event is used to turn various levels of logging on and off for client scripts. Note that turning logging on/off is not limited to the script that broadcasted the event. It will affect ALL client scripts including those in other Behavior Packs that are applied to the world. See the Debugging section for more information on logging.
+ */
+declare interface IScriptLoggerConfigParameters {
+    /**
+     * Set to true to log any scripting errors that occur on the client
+     * @default false
+     */
+    log_errors: boolean;
+    /**
+     * Set to true to log any general scripting information that occurs on the client. This includes any logging done with client.log()
+     * @default false
+     */
+    log_information: boolean;
+    /**
+     * Set to true to log any scripting warnings that occur on the client
+     * @default false
+     */
+    log_warnings: boolean;
+}
+
+/**
  * This event is used to send UI events to the UI Engine for the specific player running the script. After the event is triggered, the UI event will be sent immediately.
 Custom UI is based on HTML 5. Review the scripting demo for an example of a custom UI file.
  */
@@ -167,7 +192,7 @@ declare interface IUnloadUIParameters {
 }
 
 /**
- * This event is fired whenever a player joins the world. The event data contains the ID of the player in the world. The ID uniquely identifies the player in the world. This does NOT uniquely identify the player if they disconnect and reconnect.
+ * This event is fired whenever a player joins the world. The event data contains the player entity object.
  */
 declare interface IClientEnteredWorldEventData {
     /**

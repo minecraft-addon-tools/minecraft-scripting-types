@@ -5,6 +5,10 @@
 
 declare const enum MinecraftComponent {
     /**
+     * This component represents the armor contents of an entity. The component contains an array of ItemStack JS API Objects representing each slot in the armor container. NOTE: Currently items and containers are read-only. Slots are ordered from head to feet.
+     */
+    ArmorContainer = "minecraft:armor_container",
+    /**
      * This component controls the Attack Damage attribute from the entity. It allows you to change the current minimum and maximum values. Once the changes are applied, the current attack of the entity will be reset to the minimum specified. With the minimum and maximum changed to the values specified. Any buffs or debuffs will be left intact.
      */
     Attack = "minecraft:attack",
@@ -29,6 +33,10 @@ declare const enum MinecraftComponent {
      */
     Explode = "minecraft:explode",
     /**
+     * This component represents the contents of an entity's hands. The component contains an array of ItemStack JS API Objects representing each slot in the hand container. NOTE: Currently items and containers are read-only. Slot 0 is main-hand Slot 1 is off-hand.
+     */
+    HandContainer = "minecraft:hand_container",
+    /**
      * Defines how the entity can be healed by the player. This doesn't control how much health the entity can have; you must use the Health component for that instead.
      */
     Healable = "minecraft:healable",
@@ -37,6 +45,10 @@ declare const enum MinecraftComponent {
      */
     Health = "minecraft:health",
     /**
+     * This component represents the hotbar contents of a player. The component contains an array of ItemStack JS API Objects representing each slot in the hotbar. NOTE: Currently items and containers are read-only. Slots are ordered left to right.
+     */
+    HotbarContainer = "minecraft:hotbar_container",
+    /**
      * Defines the ways the player can interact with the entity to which this component is applied.
      */
     Interact = "minecraft:interact",
@@ -44,6 +56,10 @@ declare const enum MinecraftComponent {
      * Defines the entity's inventory (size, restrictions, etc.). Currently this does not allow changing the entity's inventory contents.
      */
     Inventory = "minecraft:inventory",
+    /**
+     * This component represents the inventory contents of an entity. The component contains an array of ItemStack JS API Objects representing each slot in the inventory. NOTE: Currently items and containers are read-only.Slot 0-8 is the hotbar, 9-16 is the top row of the player's inventory, 17-24 is the middle row, 25-32 is the bottom row
+     */
+    InventoryContainer = "minecraft:inventory_container",
     /**
      * Makes the entity look at another entity. Once applied, if an entity of the specified type is nearby and can be targeted the entity will turn towards it.
      */

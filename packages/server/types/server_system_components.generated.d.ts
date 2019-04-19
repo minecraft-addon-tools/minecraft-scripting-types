@@ -7,40 +7,48 @@
 /// <reference path="./server_component.generated.d.ts" />
 
 declare interface IVanillaServerSystemBase {
+    createComponent(entity: IEntity, componentName: MinecraftComponent.ArmorContainer): IComponent<IArmorContainerComponent> | null;
     createComponent(entity: IEntity, componentName: MinecraftComponent.Attack): IComponent<IAttackComponent> | null;
     createComponent(entity: IEntity, componentName: MinecraftComponent.CollisionBox): IComponent<ICollisionBoxComponent> | null;
-    createComponent(entity: IEntity, componentName: MinecraftComponent.DamageSensor): IComponent<IDamageSensorComponent>[] | null;
+    createComponent(entity: IEntity, componentName: MinecraftComponent.DamageSensor): IComponent<IDamageSensorComponent> | null;
     createComponent(entity: IEntity, componentName: MinecraftComponent.Equipment): IComponent<IEquipmentComponent> | null;
     createComponent(entity: IEntity, componentName: MinecraftComponent.Equippable): IComponent<IEquippableComponent> | null;
     createComponent(entity: IEntity, componentName: MinecraftComponent.Explode): IComponent<IExplodeComponent> | null;
+    createComponent(entity: IEntity, componentName: MinecraftComponent.HandContainer): IComponent<IHandContainerComponent> | null;
     createComponent(entity: IEntity, componentName: MinecraftComponent.Healable): IComponent<IHealableComponent> | null;
     createComponent(entity: IEntity, componentName: MinecraftComponent.Health): IComponent<IHealthComponent> | null;
-    createComponent(entity: IEntity, componentName: MinecraftComponent.Interact): IComponent<IInteractComponent>[] | null;
+    createComponent(entity: IEntity, componentName: MinecraftComponent.HotbarContainer): IComponent<IHotbarContainerComponent> | null;
+    createComponent(entity: IEntity, componentName: MinecraftComponent.Interact): IComponent<IInteractComponent> | null;
     createComponent(entity: IEntity, componentName: MinecraftComponent.Inventory): IComponent<IInventoryComponent> | null;
+    createComponent(entity: IEntity, componentName: MinecraftComponent.InventoryContainer): IComponent<IInventoryContainerComponent> | null;
     createComponent(entity: IEntity, componentName: MinecraftComponent.LookAt): IComponent<ILookAtComponent> | null;
     createComponent(entity: IEntity, componentName: MinecraftComponent.Nameable): IComponent<INameableComponent> | null;
     createComponent(entity: IEntity, componentName: MinecraftComponent.Position): IComponent<IPositionComponent> | null;
     createComponent(entity: IEntity, componentName: MinecraftComponent.Rotation): IComponent<IRotationComponent> | null;
     createComponent(entity: IEntity, componentName: MinecraftComponent.Shooter): IComponent<IShooterComponent> | null;
-    createComponent(entity: IEntity, componentName: MinecraftComponent.SpawnEntity): IComponent<ISpawnEntityComponent>[] | null;
+    createComponent(entity: IEntity, componentName: MinecraftComponent.SpawnEntity): IComponent<ISpawnEntityComponent> | null;
     createComponent(entity: IEntity, componentName: MinecraftComponent.Teleport): IComponent<ITeleportComponent> | null;
 
+    getComponent(entity: IEntity, componentName: MinecraftComponent.ArmorContainer): IComponent<IArmorContainerComponent> | null;
     getComponent(entity: IEntity, componentName: MinecraftComponent.Attack): IComponent<IAttackComponent> | null;
     getComponent(entity: IEntity, componentName: MinecraftComponent.CollisionBox): IComponent<ICollisionBoxComponent> | null;
-    getComponent(entity: IEntity, componentName: MinecraftComponent.DamageSensor): IComponent<IDamageSensorComponent>[] | null;
+    getComponent(entity: IEntity, componentName: MinecraftComponent.DamageSensor): IComponent<IDamageSensorComponent> | null;
     getComponent(entity: IEntity, componentName: MinecraftComponent.Equipment): IComponent<IEquipmentComponent> | null;
     getComponent(entity: IEntity, componentName: MinecraftComponent.Equippable): IComponent<IEquippableComponent> | null;
     getComponent(entity: IEntity, componentName: MinecraftComponent.Explode): IComponent<IExplodeComponent> | null;
+    getComponent(entity: IEntity, componentName: MinecraftComponent.HandContainer): IComponent<IHandContainerComponent> | null;
     getComponent(entity: IEntity, componentName: MinecraftComponent.Healable): IComponent<IHealableComponent> | null;
     getComponent(entity: IEntity, componentName: MinecraftComponent.Health): IComponent<IHealthComponent> | null;
-    getComponent(entity: IEntity, componentName: MinecraftComponent.Interact): IComponent<IInteractComponent>[] | null;
+    getComponent(entity: IEntity, componentName: MinecraftComponent.HotbarContainer): IComponent<IHotbarContainerComponent> | null;
+    getComponent(entity: IEntity, componentName: MinecraftComponent.Interact): IComponent<IInteractComponent> | null;
     getComponent(entity: IEntity, componentName: MinecraftComponent.Inventory): IComponent<IInventoryComponent> | null;
+    getComponent(entity: IEntity, componentName: MinecraftComponent.InventoryContainer): IComponent<IInventoryContainerComponent> | null;
     getComponent(entity: IEntity, componentName: MinecraftComponent.LookAt): IComponent<ILookAtComponent> | null;
     getComponent(entity: IEntity, componentName: MinecraftComponent.Nameable): IComponent<INameableComponent> | null;
     getComponent(entity: IEntity, componentName: MinecraftComponent.Position): IComponent<IPositionComponent> | null;
     getComponent(entity: IEntity, componentName: MinecraftComponent.Rotation): IComponent<IRotationComponent> | null;
     getComponent(entity: IEntity, componentName: MinecraftComponent.Shooter): IComponent<IShooterComponent> | null;
-    getComponent(entity: IEntity, componentName: MinecraftComponent.SpawnEntity): IComponent<ISpawnEntityComponent>[] | null;
+    getComponent(entity: IEntity, componentName: MinecraftComponent.SpawnEntity): IComponent<ISpawnEntityComponent> | null;
     getComponent(entity: IEntity, componentName: MinecraftComponent.Teleport): IComponent<ITeleportComponent> | null;
 
     /**

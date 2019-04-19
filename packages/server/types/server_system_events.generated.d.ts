@@ -18,6 +18,14 @@ declare interface IVanillaServerSystemBase {
      */
     broadcastEvent(eventIdentifier: SendToMinecraftServer.ExecuteCommand, eventData: string): boolean | null;
     /**
+     * This event is used to play a sound effect. Currently, sounds can only be played at a fixed position in the world. Global sounds and sounds played by an entity will be supported in a later update.
+     */
+    broadcastEvent(eventIdentifier: SendToMinecraftServer.PlaySound, eventData: IPlaySoundParameters): boolean | null;
+    /**
+     * This event is used to turn various levels of logging on and off for server scripts. Note that turning logging on/off is not limited to the script that broadcasted the event. It will affect ALL server scripts including those in other Behavior Packs that are applied to the world. See the Debugging section for more information on logging.
+     */
+    broadcastEvent(eventIdentifier: SendToMinecraftServer.ScriptLoggerConfig, eventData: IScriptLoggerConfigParameters): boolean | null;
+    /**
      * This event is used to create a particle effect that will follow an entity around. This particle effect is visible to all players. Any effect defined in a JSON file (both in your resource pack and in Minecraft) can be used here. MoLang variables defined in the JSON of the effect can then be used to control that effect by changing them in the entity to which it is attached.
      */
     broadcastEvent(eventIdentifier: SendToMinecraftServer.SpawnParticleAttachedEntity, eventData: ISpawnParticleAttachedEntityParameters): boolean | null;
@@ -30,6 +38,22 @@ declare interface IVanillaServerSystemBase {
     // listenForEvent overloads
 
     /**
+     * This event is triggered whenever a player places a block.
+     */
+    listenForEvent(eventIdentifier: ReceiveFromMinecraftServer.BlockDestructionStarted, callback: (eventData: IBlockDestructionStartedEventData) => void): boolean | null;
+    /**
+     * This event is triggered whenever a player places a block.
+     */
+    listenForEvent(eventIdentifier: ReceiveFromMinecraftServer.BlockDestructionStopped, callback: (eventData: IBlockDestructionStoppedEventData) => void): boolean | null;
+    /**
+     * This event is triggered whenever an entity acquires an item.
+     */
+    listenForEvent(eventIdentifier: ReceiveFromMinecraftServer.EntityAcquiredItem, callback: (eventData: IEntityAcquiredItemEventData) => void): boolean | null;
+    /**
+     * This event is triggered whenever an entity changes the item carried in their hand.
+     */
+    listenForEvent(eventIdentifier: ReceiveFromMinecraftServer.EntityCarriedItemChanged, callback: (eventData: IEntityCarriedItemChangedEventData) => void): boolean | null;
+    /**
      * This event is triggered whenever an entity is added to the world.
      */
     listenForEvent(eventIdentifier: ReceiveFromMinecraftServer.EntityCreated, callback: (eventData: IEntityCreatedEventData) => void): boolean | null;
@@ -37,6 +61,14 @@ declare interface IVanillaServerSystemBase {
      * This event is triggered whenever an entity dies. This won't be triggered when an entity is removed (such as when using destroyEntity).
      */
     listenForEvent(eventIdentifier: ReceiveFromMinecraftServer.EntityDeath, callback: (eventData: IEntityDeathEventData) => void): boolean | null;
+    /**
+     * This event is triggered whenever an entity drops an item.
+     */
+    listenForEvent(eventIdentifier: ReceiveFromMinecraftServer.EntityDroppedItem, callback: (eventData: IEntityDroppedItemEventData) => void): boolean | null;
+    /**
+     * This event is triggered whenever an entity equips an item in their armor slots.
+     */
+    listenForEvent(eventIdentifier: ReceiveFromMinecraftServer.EntityEquippedArmor, callback: (eventData: IEntityEquippedArmorEventData) => void): boolean | null;
     /**
      * This event is triggered whenever an entity becomes a rider on another entity.
      */
@@ -50,6 +82,10 @@ declare interface IVanillaServerSystemBase {
      */
     listenForEvent(eventIdentifier: ReceiveFromMinecraftServer.EntityTick, callback: (eventData: IEntityTickEventData) => void): boolean | null;
     /**
+     * This event is triggered whenever a piston moves a block.
+     */
+    listenForEvent(eventIdentifier: ReceiveFromMinecraftServer.PistonMovedBlock, callback: (eventData: IPistonMovedBlockEventData) => void): boolean | null;
+    /**
      * This event is used to play a sound effect. Currently, sounds can only be played at a fixed position in the world. Global sounds and sounds played by an entity will be supported in a later update.
      */
     listenForEvent(eventIdentifier: ReceiveFromMinecraftServer.PlaySound, callback: (eventData: IPlaySoundEventData) => void): boolean | null;
@@ -57,6 +93,14 @@ declare interface IVanillaServerSystemBase {
      * This event is triggered whenever a player attacks an entity.
      */
     listenForEvent(eventIdentifier: ReceiveFromMinecraftServer.PlayerAttackedEntity, callback: (eventData: IPlayerAttackedEntityEventData) => void): boolean | null;
+    /**
+     * This event is triggered whenever a player places a block.
+     */
+    listenForEvent(eventIdentifier: ReceiveFromMinecraftServer.PlayerDestroyedBlock, callback: (eventData: IPlayerDestroyedBlockEventData) => void): boolean | null;
+    /**
+     * This event is triggered whenever a player places a block.
+     */
+    listenForEvent(eventIdentifier: ReceiveFromMinecraftServer.PlayerPlacedBlock, callback: (eventData: IPlayerPlacedBlockEventData) => void): boolean | null;
     /**
      * This event is triggered whenever the weather changes. It contains information about the weather it is changing to.
      */

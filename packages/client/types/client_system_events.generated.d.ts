@@ -18,6 +18,10 @@ declare interface IVanillaClientSystemBase {
      */
     broadcastEvent(eventIdentifier: SendToMinecraftClient.LoadUI, eventData: ILoadUIParameters): boolean | null;
     /**
+     * This event is used to turn various levels of logging on and off for client scripts. Note that turning logging on/off is not limited to the script that broadcasted the event. It will affect ALL client scripts including those in other Behavior Packs that are applied to the world. See the Debugging section for more information on logging.
+     */
+    broadcastEvent(eventIdentifier: SendToMinecraftClient.ScriptLoggerConfig, eventData: IScriptLoggerConfigParameters): boolean | null;
+    /**
      * This event is used to send UI events to the UI Engine for the specific player running the script. After the event is triggered, the UI event will be sent immediately.
      * Custom UI is based on HTML 5. Review the scripting demo for an example of a custom UI file.
      */
@@ -39,7 +43,7 @@ declare interface IVanillaClientSystemBase {
     // listenForEvent overloads
 
     /**
-     * This event is fired whenever a player joins the world. The event data contains the ID of the player in the world. The ID uniquely identifies the player in the world. This does NOT uniquely identify the player if they disconnect and reconnect.
+     * This event is fired whenever a player joins the world. The event data contains the player entity object.
      */
     listenForEvent(eventIdentifier: ReceiveFromMinecraftClient.ClientEnteredWorld, callback: (eventData: IClientEnteredWorldEventData) => void): boolean | null;
     /**
