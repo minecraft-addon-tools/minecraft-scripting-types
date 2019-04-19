@@ -1,4 +1,4 @@
-import { MinecraftScriptDocumentation, isArrayType } from "minecraft-documentation-extractor";
+import { MinecraftScriptDocumentation, isArrayType, isWellKnownType } from "minecraft-documentation-extractor";
 import { getTypeAsString } from "./type";
 import { minecraftIdentifierToCamelCase } from "./identifiers";
 
@@ -23,15 +23,31 @@ ${enumName} = "${component.name}"`);
 
         const interfaceName = `I${enumName}Component`;
 
-        const componentBody = component.type ? getTypeAsString((isArrayType(component.type) ? component.type.type : component.type), `component(${enumName})`) : "";
+        
 
-        interfaces.push(`\
+        if (!(isWellKnownType(component.type) || (isArrayType(component.type) && isWellKnownType(component.type.type)))) {
+            const componentBody = component.type ? getTypeAsString((isArrayType(component.type) ? component.type.type : component.type), `component(${enumName})`) : "";
+            interfaces.push(`\
 /**
  * ${component.description}
  */
 declare interface ${interfaceName} ${componentBody}`);
+        } else {
+            let componentDataType : string;
+            if (isArrayType(component.type)) {
+                    componentDataType = `${getTypeAsString(component.type.type, `component(${enumName})`)}[]`;
+            } else {
+                    componentDataType = getTypeAsString(component.type, `component(${enumName})`);
+            }
 
-        const x = `(entity: IEntity, componentName: MinecraftComponent.${enumName}): IComponent<${interfaceName}>${isArrayType(component.type) ? "[]" : ""} | null;`;
+            interfaces.push(`\
+/**
+ * ${component.description}
+ */
+declare type ${interfaceName} = ${componentDataType}`);
+        }
+
+        const x = `(entity: IEntity, componentName: MinecraftComponent.${enumName}): IComponent<${interfaceName}> | null;`;
         Object.keys(functions).forEach(name => {
             functions[name].push(name + x);
         });

@@ -32,9 +32,9 @@ ${enumValueName} = "${event.name}"`);
             const interfaceName = `I${enumValueName}${isListening ? "EventData" : "Parameters"}`;
             eventDataType = interfaceName;
             if (isWellKnownType(event.type)) {
-                eventDataType = getType(event.type);
+                eventDataType = getType(event.type, event.name);
             } else {
-                const eventBody = event.type ? getTypeAsString(event.type, `component(${enumValueName})`) : "";
+                const eventBody = event.type ? getTypeAsString(event.type, `${clientOrServer}-event(${enumValueName})`) : "";
 
                 interfaces.push(`\
 /**

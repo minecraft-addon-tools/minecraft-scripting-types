@@ -13,6 +13,7 @@ const typeMap: Map<string, string> = new Map(Object.entries({
     "vector {x, y, z}": "VectorXYZ",
     "minecraft filter": "MinecraftFilter",
     "entity js api object": "IEntity",
+    "itemstack js api object": "IItemStack",
     "minecraft trigger object": "MinecraftTrigger",
     "minecraft trigger": "MinecraftTrigger | string",
     "sound identifier": "string",
@@ -25,11 +26,11 @@ const typeMap: Map<string, string> = new Map(Object.entries({
 
 const allTypeNames = new Set();
 
-export default function getType(typeName: string): string {
+export default function getType(typeName: string, context: string): string {
     allTypeNames.add(typeName);
     let type = typeMap.get(typeName.toLowerCase());
     if (!type) {
-        console.warn(`Unexpected type encountered: ${typeName.toLowerCase()}`);
+        console.warn(`[${context}] Unexpected type encountered: ${typeName.toLowerCase()}`);
         return "any";
     }
     return type;
@@ -62,7 +63,7 @@ export function getField(field: Field, parameterPath: string, indent: number): s
 export function getTypeAsString(type: Type, parameterPath: string, indent: number = 1): string {
     if (!type) return "";
     if (isWellKnownType(type)) {
-        return getType(type);
+        return getType(type, parameterPath);
     }
     if (isArrayType(type)) {
         const innerType = getTypeAsString(type.type, parameterPath, indent);
