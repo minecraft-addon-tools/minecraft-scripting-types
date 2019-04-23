@@ -6,6 +6,7 @@ export default function extractComponents(documentation: MinecraftScriptDocument
 
     const componentEnum: string[] = [];
     const interfaces: string[] = [];
+    const interfaceTypeMap: string[] = [];
 
     const functions: { [name: string]: string[] } = {
         "createComponent": [],
@@ -45,8 +46,11 @@ declare interface ${interfaceName} ${componentBody}`);
  * ${component.description}
  */
 declare type ${interfaceName} = ${componentDataType}`);
+
+            
         }
 
+        interfaceTypeMap.push(`[MinecraftComponent.${enumName}]: ${interfaceName}`);
         const x = `(entity: IEntity, componentName: MinecraftComponent.${enumName}): IComponent<${interfaceName}> | null;`;
         Object.keys(functions).forEach(name => {
             functions[name].push(name + x);
@@ -55,6 +59,7 @@ declare type ${interfaceName} = ${componentDataType}`);
 
     values.componentEnum = componentEnum.join(",\n");
     values.componentInterfaces = interfaces.join("\n\n");
+    values.interfaceTypeMap = interfaceTypeMap.join(",\n");
     Object.keys(functions).forEach(name => {
         values[name] = functions[name].join("\n");
     });
