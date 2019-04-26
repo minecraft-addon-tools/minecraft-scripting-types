@@ -1,1 +1,3 @@
-declare type IMinecraftObject = IEntity | ILevel | IComponent<any> | IQuery | IItemStack | IBlock | ITickingArea;
+declare type IMinecraftObject =
+    IEventData<any> | IEntity | ILevel | IComponent<any> |
+    IQuery | IItemStack | IBlock | ITickingArea;
