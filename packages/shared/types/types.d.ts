@@ -11,6 +11,11 @@ declare interface Range {
     range_max: number;
 }
 
+declare interface Int64 {
+    "64bit_low": number;
+    "64bit_high": number;
+}
+
 declare interface MinecraftTrigger {
     event: string;
     filters: MinecraftFilter;

@@ -9,7 +9,7 @@ declare interface IEntityTickingArea {
     /**
      * The unique identifier of the ticking area
      */
-    readonly entity_ticking_area_id: number;
+    readonly entity_ticking_area_id: Int64;
 }
 
 declare interface ILevelTickingArea {
@@ -19,7 +19,7 @@ declare interface ILevelTickingArea {
     readonly __type__: "level_ticking_area";
 
     /**
-     * The unique identifier of the ticking area
+     * The uuid of the ticking area
      */
-    readonly level_ticking_area_id: number;
+    readonly level_ticking_area_id: string;
 }
