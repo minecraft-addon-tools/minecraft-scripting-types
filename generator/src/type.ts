@@ -12,16 +12,21 @@ const typeMap: Map<string, string> = new Map(Object.entries({
     "vector [a, b, c]": "VectorArray",
     "vector {x, y, z}": "VectorXYZ",
     "minecraft filter": "MinecraftFilter",
+    "block js api object": "IBlock",
+    "component js api object": "IComponent<any>",
     "entity js api object": "IEntity",
+    "entity ticking area js api object": "IEntityTickingArea",
     "itemstack js api object": "IItemStack",
     "minecraft trigger object": "MinecraftTrigger",
     "minecraft trigger": "MinecraftTrigger | string",
     "sound identifier": "string",
+    "ticking area js api object": "ITickingArea",
     "entity identifier": "string",
     "particle identifier": "ParticleEffect",
     "dimension name": "Dimension",
     "null": "null",
-    
+
+    "execute command callback": "(callback: IExecuteCommandCallback) => void"
 }));
 
 const allTypeNames = new Set();

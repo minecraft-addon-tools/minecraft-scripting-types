@@ -11,7 +11,7 @@
     "@types/pump": "^1.0.1",
     "gulp-insert": "^0.5.0",
     "gulp-replace": "^1.0.0",
-    "minecraft-documentation-extractor": "^1.0.0-alpha",
+    "minecraft-documentation-extractor": "^1.1.1-alpha",
     "pump": "^3.0.0",
     "vinyl": "^2.2.0",
     "vinyl-fs": "^3.0.3"

@@ -596,3 +596,25 @@ declare interface ITeleportComponent {
      */
     targetDistance: number;
 }
+
+/**
+ * The tick world component is a read-only component that allows users to access the ticking areas on entities as well as the ticking area's data.
+ */
+declare interface ITickWorldComponent {
+    /**
+     * distance_to_players
+     */
+    distance_to_players: number;
+    /**
+     * Whether or not this ticking area will despawn when a player is out of range
+     */
+    never_despawn: boolean;
+    /**
+     * The radius in chunks of the ticking area
+     */
+    radius: number;
+    /**
+     * The ticking area entity that is attached to this entity
+     */
+    ticking_area: IEntityTickingArea;
+}

@@ -1,6 +1,6 @@
 /**
  * This interface is used to include the generated methods on the IServerSystem in a way that the generic variants do not
- * take precidence over the specific, generated versions.
+ * take precedence over the specific, generated versions.
  */
 declare interface IVanillaServerSystemBase {
     

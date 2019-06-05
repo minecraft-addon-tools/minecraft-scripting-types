@@ -87,5 +87,9 @@ declare const enum MinecraftComponent {
     /**
      * This controls the entity's ability to teleport itself (similar to the Enderman). If you wish to teleport the entity once use the Position component instead.
      */
-    Teleport = "minecraft:teleport"
+    Teleport = "minecraft:teleport",
+    /**
+     * The tick world component is a read-only component that allows users to access the ticking areas on entities as well as the ticking area's data.
+     */
+    TickWorld = "minecraft:tick_world"
 }

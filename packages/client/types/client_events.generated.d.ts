@@ -21,7 +21,7 @@ declare const enum SendToMinecraftClient {
     ScriptLoggerConfig = "minecraft:script_logger_config",
     /**
      * This event is used to send UI events to the UI Engine for the specific player running the script. After the event is triggered, the UI event will be sent immediately.
-    Custom UI is based on HTML 5. Review the scripting demo for an example of a custom UI file.
+     * Custom UI is based on HTML 5. Review the scripting demo for an example of a custom UI file.
      */
     SendUIEvent = "minecraft:send_ui_event",
     /**
@@ -66,6 +66,16 @@ declare const enum ReceiveFromMinecraftClient {
      * FIXME - UNDOCUMENTED - NO DESCRIPTION FROM MOJANG
      */
     UIEvent = "minecraft:ui_event"
+}
+
+/**
+ * This event is used to display a chat message to the specific player that is running the client script. The event data is the message to be displayed in plain text. Special formatting is supported the same way it would be if a player was sending the message.
+ */
+declare interface IDisplayChatParameters {
+    /**
+     * The chat message that will be displayed
+     */
+    message: string;
 }
 
 /**
@@ -134,7 +144,7 @@ declare interface IScriptLoggerConfigParameters {
 
 /**
  * This event is used to send UI events to the UI Engine for the specific player running the script. After the event is triggered, the UI event will be sent immediately.
-Custom UI is based on HTML 5. Review the scripting demo for an example of a custom UI file.
+ * Custom UI is based on HTML 5. Review the scripting demo for an example of a custom UI file.
  */
 declare interface ISendUIEventParameters {
     /**

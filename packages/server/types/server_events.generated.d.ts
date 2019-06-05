@@ -38,13 +38,17 @@ declare const enum SendToMinecraftServer {
  */
 declare const enum ReceiveFromMinecraftServer {
     /**
-     * This event is triggered whenever a player places a block.
+     * This event is triggered whenever a player starts to destroy a block.
      */
     BlockDestructionStarted = "minecraft:block_destruction_started",
     /**
-     * This event is triggered whenever a player places a block.
+     * This event is triggered whenever a player stops destroying a block.
      */
     BlockDestructionStopped = "minecraft:block_destruction_stopped",
+    /**
+     * This event is triggered whenever a player interacts with a block.
+     */
+    BlockInteractedWith = "minecraft:block_interacted_with",
     /**
      * This event is triggered whenever an entity acquires an item.
      */
@@ -82,6 +86,10 @@ declare const enum ReceiveFromMinecraftServer {
      */
     EntityTick = "minecraft:entity_tick",
     /**
+     * This event is triggered whenever an entity uses an item.
+     */
+    EntityUseItem = "minecraft:entity_use_item",
+    /**
      * This event is triggered whenever a piston moves a block.
      */
     PistonMovedBlock = "minecraft:piston_moved_block",
@@ -94,7 +102,7 @@ declare const enum ReceiveFromMinecraftServer {
      */
     PlayerAttackedEntity = "minecraft:player_attacked_entity",
     /**
-     * This event is triggered whenever a player places a block.
+     * This event is triggered whenever a player destroys a block.
      */
     PlayerDestroyedBlock = "minecraft:player_destroyed_block",
     /**
@@ -108,7 +116,7 @@ declare const enum ReceiveFromMinecraftServer {
 }
 
 /**
- * This event is triggered whenever a player places a block.
+ * This event is triggered whenever a player starts to destroy a block.
  */
 declare interface IBlockDestructionStartedEventData {
     /**
@@ -122,7 +130,7 @@ declare interface IBlockDestructionStartedEventData {
 }
 
 /**
- * This event is triggered whenever a player places a block.
+ * This event is triggered whenever a player stops destroying a block.
  */
 declare interface IBlockDestructionStoppedEventData {
     /**
@@ -135,6 +143,20 @@ declare interface IBlockDestructionStoppedEventData {
     destruction_progress: number;
     /**
      * The player that stopped destoying the block
+     */
+    player: IEntity;
+}
+
+/**
+ * This event is triggered whenever a player interacts with a block.
+ */
+declare interface IBlockInteractedWithEventData {
+    /**
+     * The position of the block that is being interacted with
+     */
+    block_position: VectorXYZ;
+    /**
+     * The player that interacted with the block
      */
     player: IEntity;
 }
@@ -278,6 +300,24 @@ declare interface IEntityTickEventData {
 }
 
 /**
+ * This event is triggered whenever an entity uses an item.
+ */
+declare interface IEntityUseItemEventData {
+    /**
+     * The entity who is using the item
+     */
+    entity: IEntity;
+    /**
+     * The item that is being used
+     */
+    item_stack: IItemStack;
+    /**
+     * The way the entity used the item
+     */
+    use_method: string;
+}
+
+/**
  * This event is triggered whenever a piston moves a block.
  */
 declare interface IPistonMovedBlockEventData {
@@ -335,7 +375,7 @@ declare interface IPlayerAttackedEntityEventData {
 }
 
 /**
- * This event is triggered whenever a player places a block.
+ * This event is triggered whenever a player destroys a block.
  */
 declare interface IPlayerDestroyedBlockEventData {
     /**
@@ -382,6 +422,26 @@ declare interface IWeatherChangedEventData {
      * Tells if the new weather has rain
      */
     raining: boolean;
+}
+
+/**
+ * This event is used to send a chat message from the server to the players. The event data is the message being sent as a string. Special formatting is supported the same way it would be if a player was sending the message.
+ */
+declare interface IDisplayChatParameters {
+    /**
+     * The chat message that will be displayed
+     */
+    message: string;
+}
+
+/**
+ * This event is used to execute a slash command on the server with the World Owner permission level. The event data contains the slash command as a string. The slash command will be processed and will run after the event is sent.
+ */
+declare interface IExecuteCommandParameters {
+    /**
+     * The command that will be run
+     */
+    command: string;
 }
 
 /**

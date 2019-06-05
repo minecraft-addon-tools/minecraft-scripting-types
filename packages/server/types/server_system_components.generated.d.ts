@@ -28,6 +28,7 @@ declare interface IVanillaServerSystemBase {
     createComponent(entity: IEntity, componentName: MinecraftComponent.Shooter): IComponent<IShooterComponent> | null;
     createComponent(entity: IEntity, componentName: MinecraftComponent.SpawnEntity): IComponent<ISpawnEntityComponent> | null;
     createComponent(entity: IEntity, componentName: MinecraftComponent.Teleport): IComponent<ITeleportComponent> | null;
+    createComponent(entity: IEntity, componentName: MinecraftComponent.TickWorld): IComponent<ITickWorldComponent> | null;
 
     getComponent(entity: IEntity, componentName: MinecraftComponent.ArmorContainer): IComponent<IArmorContainerComponent> | null;
     getComponent(entity: IEntity, componentName: MinecraftComponent.Attack): IComponent<IAttackComponent> | null;
@@ -50,6 +51,7 @@ declare interface IVanillaServerSystemBase {
     getComponent(entity: IEntity, componentName: MinecraftComponent.Shooter): IComponent<IShooterComponent> | null;
     getComponent(entity: IEntity, componentName: MinecraftComponent.SpawnEntity): IComponent<ISpawnEntityComponent> | null;
     getComponent(entity: IEntity, componentName: MinecraftComponent.Teleport): IComponent<ITeleportComponent> | null;
+    getComponent(entity: IEntity, componentName: MinecraftComponent.TickWorld): IComponent<ITickWorldComponent> | null;
 
     /**
      * Creates a component of the specified name and adds it to the entity. This should only be used with custom components which need 

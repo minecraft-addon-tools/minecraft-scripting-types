@@ -7,108 +7,159 @@
 
 declare interface IVanillaServerSystemBase {
     ///////////////////////////
+    // createEventData overloads
+
+    /**
+     * This event is used to send a chat message from the server to the players. The event data is the message being sent as a string. Special formatting is supported the same way it would be if a player was sending the message.
+     */
+    createEventData(eventIdentifier: SendToMinecraftServer.DisplayChat): IEventData<IDisplayChatParameters> | null;
+    /**
+     * This event is used to execute a slash command on the server with the World Owner permission level. The event data contains the slash command as a string. The slash command will be processed and will run after the event is sent.
+     */
+    createEventData(eventIdentifier: SendToMinecraftServer.ExecuteCommand): IEventData<IExecuteCommandParameters> | null;
+    /**
+     * This event is used to play a sound effect. Currently, sounds can only be played at a fixed position in the world. Global sounds and sounds played by an entity will be supported in a later update.
+     */
+    createEventData(eventIdentifier: SendToMinecraftServer.PlaySound): IEventData<IPlaySoundParameters> | null;
+    /**
+     * This event is used to turn various levels of logging on and off for server scripts. Note that turning logging on/off is not limited to the script that broadcasted the event. It will affect ALL server scripts including those in other Behavior Packs that are applied to the world. See the Debugging section for more information on logging.
+     */
+    createEventData(eventIdentifier: SendToMinecraftServer.ScriptLoggerConfig): IEventData<IScriptLoggerConfigParameters> | null;
+    /**
+     * This event is used to create a particle effect that will follow an entity around. This particle effect is visible to all players. Any effect defined in a JSON file (both in your resource pack and in Minecraft) can be used here. MoLang variables defined in the JSON of the effect can then be used to control that effect by changing them in the entity to which it is attached.
+     */
+    createEventData(eventIdentifier: SendToMinecraftServer.SpawnParticleAttachedEntity): IEventData<ISpawnParticleAttachedEntityParameters> | null;
+    /**
+     * This event is used to create a static particle effect in the world. This particle effect is visible to all players. Any effect defined in a JSON file (both in your resource pack and in Minecraft) can be used here. Once the effect is spawned you won't be able to control it further.
+     */
+    createEventData(eventIdentifier: SendToMinecraftServer.SpawnParticleInWorld): IEventData<ISpawnParticleInWorldParameters> | null;
+
+    ///////////////////////////
     // broadcastEvent overloads
 
     /**
      * This event is used to send a chat message from the server to the players. The event data is the message being sent as a string. Special formatting is supported the same way it would be if a player was sending the message.
      */
-    broadcastEvent(eventIdentifier: SendToMinecraftServer.DisplayChat, eventData: string): boolean | null;
+    broadcastEvent(eventIdentifier: SendToMinecraftServer.DisplayChat, eventData: IEventData<IDisplayChatParameters>): boolean | null;
     /**
      * This event is used to execute a slash command on the server with the World Owner permission level. The event data contains the slash command as a string. The slash command will be processed and will run after the event is sent.
      */
-    broadcastEvent(eventIdentifier: SendToMinecraftServer.ExecuteCommand, eventData: string): boolean | null;
+    broadcastEvent(eventIdentifier: SendToMinecraftServer.ExecuteCommand, eventData: IEventData<IExecuteCommandParameters>): boolean | null;
     /**
      * This event is used to play a sound effect. Currently, sounds can only be played at a fixed position in the world. Global sounds and sounds played by an entity will be supported in a later update.
      */
-    broadcastEvent(eventIdentifier: SendToMinecraftServer.PlaySound, eventData: IPlaySoundParameters): boolean | null;
+    broadcastEvent(eventIdentifier: SendToMinecraftServer.PlaySound, eventData: IEventData<IPlaySoundParameters>): boolean | null;
     /**
      * This event is used to turn various levels of logging on and off for server scripts. Note that turning logging on/off is not limited to the script that broadcasted the event. It will affect ALL server scripts including those in other Behavior Packs that are applied to the world. See the Debugging section for more information on logging.
      */
-    broadcastEvent(eventIdentifier: SendToMinecraftServer.ScriptLoggerConfig, eventData: IScriptLoggerConfigParameters): boolean | null;
+    broadcastEvent(eventIdentifier: SendToMinecraftServer.ScriptLoggerConfig, eventData: IEventData<IScriptLoggerConfigParameters>): boolean | null;
     /**
      * This event is used to create a particle effect that will follow an entity around. This particle effect is visible to all players. Any effect defined in a JSON file (both in your resource pack and in Minecraft) can be used here. MoLang variables defined in the JSON of the effect can then be used to control that effect by changing them in the entity to which it is attached.
      */
-    broadcastEvent(eventIdentifier: SendToMinecraftServer.SpawnParticleAttachedEntity, eventData: ISpawnParticleAttachedEntityParameters): boolean | null;
+    broadcastEvent(eventIdentifier: SendToMinecraftServer.SpawnParticleAttachedEntity, eventData: IEventData<ISpawnParticleAttachedEntityParameters>): boolean | null;
     /**
      * This event is used to create a static particle effect in the world. This particle effect is visible to all players. Any effect defined in a JSON file (both in your resource pack and in Minecraft) can be used here. Once the effect is spawned you won't be able to control it further.
      */
-    broadcastEvent(eventIdentifier: SendToMinecraftServer.SpawnParticleInWorld, eventData: ISpawnParticleInWorldParameters): boolean | null;
+    broadcastEvent(eventIdentifier: SendToMinecraftServer.SpawnParticleInWorld, eventData: IEventData<ISpawnParticleInWorldParameters>): boolean | null;
 
     ///////////////////////////
     // listenForEvent overloads
 
     /**
-     * This event is triggered whenever a player places a block.
+     * This event is triggered whenever a player starts to destroy a block.
      */
-    listenForEvent(eventIdentifier: ReceiveFromMinecraftServer.BlockDestructionStarted, callback: (eventData: IBlockDestructionStartedEventData) => void): boolean | null;
+    listenForEvent(eventIdentifier: ReceiveFromMinecraftServer.BlockDestructionStarted, callback: (eventData: IEventData<IBlockDestructionStartedEventData>) => void): boolean | null;
     /**
-     * This event is triggered whenever a player places a block.
+     * This event is triggered whenever a player stops destroying a block.
      */
-    listenForEvent(eventIdentifier: ReceiveFromMinecraftServer.BlockDestructionStopped, callback: (eventData: IBlockDestructionStoppedEventData) => void): boolean | null;
+    listenForEvent(eventIdentifier: ReceiveFromMinecraftServer.BlockDestructionStopped, callback: (eventData: IEventData<IBlockDestructionStoppedEventData>) => void): boolean | null;
+    /**
+     * This event is triggered whenever a player interacts with a block.
+     */
+    listenForEvent(eventIdentifier: ReceiveFromMinecraftServer.BlockInteractedWith, callback: (eventData: IEventData<IBlockInteractedWithEventData>) => void): boolean | null;
     /**
      * This event is triggered whenever an entity acquires an item.
      */
-    listenForEvent(eventIdentifier: ReceiveFromMinecraftServer.EntityAcquiredItem, callback: (eventData: IEntityAcquiredItemEventData) => void): boolean | null;
+    listenForEvent(eventIdentifier: ReceiveFromMinecraftServer.EntityAcquiredItem, callback: (eventData: IEventData<IEntityAcquiredItemEventData>) => void): boolean | null;
     /**
      * This event is triggered whenever an entity changes the item carried in their hand.
      */
-    listenForEvent(eventIdentifier: ReceiveFromMinecraftServer.EntityCarriedItemChanged, callback: (eventData: IEntityCarriedItemChangedEventData) => void): boolean | null;
+    listenForEvent(eventIdentifier: ReceiveFromMinecraftServer.EntityCarriedItemChanged, callback: (eventData: IEventData<IEntityCarriedItemChangedEventData>) => void): boolean | null;
     /**
      * This event is triggered whenever an entity is added to the world.
      */
-    listenForEvent(eventIdentifier: ReceiveFromMinecraftServer.EntityCreated, callback: (eventData: IEntityCreatedEventData) => void): boolean | null;
+    listenForEvent(eventIdentifier: ReceiveFromMinecraftServer.EntityCreated, callback: (eventData: IEventData<IEntityCreatedEventData>) => void): boolean | null;
     /**
      * This event is triggered whenever an entity dies. This won't be triggered when an entity is removed (such as when using destroyEntity).
      */
-    listenForEvent(eventIdentifier: ReceiveFromMinecraftServer.EntityDeath, callback: (eventData: IEntityDeathEventData) => void): boolean | null;
+    listenForEvent(eventIdentifier: ReceiveFromMinecraftServer.EntityDeath, callback: (eventData: IEventData<IEntityDeathEventData>) => void): boolean | null;
     /**
      * This event is triggered whenever an entity drops an item.
      */
-    listenForEvent(eventIdentifier: ReceiveFromMinecraftServer.EntityDroppedItem, callback: (eventData: IEntityDroppedItemEventData) => void): boolean | null;
+    listenForEvent(eventIdentifier: ReceiveFromMinecraftServer.EntityDroppedItem, callback: (eventData: IEventData<IEntityDroppedItemEventData>) => void): boolean | null;
     /**
      * This event is triggered whenever an entity equips an item in their armor slots.
      */
-    listenForEvent(eventIdentifier: ReceiveFromMinecraftServer.EntityEquippedArmor, callback: (eventData: IEntityEquippedArmorEventData) => void): boolean | null;
+    listenForEvent(eventIdentifier: ReceiveFromMinecraftServer.EntityEquippedArmor, callback: (eventData: IEventData<IEntityEquippedArmorEventData>) => void): boolean | null;
     /**
      * This event is triggered whenever an entity becomes a rider on another entity.
      */
-    listenForEvent(eventIdentifier: ReceiveFromMinecraftServer.EntityStartRiding, callback: (eventData: IEntityStartRidingEventData) => void): boolean | null;
+    listenForEvent(eventIdentifier: ReceiveFromMinecraftServer.EntityStartRiding, callback: (eventData: IEventData<IEntityStartRidingEventData>) => void): boolean | null;
     /**
      * This event is triggered whenever an entity stops riding another entity.
      */
-    listenForEvent(eventIdentifier: ReceiveFromMinecraftServer.EntityStopRiding, callback: (eventData: IEntityStopRidingEventData) => void): boolean | null;
+    listenForEvent(eventIdentifier: ReceiveFromMinecraftServer.EntityStopRiding, callback: (eventData: IEventData<IEntityStopRidingEventData>) => void): boolean | null;
     /**
      * This event is triggered whenever an entity is ticked. This event will not fire when a player is ticked.
      */
-    listenForEvent(eventIdentifier: ReceiveFromMinecraftServer.EntityTick, callback: (eventData: IEntityTickEventData) => void): boolean | null;
+    listenForEvent(eventIdentifier: ReceiveFromMinecraftServer.EntityTick, callback: (eventData: IEventData<IEntityTickEventData>) => void): boolean | null;
+    /**
+     * This event is triggered whenever an entity uses an item.
+     */
+    listenForEvent(eventIdentifier: ReceiveFromMinecraftServer.EntityUseItem, callback: (eventData: IEventData<IEntityUseItemEventData>) => void): boolean | null;
     /**
      * This event is triggered whenever a piston moves a block.
      */
-    listenForEvent(eventIdentifier: ReceiveFromMinecraftServer.PistonMovedBlock, callback: (eventData: IPistonMovedBlockEventData) => void): boolean | null;
+    listenForEvent(eventIdentifier: ReceiveFromMinecraftServer.PistonMovedBlock, callback: (eventData: IEventData<IPistonMovedBlockEventData>) => void): boolean | null;
     /**
      * This event is used to play a sound effect. Currently, sounds can only be played at a fixed position in the world. Global sounds and sounds played by an entity will be supported in a later update.
      */
-    listenForEvent(eventIdentifier: ReceiveFromMinecraftServer.PlaySound, callback: (eventData: IPlaySoundEventData) => void): boolean | null;
+    listenForEvent(eventIdentifier: ReceiveFromMinecraftServer.PlaySound, callback: (eventData: IEventData<IPlaySoundEventData>) => void): boolean | null;
     /**
      * This event is triggered whenever a player attacks an entity.
      */
-    listenForEvent(eventIdentifier: ReceiveFromMinecraftServer.PlayerAttackedEntity, callback: (eventData: IPlayerAttackedEntityEventData) => void): boolean | null;
+    listenForEvent(eventIdentifier: ReceiveFromMinecraftServer.PlayerAttackedEntity, callback: (eventData: IEventData<IPlayerAttackedEntityEventData>) => void): boolean | null;
+    /**
+     * This event is triggered whenever a player destroys a block.
+     */
+    listenForEvent(eventIdentifier: ReceiveFromMinecraftServer.PlayerDestroyedBlock, callback: (eventData: IEventData<IPlayerDestroyedBlockEventData>) => void): boolean | null;
     /**
      * This event is triggered whenever a player places a block.
      */
-    listenForEvent(eventIdentifier: ReceiveFromMinecraftServer.PlayerDestroyedBlock, callback: (eventData: IPlayerDestroyedBlockEventData) => void): boolean | null;
-    /**
-     * This event is triggered whenever a player places a block.
-     */
-    listenForEvent(eventIdentifier: ReceiveFromMinecraftServer.PlayerPlacedBlock, callback: (eventData: IPlayerPlacedBlockEventData) => void): boolean | null;
+    listenForEvent(eventIdentifier: ReceiveFromMinecraftServer.PlayerPlacedBlock, callback: (eventData: IEventData<IPlayerPlacedBlockEventData>) => void): boolean | null;
     /**
      * This event is triggered whenever the weather changes. It contains information about the weather it is changing to.
      */
-    listenForEvent(eventIdentifier: ReceiveFromMinecraftServer.WeatherChanged, callback: (eventData: IWeatherChangedEventData) => void): boolean | null;
+    listenForEvent(eventIdentifier: ReceiveFromMinecraftServer.WeatherChanged, callback: (eventData: IEventData<IWeatherChangedEventData>) => void): boolean | null;
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Generic method for other custom events
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    /**
+     * Registers the Event to the script engine. This allows you to create Event Data by calling createEventData and have it initialized with the correct default data and fields. Only custom events need to be registered.
+     * 
+     * @param eventIdentifier This is the identifier of the custom event we are registering. The namespace is required and can't be set to minecraft.
+     * @param eventData The JavaScript object with the correct fields and default values for the event
+     */
+    registerEventData<TEventDataType = any>(eventIdentifier: string, eventData: TEventDataType): true | null;
+
+    /**
+     * Creates an object with all the required fields and default data for the specified event. If the event is a custom event, it needs to have been previously registered.
+     * 
+     * @param eventIdentifier This is the identifier of the custom event we are registering. The namespace is required and can't be set to minecraft. 
+     */
+    createEventData<TEventDataType = any>(eventIdentifier: string): IEventData<TEventDataType> | null;
 
     /**
      * 
@@ -116,12 +167,12 @@ declare interface IVanillaServerSystemBase {
      * Anything that signed up to listen for the event will be notified and the given data delivered to them.
      * @param eventData The data for the event. You can create a new JavaScript Object with the parameters you want to pass in to the listener and the engine will take care of delivering the data to them
      */
-    broadcastEvent(eventIdentifier: string, eventData: any): boolean | null;
+    broadcastEvent<TEventDataType = any>(eventIdentifier: string, eventData: IEventData<TEventDataType>): boolean | null;
 
     /**
      * Allows you to register a JavaScript object that gets called whenever the specified event is broadcast. The event can either be a built-in event or an event specified in script.
      * @param eventIdentifier This is the name of the event to which we want to react. Can be the identifier of a built-in event or a custom one from script
      * @param eventData The name of the JavaScript object that will get called whenever the event is broadcast
      */
-    listenForEvent<TEventDataType = any>(eventIdentifier: string, callback: (eventData: TEventDataType) => void): boolean | null;
+    listenForEvent<TEventDataType = any>(eventIdentifier: string, callback: (eventData: IEventData<TEventDataType>) => void): boolean | null;
 }

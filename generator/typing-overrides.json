@@ -1,0 +1,33 @@
+{
+    "$schema": "https://raw.githubusercontent.com/minecraft-addon-tools/minecraft-documentation-extractor/9b1c9537b061aeb8f0839272d9738d408ae7e21e/src/type-overrides.schema.json",
+    "version": {
+        "major": 1,
+        "minor": 12,
+        "revision": 0,
+        "build": 9
+    },
+    "overrides": {
+        "systemMethods": {
+            "registerComponent": { "_operation": "remove", "_comment": "Removed to make use of generics" },
+            "createComponent": { "_operation": "remove", "_comment": "Removed to make use of generics" },
+            "getComponent": { "_operation": "remove", "_comment": "Removed to make use of generics" },
+            "applyComponentChanges": { "_operation": "remove", "_comment": "Removed to make use of generics" },
+
+            "registerEventData": { "_operation": "remove", "_comment": "Removed to make use of generics" },
+            "createEventData": { "_operation": "remove", "_comment": "Removed to make use of generics" },
+            "listenForEvent": { "_operation": "remove", "_comment": "Removed to make use of generics" },
+            "broadcastEvent": { "_operation": "remove", "_comment": "Removed to make use of generics" },
+
+            "executeCommand": {
+                "findByParameters": ["Command", "Callback"],
+                "override": {
+                    "parameters": {
+                        "Callback": {
+                            "type": "Execute Command Callback"
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

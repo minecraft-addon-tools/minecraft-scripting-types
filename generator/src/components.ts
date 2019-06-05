@@ -23,8 +23,6 @@ ${enumName} = "${component.name}"`);
 
         const interfaceName = `I${enumName}Component`;
 
-        
-
         if (!(isWellKnownType(component.type) || (isArrayType(component.type) && isWellKnownType(component.type.type)))) {
             const componentBody = component.type ? getTypeAsString((isArrayType(component.type) ? component.type.type : component.type), `component(${enumName})`) : "";
             interfaces.push(`\

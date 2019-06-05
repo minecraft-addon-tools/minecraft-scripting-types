@@ -7,37 +7,70 @@
 
 declare interface IVanillaClientSystemBase {
     ///////////////////////////
+    // createEventData overloads
+
+    /**
+     * This event is used to display a chat message to the specific player that is running the client script. The event data is the message to be displayed in plain text. Special formatting is supported the same way it would be if a player was sending the message.
+     */
+    createEventData(eventIdentifier: SendToMinecraftClient.DisplayChat): IEventData<IDisplayChatParameters> | null;
+    /**
+     * This event is used to show a UI screen to the specific player running the client script. This event will add the UI screen to the top of the UI screen stack. The screen will be shown immediately after the event is triggered. Only screens defined in a HTML file can be shown using this event.
+     */
+    createEventData(eventIdentifier: SendToMinecraftClient.LoadUI): IEventData<ILoadUIParameters> | null;
+    /**
+     * This event is used to turn various levels of logging on and off for client scripts. Note that turning logging on/off is not limited to the script that broadcasted the event. It will affect ALL client scripts including those in other Behavior Packs that are applied to the world. See the Debugging section for more information on logging.
+     */
+    createEventData(eventIdentifier: SendToMinecraftClient.ScriptLoggerConfig): IEventData<IScriptLoggerConfigParameters> | null;
+    /**
+     * This event is used to send UI events to the UI Engine for the specific player running the script. After the event is triggered, the UI event will be sent immediately.
+     * Custom UI is based on HTML 5. Review the scripting demo for an example of a custom UI file.
+     */
+    createEventData(eventIdentifier: SendToMinecraftClient.SendUIEvent): IEventData<ISendUIEventParameters> | null;
+    /**
+     * This event is used to create a particle effect that will follow an entity around. This particle effect is only visible to the specific player that is running the client script where you fired the event. Any effect defined in a JSON file (both in your resource pack and in Minecraft) can be used here. MoLang variables defined in the JSON of the effect can then be used to control that effect by changing them in the entity to which it is attached.
+     */
+    createEventData(eventIdentifier: SendToMinecraftClient.SpawnParticleAttachedEntity): IEventData<ISpawnParticleAttachedEntityParameters> | null;
+    /**
+     * This event is used to create a static particle effect in the world. This particle effect is only visible to the specific player that is running the client script where you fired the event. Any effect defined in a JSON file (both in your resource pack and in Minecraft) can be used here. Once the effect is spawned you won't be able to control it further. Unlike the server version of the event, the client version will spawn the particle in the dimension the player is currently in.
+     */
+    createEventData(eventIdentifier: SendToMinecraftClient.SpawnParticleInWorld): IEventData<ISpawnParticleInWorldParameters> | null;
+    /**
+     * This event is used to remove a UI screen from the stack of the specific player running the client script. The event data contains the name of the screen to remove as a string. After the event is triggered the screen will be scheduled to be removed from the stack the next time the UI Engine can do so. Only screens defined in a HTML file can be removed using this event.
+     */
+    createEventData(eventIdentifier: SendToMinecraftClient.UnloadUI): IEventData<IUnloadUIParameters> | null;
+
+    ///////////////////////////
     // broadcastEvent overloads
 
     /**
      * This event is used to display a chat message to the specific player that is running the client script. The event data is the message to be displayed in plain text. Special formatting is supported the same way it would be if a player was sending the message.
      */
-    broadcastEvent(eventIdentifier: SendToMinecraftClient.DisplayChat, eventData: string): boolean | null;
+    broadcastEvent(eventIdentifier: SendToMinecraftClient.DisplayChat, eventData: IEventData<IDisplayChatParameters>): boolean | null;
     /**
      * This event is used to show a UI screen to the specific player running the client script. This event will add the UI screen to the top of the UI screen stack. The screen will be shown immediately after the event is triggered. Only screens defined in a HTML file can be shown using this event.
      */
-    broadcastEvent(eventIdentifier: SendToMinecraftClient.LoadUI, eventData: ILoadUIParameters): boolean | null;
+    broadcastEvent(eventIdentifier: SendToMinecraftClient.LoadUI, eventData: IEventData<ILoadUIParameters>): boolean | null;
     /**
      * This event is used to turn various levels of logging on and off for client scripts. Note that turning logging on/off is not limited to the script that broadcasted the event. It will affect ALL client scripts including those in other Behavior Packs that are applied to the world. See the Debugging section for more information on logging.
      */
-    broadcastEvent(eventIdentifier: SendToMinecraftClient.ScriptLoggerConfig, eventData: IScriptLoggerConfigParameters): boolean | null;
+    broadcastEvent(eventIdentifier: SendToMinecraftClient.ScriptLoggerConfig, eventData: IEventData<IScriptLoggerConfigParameters>): boolean | null;
     /**
      * This event is used to send UI events to the UI Engine for the specific player running the script. After the event is triggered, the UI event will be sent immediately.
      * Custom UI is based on HTML 5. Review the scripting demo for an example of a custom UI file.
      */
-    broadcastEvent(eventIdentifier: SendToMinecraftClient.SendUIEvent, eventData: ISendUIEventParameters): boolean | null;
+    broadcastEvent(eventIdentifier: SendToMinecraftClient.SendUIEvent, eventData: IEventData<ISendUIEventParameters>): boolean | null;
     /**
      * This event is used to create a particle effect that will follow an entity around. This particle effect is only visible to the specific player that is running the client script where you fired the event. Any effect defined in a JSON file (both in your resource pack and in Minecraft) can be used here. MoLang variables defined in the JSON of the effect can then be used to control that effect by changing them in the entity to which it is attached.
      */
-    broadcastEvent(eventIdentifier: SendToMinecraftClient.SpawnParticleAttachedEntity, eventData: ISpawnParticleAttachedEntityParameters): boolean | null;
+    broadcastEvent(eventIdentifier: SendToMinecraftClient.SpawnParticleAttachedEntity, eventData: IEventData<ISpawnParticleAttachedEntityParameters>): boolean | null;
     /**
      * This event is used to create a static particle effect in the world. This particle effect is only visible to the specific player that is running the client script where you fired the event. Any effect defined in a JSON file (both in your resource pack and in Minecraft) can be used here. Once the effect is spawned you won't be able to control it further. Unlike the server version of the event, the client version will spawn the particle in the dimension the player is currently in.
      */
-    broadcastEvent(eventIdentifier: SendToMinecraftClient.SpawnParticleInWorld, eventData: ISpawnParticleInWorldParameters): boolean | null;
+    broadcastEvent(eventIdentifier: SendToMinecraftClient.SpawnParticleInWorld, eventData: IEventData<ISpawnParticleInWorldParameters>): boolean | null;
     /**
      * This event is used to remove a UI screen from the stack of the specific player running the client script. The event data contains the name of the screen to remove as a string. After the event is triggered the screen will be scheduled to be removed from the stack the next time the UI Engine can do so. Only screens defined in a HTML file can be removed using this event.
      */
-    broadcastEvent(eventIdentifier: SendToMinecraftClient.UnloadUI, eventData: IUnloadUIParameters): boolean | null;
+    broadcastEvent(eventIdentifier: SendToMinecraftClient.UnloadUI, eventData: IEventData<IUnloadUIParameters>): boolean | null;
 
     ///////////////////////////
     // listenForEvent overloads
@@ -45,31 +78,46 @@ declare interface IVanillaClientSystemBase {
     /**
      * This event is fired whenever a player joins the world. The event data contains the player entity object.
      */
-    listenForEvent(eventIdentifier: ReceiveFromMinecraftClient.ClientEnteredWorld, callback: (eventData: IClientEnteredWorldEventData) => void): boolean | null;
+    listenForEvent(eventIdentifier: ReceiveFromMinecraftClient.ClientEnteredWorld, callback: (eventData: IEventData<IClientEnteredWorldEventData>) => void): boolean | null;
     /**
      * This event is triggered whenever the reticle changes from pointing at a block or air to pointing at an entity and the other way around. Up to 1000 blocks away.
      */
-    listenForEvent(eventIdentifier: ReceiveFromMinecraftClient.HitResultChanged, callback: (eventData: IHitResultChangedEventData) => void): boolean | null;
+    listenForEvent(eventIdentifier: ReceiveFromMinecraftClient.HitResultChanged, callback: (eventData: IEventData<IHitResultChangedEventData>) => void): boolean | null;
     /**
      * This event is triggered every update and tells you what entity the reticle is pointing to in the world up to 1000 blocks away.
      */
-    listenForEvent(eventIdentifier: ReceiveFromMinecraftClient.HitResultContinuous, callback: (eventData: IHitResultContinuousEventData) => void): boolean | null;
+    listenForEvent(eventIdentifier: ReceiveFromMinecraftClient.HitResultContinuous, callback: (eventData: IEventData<IHitResultContinuousEventData>) => void): boolean | null;
     /**
      * This event is triggered whenever the mouse pointer changes from pointing at a block or air to pointing at an entity and the other way around. Up to 1000 blocks away.
      */
-    listenForEvent(eventIdentifier: ReceiveFromMinecraftClient.PickHitResultChanged, callback: (eventData: IPickHitResultChangedEventData) => void): boolean | null;
+    listenForEvent(eventIdentifier: ReceiveFromMinecraftClient.PickHitResultChanged, callback: (eventData: IEventData<IPickHitResultChangedEventData>) => void): boolean | null;
     /**
      * This event is triggered every update and tells you what entity the mouse pointer is pointing to in the world up to 1000 blocks away.
      */
-    listenForEvent(eventIdentifier: ReceiveFromMinecraftClient.PickHitResultContinuous, callback: (eventData: IPickHitResultContinuousEventData) => void): boolean | null;
+    listenForEvent(eventIdentifier: ReceiveFromMinecraftClient.PickHitResultContinuous, callback: (eventData: IEventData<IPickHitResultContinuousEventData>) => void): boolean | null;
     /**
      * FIXME - UNDOCUMENTED - NO DESCRIPTION FROM MOJANG
      */
-    listenForEvent(eventIdentifier: ReceiveFromMinecraftClient.UIEvent, callback: (eventData: string) => void): boolean | null;
+    listenForEvent(eventIdentifier: ReceiveFromMinecraftClient.UIEvent, callback: (eventData: IEventData<string>) => void): boolean | null;
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Generic method for other custom events
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    
+    /**
+     * Registers the Event to the script engine. This allows you to create Event Data by calling createEventData and have it initialized with the correct default data and fields. Only custom events need to be registered.
+     * 
+     * @param eventIdentifier This is the identifier of the custom event we are registering. The namespace is required and can't be set to minecraft.
+     * @param eventData The JavaScript object with the correct fields and default values for the event
+     */
+    registerEventData<TEventDataType = any>(eventIdentifier: string, eventData: TEventDataType): true | null;
+
+    /**
+     * Creates an object with all the required fields and default data for the specified event. If the event is a custom event, it needs to have been previously registered.
+     * 
+     * @param eventIdentifier This is the identifier of the custom event we are registering. The namespace is required and can't be set to minecraft. 
+     */
+    createEventData<TEventDataType = any>(eventIdentifier: string): IEventData<TEventDataType> | null;
 
     /**
      * 
@@ -77,13 +125,13 @@ declare interface IVanillaClientSystemBase {
      * Anything that signed up to listen for the event will be notified and the given data delivered to them.
      * @param eventData The data for the event. You can create a new JavaScript Object with the parameters you want to pass in to the listener and the engine will take care of delivering the data to them
      */
-    broadcastEvent(eventIdentifier: string, eventData: any): boolean | null;
+    broadcastEvent<TEventDataType = any>(eventIdentifier: string, eventData: IEventData<TEventDataType>): boolean | null;
 
     /**
      * Allows you to register a JavaScript object that gets called whenever the specified event is broadcast. The event can either be a built-in event or an event specified in script.
      * @param eventIdentifier This is the name of the event to which we want to react. Can be the identifier of a built-in event or a custom one from script
      * @param eventData The name of the JavaScript object that will get called whenever the event is broadcast
      */
-    listenForEvent(eventIdentifier: string, callback: (eventData: any) => void): boolean | null;
+    listenForEvent<TEventDataType = any>(eventIdentifier: string, callback: (eventData: IEventData<TEventDataType>) => void): boolean | null;
 
 }
