@@ -9,6 +9,8 @@ Mojang provides modding capabilities via JavaScript. This project aims to bring 
 
 This readme is not a replacement for the API documentation, which should still be your primary source of information. See: [https://minecraft.gamepedia.com/Bedrock_Beta_Script_Documentation](https://minecraft.gamepedia.com/Bedrock_Beta_Script_Documentation)
 
+However, if you still wish to view the typings, see the [formatted version](https://richienb.github.io/minecraft-scripting-api-docs/globals.html).
+
 ## Pre-Requisites
 
 So you want to make your own Scripts? That's awesome! In this section you will find the list of minimum and recommended software you will need.
