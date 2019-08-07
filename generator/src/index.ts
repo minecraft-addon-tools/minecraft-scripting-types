@@ -7,7 +7,7 @@ import { debugPrintTypeNames } from "./type";
 import { MinecraftScriptDocumentation, applyOverrides, IScriptingDocumentationOverrides } from "minecraft-documentation-extractor";
 import extractMethods from "./methods";
 
-const sourceFile = "./Documentation_Scripting.html";
+const sourceFile = "./Scripting.html";
 const templateFiles = "./template/**";
 const outputDir = "../packages";
 

@@ -2,9 +2,9 @@
     "$schema": "https://raw.githubusercontent.com/minecraft-addon-tools/minecraft-documentation-extractor/9b1c9537b061aeb8f0839272d9738d408ae7e21e/src/type-overrides.schema.json",
     "version": {
         "major": 1,
-        "minor": 12,
+        "minor": 13,
         "revision": 0,
-        "build": 9
+        "build": 1
     },
     "overrides": {
         "systemMethods": {
