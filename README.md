@@ -69,11 +69,11 @@ This is a node module that is not intended to be published, but can be used for 
 Now add TypeScript and minecraft-scripting-types (this project) using NPM
 
 ```cmd
-npm install --save-dev TypeScript
+npm install --save-dev typescript
 npm install --save-dev minecraft-scripting-types-client minecraft-scripting-types-server
 ```
 
-Next we just need to add a script to compile the project, which can be done by adding a "compile" script with the command `tsc -p .` which compiles the current project.
+Next we just need to add a script to build the project, which can be done by adding a "build" script with the command `tsc -p .` which builds the current project.
 
 #### Example package.json
 The final package.json should look something like this:
@@ -81,7 +81,7 @@ The final package.json should look something like this:
 {
   "private": "true",
   "scripts": {
-    "compile": "tsc -p ."
+    "build": "tsc -p ."
   },
   "dependencies": {
     "minecraft-scripting-types-client": "^0.1.0",
@@ -91,7 +91,7 @@ The final package.json should look something like this:
 }
 ```
 
-The project will not compile however until we add a tsconfig.json file, here is an example one that was used to write Beanstalk
+The project will not build however until we add a tsconfig.json file, here is an example one that was used to write Beanstalk
 
 #### Example tsconfig.json
 ```json
@@ -110,11 +110,13 @@ The project will not compile however until we add a tsconfig.json file, here is 
 }
 ```
 
-The last step will be to rename the `.js` files in `scripts/**/*.js` to `.ts` files.
+You must then rename the `.js` files in `scripts/**/*.js` to `.ts` files.
+
+In Visual Studio, create a new .ts project from existing files.  The root of the project should be the root of the behavior pack --- the IDE will know what to build based upon the contents of package.json and tsconfig.json.
 
 You should now be able to build your project using
 ```
-npm run compile
+npm run build
 ```
 It will generate .js files next to the typescript files which Minecraft will happily load.
 
@@ -130,10 +132,11 @@ namespacing should be as simple as wrapping your script like this:
 
 ```typescript
 /// <reference types="minecraft-scripting-types-server" />
+// NOTE: The above line is required and is not a comment!
 
 namespace Server {
     ...
-    /// Your code goes here
+    // Your code goes here
     ...    
 }
 ```
@@ -156,6 +159,7 @@ Note: although the demos from Mojang do this, we do not recommend it.
 
 ```typescript
 /// <reference types="minecraft-scripting-types-server" />
+// NOTE: The above line is required and is not a comment!
 
 namespace Server {
     interface IMyCustomModSystem extends IServerSystem<IMyCustomModSystem> {
